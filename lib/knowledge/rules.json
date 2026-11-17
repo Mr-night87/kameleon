@@ -1,0 +1,91 @@
+{
+  "version": "1.0.0",
+  "description": "Règles de style S1 à S8 pour un prompt efficace.",
+  "source": "SRC-1 (Keyrus)",
+  "rules": [
+    {
+      "id": "S1",
+      "label": "Termes clairs et instructions concises",
+      "description": "Chaque mot est choisi avec soin. Pas de jargon inutile.",
+      "example_bad": "Pourriez-vous éventuellement me fournir une synthèse ?",
+      "example_good": "Résume ce texte en 2 phrases.",
+      "check": "Le prompt contient-il des mots vagues ?"
+    },
+    {
+      "id": "S2",
+      "label": "Voix active",
+      "description": "Le sujet fait l'action. Pas de passif.",
+      "example_bad": "Un résumé devrait être produit.",
+      "example_good": "Résume ce texte.",
+      "check": "Y a-t-il des tournures passives ?"
+    },
+    {
+      "id": "S3",
+      "label": "Éviter la négation",
+      "description": "Formuler en positif. Garder le négatif pour les interdits importants.",
+      "example_bad": "Ne fais pas de phrases longues.",
+      "example_good": "Écris des phrases de 15 mots maximum.",
+      "check": "Y a-t-il des négations évitables ?",
+      "note": "Nuance : CONTEXTE-V utilise 'Tu ne dois pas...' pour les contraintes strictes."
+    },
+    {
+      "id": "S4",
+      "label": "Utiliser l'impératif",
+      "description": "Pas besoin d'être poli avec une IA. L'impératif donne de meilleurs résultats.",
+      "example_bad": "Pourriez-vous me faire un résumé ?",
+      "example_good": "Fais un résumé.",
+      "check": "Le prompt utilise-t-il l'impératif ?"
+    },
+    {
+      "id": "S5",
+      "label": "Verbes d'action directifs",
+      "description": "Utiliser des verbes précis : explique, définis, compare, crée, liste, résume, analyse.",
+      "example_bad": "Parle-moi de ce sujet.",
+      "example_good": "Explique ce sujet en 3 points.",
+      "check": "Le verbe d'action est-il précis ?"
+    },
+    {
+      "id": "S6",
+      "label": "Une seule demande à la fois",
+      "description": "Une seule tâche par prompt. Si deux tâches, deux prompts.",
+      "example_bad": "Résume et traduis ce texte.",
+      "example_good": "Résume ce texte. (Puis, dans un second prompt : traduis-le.)",
+      "check": "Y a-t-il plusieurs tâches mélangées ?"
+    },
+    {
+      "id": "S7",
+      "label": "Inclure des mots-clés pertinents",
+      "description": "Cadrer le sujet avec des mots-clés précis.",
+      "example_bad": "Parle-moi de ça.",
+      "example_good": "Explique le fonctionnement des WebSocket en JavaScript.",
+      "check": "Les mots-clés du sujet sont-ils présents ?"
+    },
+    {
+      "id": "S8",
+      "label": "Anticiper les malentendus",
+      "description": "Si un mot peut avoir deux sens, préciser lequel.",
+      "example_bad": "Explique Python.",
+      "example_good": "Explique le langage de programmation Python (pas le serpent).",
+      "check": "Y a-t-il des mots ambigus ?"
+    }
+  ],
+  "imperatives": {
+    "use": true,
+    "note": "Pas besoin d'être poli avec une IA. L'impératif donne de meilleurs résultats."
+  },
+  "verbList": [
+    "explique", "définis", "compare", "crée", "liste", "résume",
+    "analyse", "propose", "reformule", "rédige", "traduis",
+    "corrige", "génère", "donne", "trouve", "identifie", "fournis"
+  ],
+  "checklist": [
+    "Le prompt est-il clair et concis ? (S1)",
+    "Est-il à la voix active ? (S2)",
+    "Les négations sont-elles évitées ? (S3)",
+    "Utilise-t-il l'impératif ? (S4)",
+    "Le verbe d'action est-il précis ? (S5)",
+    "Y a-t-il une seule demande ? (S6)",
+    "Les mots-clés sont-ils présents ? (S7)",
+    "Les ambiguïtés sont-elles levées ? (S8)"
+  ]
+}

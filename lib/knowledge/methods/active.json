@@ -1,0 +1,375 @@
+{
+  "id": "active",
+  "label": "Active",
+  "fullName": "Méthode active",
+  "shortDescription": "Verbe d'action + objet + limite. 30 secondes. Réponse directe.",
+  "description": "La méthode active est la plus courte de toutes : une phrase, un verbe d'action à l'impératif, un objet précis, une limite ou un format. Elle encourage des réponses directes et immédiates, sans détour. C'est la méthode du quotidien immédiat : correction, résumé, traduction, liste, comparaison rapide. Elle s'appuie sur les règles de style (voix active, impératif, positivité) qui rendent un prompt efficace.",
+  "difficulty": 1,
+  "estimatedTime": "30 secondes",
+  "level": "débutant",
+  "whenToUse": [
+    "Demandes courtes du quotidien (correction, résumé, liste, traduction)",
+    "Quand tu sais exactement ce que tu veux en une phrase",
+    "Pour les micro-tâches répétitives",
+    "Quand tu veux une réponse immédiate, sans contexte lourd"
+  ],
+  "whenNotToUse": [
+    "Besoin d'un rôle précis et d'un ton adapté (→ CRAFT)",
+    "Besoin d'exemples, de contraintes, de vérification (→ CONTEXTE-V)",
+    "Besoin de comprendre ton propre besoin (→ QQ)",
+    "Tâche complexe qui demande plusieurs étapes (→ CONTEXTE-V)"
+  ],
+  "source": [
+    "SRC-1 (mention)",
+    "AJOUT (structure opérationnelle)"
+  ],
+  "methodsCitation": "Keyrus : des approches telles que la méthode active encouragent des réponses directes et immédiates. Le document ne la détaille pas ; la structure ci-dessous est une explicitation d'usage.",
+  "disclaimer": "La méthode active est mentionnée par Keyrus sans être détaillée. Les blocs ci-dessous sont construits par Kameleon Prompter à partir des règles de style S1-S8 du même document (voix active, impératif, concision, positivité).",
+  "blocks": [
+    {
+      "id": "verb",
+      "order": 1,
+      "letter": "V",
+      "label": "Verbe d'action",
+      "amorce": "Explique / Résume / Liste / Compare / Corrige…",
+      "description": "Un verbe d'action à l'impératif, en premier mot du prompt.",
+      "purpose": "Impose le mode directif. La voix active et l'impératif donnent de meilleurs résultats qu'une question polie.",
+      "question": "Quel verbe d'action décrit ta demande ?",
+      "hint": "Un seul verbe, à l'impératif, en premier mot.",
+      "placeholder": "Ex : Résume",
+      "type": "select",
+      "required": true,
+      "options": [
+        {
+          "id": "explique",
+          "label": "Explique"
+        },
+        {
+          "id": "resume",
+          "label": "Résume"
+        },
+        {
+          "id": "liste",
+          "label": "Liste"
+        },
+        {
+          "id": "compare",
+          "label": "Compare"
+        },
+        {
+          "id": "corrige",
+          "label": "Corrige"
+        },
+        {
+          "id": "traduis",
+          "label": "Traduis"
+        },
+        {
+          "id": "reformule",
+          "label": "Reformule"
+        },
+        {
+          "id": "analyse",
+          "label": "Analyse"
+        },
+        {
+          "id": "genere",
+          "label": "Génère"
+        },
+        {
+          "id": "trouve",
+          "label": "Trouve"
+        },
+        {
+          "id": "definis",
+          "label": "Définis"
+        },
+        {
+          "id": "propose",
+          "label": "Propose"
+        }
+      ],
+      "validation": {
+        "mustBeInImperative": true
+      },
+      "examples": [
+        "Liste",
+        "Compare",
+        "Corrige",
+        "Résume",
+        "Explique"
+      ],
+      "helper": "Un verbe d'action directif en premier mot. Pas de « Pourriez-vous… » ni de « Peux-tu… ».",
+      "commonErrors": [
+        "Verbe poli (« Pourriez-vous… »)",
+        "Verbe vague (« Parle de… »)",
+        "Deux verbes mélangés (« Résume et traduis »)"
+      ],
+      "formula": "[Verbe à l'impératif]"
+    },
+    {
+      "id": "object",
+      "order": 2,
+      "letter": "O",
+      "label": "Objet",
+      "amorce": "… ce texte / cette image / ce concept",
+      "description": "L'objet précis de la demande, juste après le verbe.",
+      "purpose": "Évite le vague. L'IA doit savoir exactement sur quoi travailler.",
+      "question": "Sur quoi porte ta demande ?",
+      "hint": "Un objet précis, concret. Colle le texte si besoin.",
+      "placeholder": "Ex : ce paragraphe : [texte à résumer]",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 5,
+        "maxLength": 800,
+        "mustBeConcrete": true
+      },
+      "examples": [
+        "ce texte : [texte à résumer]",
+        "ces deux solutions : Firebase et Supabase",
+        "les fautes de ce texte : [texte à corriger]",
+        "ce paragraphe en 2 phrases",
+        "« good morning » en espagnol",
+        "la différence entre let et const",
+        "7 idées de noms pour une appli de prompts",
+        "ce rapport : [rapport à résumer]",
+        "mon texte : [texte à reformuler]",
+        "ce communiqué de presse : [texte à traduire]"
+      ],
+      "helper": "L'objet, c'est ce sur quoi l'IA doit travailler. Plus il est précis, mieux c'est.",
+      "commonErrors": [
+        "Objet vague (« ce truc »)",
+        "Objet absent (« Corrige » — corrige quoi ?)",
+        "Objet trop large (« l'IA »)"
+      ],
+      "formula": "[Verbe] + [objet précis]"
+    },
+    {
+      "id": "limit",
+      "order": 3,
+      "letter": "L",
+      "label": "Limite",
+      "amorce": "… en 2 phrases / uniquement / maximum 5 lignes",
+      "description": "Une contrainte de format, de longueur ou de portée.",
+      "purpose": "Encadre la réponse pour la rendre directement utilisable.",
+      "question": "Quelle limite ou quel format veux-tu ?",
+      "hint": "Longueur, format, ce qu'il faut exclure. Une seule limite suffit.",
+      "placeholder": "Ex : en 2 phrases",
+      "type": "text",
+      "required": true,
+      "validation": {
+        "minLength": 3,
+        "maxLength": 150,
+        "mustMentionLimit": true
+      },
+      "examples": [
+        "en 2 phrases",
+        "en 5 lignes maximum, une ligne chacun",
+        "uniquement le texte corrigé",
+        "sous forme de tableau à 2 colonnes",
+        "sans utiliser de jargon",
+        "en 3 points numérotés",
+        "en une seule phrase",
+        "sans exemple de code",
+        "sur une page DIN A4",
+        "en 300 mots maximum",
+        "en moins de 50 mots",
+        "dans le style suivant : formel"
+      ],
+      "helper": "Une seule limite suffit. Elle rend la réponse directement utilisable.",
+      "commonErrors": [
+        "Limite absente (l'IA choisit la longueur)",
+        "Limite contradictoire (« détaillé en 2 phrases »)",
+        "Plusieurs limites dans la même phrase (mieux vaut aller à CRAFT)"
+      ],
+      "formula": "[objet] + [limite précise]"
+    }
+  ],
+  "template": {
+    "pattern": "{verb} {object} {limit}.",
+    "example": "Résume ce texte : [texte à résumer], en 2 phrases.",
+    "assembly": [
+      "verb",
+      "object",
+      "limit"
+    ],
+    "singleLine": true
+  },
+  "examples": [
+    {
+      "id": "active-1",
+      "title": "Résumer un texte",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "resume",
+        "object": "ce texte : [texte à résumer]",
+        "limit": "en 2 phrases"
+      },
+      "finalPrompt": "Résume ce texte : [texte à résumer] en 2 phrases."
+    },
+    {
+      "id": "active-2",
+      "title": "Lister des idées",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "liste",
+        "object": "7 idées de noms pour une appli de prompts",
+        "limit": "une ligne chacune"
+      },
+      "finalPrompt": "Liste 7 idées de noms pour une appli de prompts une ligne chacune."
+    },
+    {
+      "id": "active-3",
+      "title": "Comparer deux outils",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "compare",
+        "object": "Firebase et Supabase en 5 critères",
+        "limit": "sous forme de tableau à 2 colonnes"
+      },
+      "finalPrompt": "Compare Firebase et Supabase en 5 critères sous forme de tableau à 2 colonnes."
+    },
+    {
+      "id": "active-4",
+      "title": "Corriger un texte",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "corrige",
+        "object": "les fautes de ce texte : [texte à corriger]",
+        "limit": "uniquement le texte corrigé"
+      },
+      "finalPrompt": "Corrige les fautes de ce texte : [texte à corriger] uniquement le texte corrigé."
+    },
+    {
+      "id": "active-5",
+      "title": "Traduire un mot",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "traduis",
+        "object": "« good morning » en espagnol",
+        "limit": "en une seule ligne"
+      },
+      "finalPrompt": "Traduis « good morning » en espagnol en une seule ligne."
+    },
+    {
+      "id": "active-6",
+      "title": "Définir une notion",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "definis",
+        "object": "une API en une phrase simple",
+        "limit": "sans jargon"
+      },
+      "finalPrompt": "Définis une API en une phrase simple sans jargon."
+    },
+    {
+      "id": "active-7",
+      "title": "Générer un titre",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "genere",
+        "object": "un titre accrocheur pour un article sur le café bio",
+        "limit": "en 10 mots maximum"
+      },
+      "finalPrompt": "Génère un titre accrocheur pour un article sur le café bio en 10 mots maximum."
+    },
+    {
+      "id": "active-8",
+      "title": "Trouver une info",
+      "source": "AJOUT",
+      "answers": {
+        "verb": "trouve",
+        "object": "3 synonymes de « rapide » en anglais",
+        "limit": "une ligne chacun"
+      },
+      "finalPrompt": "Trouve 3 synonymes de « rapide » en anglais une ligne chacun."
+    },
+    {
+      "id": "active-9",
+      "title": "Résumer un rapport sur une page",
+      "source": "SRC-BERNE",
+      "answers": {
+        "verb": "resume",
+        "object": "ce rapport : [rapport à résumer]",
+        "limit": "sur une page DIN A4"
+      },
+      "finalPrompt": "Résume ce rapport : [rapport à résumer] sur une page DIN A4."
+    },
+    {
+      "id": "active-10",
+      "title": "Reformuler dans un style",
+      "source": "SRC-BERNE",
+      "answers": {
+        "verb": "reformule",
+        "object": "mon texte : [texte à reformuler]",
+        "limit": "dans le style suivant : formel"
+      },
+      "finalPrompt": "Reformule mon texte : [texte à reformuler] dans le style suivant : formel."
+    }
+  ],
+  "limitations": [
+    "Pas de rôle explicite (l'IA choisit son registre)",
+    "Pas de contexte (l'IA ne sait pas pourquoi tu demandes)",
+    "Pas de ton (elle choisit seule)",
+    "Pas de vérification demandée",
+    "Pas adaptée aux tâches complexes"
+  ],
+  "nextStepIfFail": {
+    "method": "craft",
+    "reason": "Si la réponse manque de ton ou de contexte, passe à CRAFT : tu ajouteras un contexte, un rôle et une tonalité explicites. La méthode active est un coup de poing rapide, pas un poing ganté."
+  },
+  "tips": [
+    "La méthode active fonctionne surtout parce qu'elle impose l'impératif : pas de politesse, pas de question.",
+    "Un seul verbe d'action, un seul objet, une seule limite. Si tu as besoin de deux, c'est que tu as besoin de CRAFT.",
+    "Utilise-la pour les tâches répétitives du quotidien : traduction, correction, résumé, extraction.",
+    "Le verbe à l'impératif donne de meilleurs résultats que « Peux-tu… » (règle S4 de Keyrus).",
+    "Une limite précise vaut mieux qu'une longue explication : « en 2 phrases » suffit."
+  ],
+  "commonErrorsOverall": [
+    "Verbe poli (« Pourriez-vous… ») au lieu de l'impératif",
+    "Verbe vague (« Parle de… ») au lieu d'un verbe d'action",
+    "Objet absent ou trop vague",
+    "Limite oubliée (l'IA choisit la longueur)",
+    "Deux verbes dans la même phrase (mélange de tâches)"
+  ],
+  "comparisonWithRtf": {
+    "adds": [
+      "verb (impératif strict)"
+    ],
+    "removes": [
+      "role",
+      "format (structurel)"
+    ],
+    "renames": [
+      {
+        "from": "task",
+        "to": "object"
+      },
+      {
+        "from": "format",
+        "to": "limit"
+      }
+    ],
+    "note": "Active et RTF se ressemblent sur le fond : les deux vont vite. Active impose l'impératif strict (un verbe), là où RTF ajoute un rôle. Active est encore plus court, mais moins encadré."
+  },
+  "relationToRules": {
+    "S1": "termes clairs et instructions concises — appliqué",
+    "S2": "voix active — appliqué",
+    "S3": "éviter la négation — appliqué (limites formulées en positif)",
+    "S4": "utiliser l'impératif — appliqué (cœur de la méthode)",
+    "S5": "verbes d'action directifs — appliqué (liste fermée)",
+    "S6": "une seule question à la fois — appliqué (un seul verbe)"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-1 (mention)",
+      "AJOUT (structure)",
+      "SRC-BERNE"
+    ],
+    "validated": true
+  }
+}

@@ -1,0 +1,8 @@
+Tests avec un faux navigateur (pas besoin de navigateur, seulement Node.js).
+- harness-ui.js   : parcours de l'appli (méthodes, guide, bibliothèque, modale, techniques, checklist).
+Les chemins sont écrits pour le dossier du projet : adapte-les (chemins absolus en haut des fichiers)
+puis lance :  node tests/harness-ui.js
+Test des données :  node test-engine.js
+Thème + migration des clés :  node tests/test-boot.js
+Projets (sauvegarde, import/export, aucune mention Kameleon dans les prompts) :  node tests/test-store.js
+Animations (phase d'édition, glisser-confirmer) :  node tests/test-ux.js

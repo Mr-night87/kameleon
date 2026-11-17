@@ -1,0 +1,494 @@
+{
+  "id": "craft",
+  "label": "CRAFT",
+  "fullName": "Contexte – Rôle – Action – Format – Tonalité",
+  "shortDescription": "5 blocs. Ajoute contexte et ton. 1 à 2 minutes.",
+  "description": "CRAFT ajoute deux choses à RTF : le CONTEXTE (pourquoi tu demandes) et la TONALITÉ (comment l'IA doit s'exprimer). C'est la méthode polyvalente par excellence : elle couvre 80 % des besoins du quotidien, avec un public, un objectif et un registre précis.",
+  "difficulty": 2,
+  "estimatedTime": "1 à 2 minutes",
+  "level": "intermédiaire",
+  "whenToUse": [
+    "Question simple mais réponse précise attendue",
+    "Besoin d'un ton adapté (public, registre)",
+    "Besoin d'un contexte clair (pour qui, pourquoi)",
+    "Demandes du quotidien : mails, articles, descriptions, plans"
+  ],
+  "whenNotToUse": [
+    "Demande ultra-rapide sans public ni ton (→ RTF)",
+    "Besoin d'exemples à imiter ou de vérification (→ CONTEXTE-V)",
+    "Tâche complexe avec contraintes multiples (→ CONTEXTE-V)"
+  ],
+  "source": [
+    "SRC-2"
+  ],
+  "methodsCitation": "Cavazza : pour des questions simples mais des réponses précises, avec un contexte et une tonalité.",
+  "blocks": [
+    {
+      "id": "context",
+      "order": 1,
+      "letter": "C",
+      "label": "Contexte",
+      "amorce": "Je suis chargé de…",
+      "description": "Décris la situation ou le besoin global.",
+      "purpose": "Aide l'IA à comprendre le cadre et les attentes générales. Dit POUR QUI et POURQUOI.",
+      "question": "Décris ton contexte en une phrase.",
+      "hint": "Pourquoi tu demandes ça ? Pour qui ? Dans quel cadre ?",
+      "placeholder": "Ex : je prépare un single de rap mélancolique pour un public de 16-30 ans",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 15,
+        "maxLength": 400,
+        "shouldMentionAudience": true
+      },
+      "examples": [
+        "Je dois expliquer un concept à une audience qui n'est pas experte mais curieuse d'apprendre.",
+        "Je prépare un brainstorming avec mon équipe pour trouver des idées innovantes autour du télétravail.",
+        "Je lance une chaîne YouTube de tutoriels pour débutants en code.",
+        "Je sors un morceau de rap mélancolique sur Audiomack et YouTube. Mon public a entre 16 et 30 ans.",
+        "J'apprends le backend Python. Je connais déjà JavaScript.",
+        "Un client attend une livraison en retard de trois jours.",
+        "Je suis débutant en programmation, je parle à un mentor.",
+        "Je prépare un examen d'électronique dans 4 semaines.",
+        "Les articles ont été rédigés entre 2022 et 2024 et traitent des thèmes [X, Y, Z].",
+        "Voici la transcription brute de la réunion de ce matin.",
+        "Je dois organiser un événement d'entreprise pour 100 personnes.",
+        "Un collaborateur très performant techniquement a des difficultés à travailler en équipe."
+      ],
+      "helper": "Le contexte dit POUR QUI et POURQUOI. Sans ça, l'IA devine — et souvent mal.",
+      "commonErrors": [
+        "Contexte trop court : « pour un blog » — quel blog ? pour qui ?",
+        "Oublier de donner le public cible",
+        "Mélanger contexte et action : le contexte dit POURQUOI, l'action dit QUOI"
+      ],
+      "formula": "Je suis [qui] et je [fais quoi] pour [public] dans le but de [objectif]."
+    },
+    {
+      "id": "role",
+      "order": 2,
+      "letter": "R",
+      "label": "Rôle",
+      "amorce": "Agis en tant que…",
+      "description": "Indique le rôle que l'IA doit incarner.",
+      "purpose": "Adapte le style et l'expertise requise. Un rôle précis donne un vocabulaire précis.",
+      "question": "Agis en tant que…",
+      "hint": "Métier précis + domaine + niveau d'expertise.",
+      "placeholder": "Ex : community manager musical expérimenté",
+      "type": "text",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 200,
+        "forbiddenPatterns": [
+          "^(expert|spécialiste|professionnel)$",
+          "^(un |une )?(expert|spécialiste)$"
+        ]
+      },
+      "examples": [
+        "Tu es un enseignant expérimenté en vulgarisation, capable de rendre les sujets complexes compréhensibles pour tous.",
+        "Tu es un expert en facilitation d'ateliers collaboratifs et en gestion de groupe.",
+        "Tu es un community manager musical.",
+        "Tu es un mentor développeur patient.",
+        "Tu es un responsable du service client.",
+        "Tu es un stratège de contenu vidéo.",
+        "Tu es un professeur d'électronique patient qui parle à un élève de niveau terminale.",
+        "Tu es un manager de musique indépendant, expérimenté.",
+        "Tu es une collaboratrice scientifique ayant de l'expertise dans la planification des transports.",
+        "Tu es un manager bienveillant.",
+        "Tu es un expert en analyse documentaire."
+      ],
+      "helper": "Évite les rôles vagues. « Expert en marketing » < « Expert en marketing pour services B2B ».",
+      "commonErrors": [
+        "Rôle sans rapport avec la tâche",
+        "Rôle trop générique (« assistant »)",
+        "Rôle redondant avec le contexte"
+      ],
+      "formula": "[métier] + [domaine] + [niveau] + [public si pertinent]"
+    },
+    {
+      "id": "action",
+      "order": 3,
+      "letter": "A",
+      "label": "Action",
+      "amorce": "Tu dois…",
+      "description": "Spécifie précisément ce que l'IA doit faire.",
+      "purpose": "Oriente la réponse vers une tâche claire. C'est le QUOI.",
+      "question": "Quelle action précise dois-je faire ?",
+      "hint": "Verbe d'action + objet + résultat attendu.",
+      "placeholder": "Ex : rédige une description de 5 lignes pour mon morceau",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 15,
+        "maxLength": 400,
+        "mustStartWithActionVerb": true
+      },
+      "actionVerbs": [
+        "explique",
+        "définis",
+        "compare",
+        "crée",
+        "liste",
+        "résume",
+        "analyse",
+        "propose",
+        "reformule",
+        "rédige",
+        "traduis",
+        "corrige",
+        "génère",
+        "donne",
+        "trouve",
+        "identifie",
+        "fournis",
+        "prépare",
+        "imagine",
+        "construis"
+      ],
+      "examples": [
+        "Fournis une explication claire et simplifiée de ce concept en utilisant des exemples concrets et des analogies accessibles.",
+        "Propose un plan détaillé d'animation pour cette session, avec des activités adaptées pour maximiser la créativité et l'engagement des participants.",
+        "Rédige une description de 5 lignes pour accompagner le titre.",
+        "Explique ce qu'est une API et comment FastAPI aide à en créer une.",
+        "Rédige un message d'excuse avec une solution.",
+        "Propose un plan de 8 vidéos pour le premier mois.",
+        "Propose un plan de révision de 4 semaines et explique la première notion avec un exemple.",
+        "Prépare un argumentaire incluant : une accroche, les bénéfices, les caractéristiques, une proposition de valeur, un appel à l'action.",
+        "Rédige un résumé structuré de plusieurs articles relatifs à la planification des transports.",
+        "Rédige un e-mail pour refuser poliment une demande de congé, tout en proposant une alternative pour le mois suivant.",
+        "Crée un communiqué à la population pour annoncer l'introduction du nouveau programme de transport."
+      ],
+      "helper": "L'action dit QUOI faire. Le format (question suivante) dit COMMENT présenter.",
+      "commonErrors": [
+        "Confondre Action et Format : le format ne décrit pas le contenu",
+        "Action sans verbe d'action (« une description » — ok, mais commence par « Rédige »)",
+        "Action trop vague (« fais quelque chose »)"
+      ],
+      "formula": "[verbe d'action] + [objet précis] + [résultat attendu]"
+    },
+    {
+      "id": "format",
+      "order": 4,
+      "letter": "F",
+      "label": "Format",
+      "amorce": "Ta réponse devra…",
+      "description": "Précise la structure, la longueur et les éléments à inclure.",
+      "purpose": "Garantit un résultat clair et utilisable tout de suite.",
+      "question": "Quel format pour la réponse ?",
+      "hint": "Structure + longueur + éléments à inclure. Liste chaque élément attendu.",
+      "placeholder": "Ex : 1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel à l'action",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 300,
+        "shouldMentionStructure": true
+      },
+      "examples": [
+        "La réponse devra intégrer : une définition courte et claire ; une analogie ou un exemple concret ; une explication en plusieurs étapes.",
+        "La réponse devra intégrer : une activité brise-glace ; une méthode d'idéation ; une phase de priorisation des idées ; une conclusion avec les prochaines étapes.",
+        "1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel à écouter et à s'abonner.",
+        "4 étapes numérotées, chacune avec un mini exemple de code.",
+        "6 lignes maximum : excuse, explication, solution, remerciement.",
+        "Tableau : numéro, titre, durée conseillée, idée de miniature.",
+        "Plan en 4 lignes (une par semaine), puis l'explication en 5 étapes numérotées.",
+        "Structure logique : Accroche, Bénéfices, Caractéristiques, Proposition de valeur, Appel à l'action.",
+        "Un texte courant d'environ 300 mots.",
+        "Un résumé exécutif de 300 mots maximum, concentré sur les aspects financiers et les risques identifiés.",
+        "Une checklist classée par ordre chronologique : 3 mois avant, 1 mois avant, J-1, Jour J, post-événement."
+      ],
+      "helper": "Liste chaque élément attendu. Un format précis = une réponse utilisable tout de suite.",
+      "commonErrors": [
+        "Format absent : l'IA choisit, souvent trop long",
+        "Format vague : « fais bien » — précise la structure",
+        "Format contradictoire : « très détaillé » et « 5 lignes »"
+      ],
+      "formula": "[type de sortie] + [nombre/longueur] + [éléments à inclure]"
+    },
+    {
+      "id": "tone",
+      "order": 5,
+      "letter": "T",
+      "label": "Tonalité",
+      "amorce": "Adopte un ton…",
+      "description": "Précise le style ou le registre attendu.",
+      "purpose": "Harmonise le ton avec l'objectif et l'audience.",
+      "question": "Quel ton adopter ?",
+      "hint": "2 ou 3 adjectifs compatibles entre eux. Maximum 3.",
+      "type": "select-multi",
+      "required": true,
+      "max": 3,
+      "source": "tones.json",
+      "validation": {
+        "mustBeCompatible": true,
+        "noContradiction": true
+      },
+      "examples": [
+        [
+          "pédagogique",
+          "engageant",
+          "adapté aux débutants"
+        ],
+        [
+          "professionnel",
+          "clair",
+          "inspirant"
+        ],
+        [
+          "sincère",
+          "proche du public"
+        ],
+        [
+          "encourageant",
+          "très clair"
+        ],
+        [
+          "respectueux",
+          "chaleureux",
+          "sans jargon"
+        ],
+        [
+          "motivant",
+          "concret"
+        ],
+        [
+          "clair",
+          "informatif"
+        ],
+        [
+          "encourageant",
+          "simple"
+        ],
+        [
+          "clair",
+          "factuel",
+          "accessible"
+        ],
+        [
+          "professionnel",
+          "empathique"
+        ],
+        [
+          "clair",
+          "accessible"
+        ]
+      ],
+      "helper": "Évite les contradictions (« sérieux et très drôle »). Maximum 3 adjectifs.",
+      "commonErrors": [
+        "Ton contradictoire : « sérieux et très drôle »",
+        "Trop d'adjectifs (4+) : le ton se dilue",
+        "Ton sans rapport avec l'audience"
+      ],
+      "formula": "[adjectif 1], [adjectif 2] (compatibles entre eux)"
+    }
+  ],
+  "template": {
+    "pattern": "Contexte : {context}\nRôle : {role}\nAction : {action}\nFormat : {format}\nTonalité : Adopte un ton {tone}.",
+    "example": "Contexte : Je sors un morceau de rap mélancolique sur Audiomack et YouTube. Mon public a entre 16 et 30 ans.\nRôle : Agis en tant que community manager musical.\nAction : Rédige une description de 5 lignes pour accompagner le titre.\nFormat : 1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel à écouter et à s'abonner.\nTonalité : Adopte un ton sincère, proche du public, sans exagération.",
+    "assembly": [
+      "context",
+      "role",
+      "action",
+      "format",
+      "tone"
+    ]
+  },
+  "examples": [
+    {
+      "id": "craft-1",
+      "title": "Expliquer un concept compliqué",
+      "source": "SRC-2",
+      "answers": {
+        "context": "Je dois expliquer [concept] à une audience qui n'est pas experte mais curieuse d'apprendre.",
+        "role": "Tu es un enseignant expérimenté en vulgarisation, capable de rendre les sujets complexes compréhensibles pour tous.",
+        "action": "Fournis une explication claire et simplifiée de ce concept en utilisant des exemples concrets et des analogies accessibles.",
+        "format": "La réponse devra intégrer : une définition courte et claire ; une analogie ou un exemple concret pour illustrer le concept ; une explication en plusieurs étapes pour détailler comment cela fonctionne.",
+        "tone": [
+          "pédagogique",
+          "engageant",
+          "adapté aux débutants"
+        ]
+      },
+      "finalPrompt": "Contexte : Je dois expliquer [concept] à une audience qui n'est pas experte mais curieuse d'apprendre.\nRôle : Tu es un enseignant expérimenté en vulgarisation, capable de rendre les sujets complexes compréhensibles pour tous.\nAction : Fournis une explication claire et simplifiée de ce concept en utilisant des exemples concrets et des analogies accessibles.\nFormat : La réponse devra intégrer : une définition courte et claire ; une analogie ou un exemple concret pour illustrer le concept ; une explication en plusieurs étapes pour détailler comment cela fonctionne.\nTonalité : Adopte un ton pédagogique, engageant et adapté aux débutants."
+    },
+    {
+      "id": "craft-2",
+      "title": "Préparer une réunion",
+      "source": "SRC-2",
+      "answers": {
+        "context": "Je prépare un brainstorming avec mon équipe pour trouver des idées innovantes autour de [sujet].",
+        "role": "Tu es un expert en facilitation d'ateliers collaboratifs et en gestion de groupe.",
+        "action": "Propose un plan détaillé d'animation pour cette session, avec des activités adaptées pour maximiser la créativité et l'engagement des participants.",
+        "format": "La réponse devra intégrer : une activité brise-glace ; une méthode d'idéation ; une phase de priorisation des idées ; une conclusion avec les prochaines étapes.",
+        "tone": [
+          "professionnel",
+          "clair",
+          "inspirant"
+        ]
+      },
+      "finalPrompt": "Contexte : Je prépare un brainstorming avec mon équipe pour trouver des idées innovantes autour de [sujet].\nRôle : Tu es un expert en facilitation d'ateliers collaboratifs et en gestion de groupe.\nAction : Propose un plan détaillé d'animation pour cette session, avec des activités adaptées pour maximiser la créativité et l'engagement des participants.\nFormat : La réponse devra intégrer : une activité brise-glace ; une méthode d'idéation ; une phase de priorisation des idées ; une conclusion avec les prochaines étapes.\nTonalité : Adopte un ton professionnel, clair et informatif et inspirant."
+    },
+    {
+      "id": "craft-3",
+      "title": "Écrire une description de chanson",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Je sors un morceau de rap mélancolique sur Audiomack et YouTube. Mon public a entre 16 et 30 ans.",
+        "role": "Agis en tant que community manager musical.",
+        "action": "Rédige une description de 5 lignes pour accompagner le titre.",
+        "format": "1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel à écouter et à s'abonner.",
+        "tone": [
+          "sincère",
+          "proche du public",
+          "sans exagération"
+        ]
+      },
+      "finalPrompt": "Contexte : Je sors un morceau de rap mélancolique sur Audiomack et YouTube. Mon public a entre 16 et 30 ans.\nRôle : Agis en tant que community manager musical.\nAction : Rédige une description de 5 lignes pour accompagner le titre.\nFormat : 1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel à écouter et à s'abonner.\nTonalité : Adopte un ton sincère, proche du public et sans exagération."
+    },
+    {
+      "id": "craft-4",
+      "title": "Apprendre un sujet technique",
+      "source": "AJOUT",
+      "answers": {
+        "context": "J'apprends le backend Python. Je connais déjà JavaScript.",
+        "role": "Agis en tant que mentor développeur patient.",
+        "action": "Explique ce qu'est une API et comment FastAPI aide à en créer une.",
+        "format": "4 étapes numérotées, chacune avec un mini exemple de code.",
+        "tone": [
+          "encourageant",
+          "très clair"
+        ]
+      },
+      "finalPrompt": "Contexte : J'apprends le backend Python. Je connais déjà JavaScript.\nRôle : Agis en tant que mentor développeur patient.\nAction : Explique ce qu'est une API et comment FastAPI aide à en créer une.\nFormat : 4 étapes numérotées, chacune avec un mini exemple de code.\nTonalité : Adopte un ton encourageant et très clair."
+    },
+    {
+      "id": "craft-5",
+      "title": "Message à un client",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Un client attend une livraison en retard de trois jours.",
+        "role": "Agis en tant que responsable du service client.",
+        "action": "Rédige un message d'excuse avec une solution.",
+        "format": "6 lignes maximum : excuse, explication, solution, remerciement.",
+        "tone": [
+          "respectueux",
+          "chaleureux",
+          "sans jargon"
+        ]
+      },
+      "finalPrompt": "Contexte : Un client attend une livraison en retard de trois jours.\nRôle : Agis en tant que responsable du service client.\nAction : Rédige un message d'excuse avec une solution.\nFormat : 6 lignes maximum : excuse, explication, solution, remerciement.\nTonalité : Adopte un ton respectueux, chaleureux et sans jargon."
+    },
+    {
+      "id": "craft-6",
+      "title": "Plan de contenu",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Je lance une chaîne YouTube de tutoriels pour débutants en code.",
+        "role": "Agis en tant que stratège de contenu vidéo.",
+        "action": "Propose un plan de 8 vidéos pour le premier mois.",
+        "format": "Tableau : numéro, titre, durée conseillée, idée de miniature.",
+        "tone": [
+          "motivant",
+          "concret"
+        ]
+      },
+      "finalPrompt": "Contexte : Je lance une chaîne YouTube de tutoriels pour débutants en code.\nRôle : Agis en tant que stratège de contenu vidéo.\nAction : Propose un plan de 8 vidéos pour le premier mois.\nFormat : Tableau : numéro, titre, durée conseillée, idée de miniature.\nTonalité : Adopte un ton motivant et concret."
+    },
+    {
+      "id": "craft-7",
+      "title": "Fiche produit",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Je vends des cosmétiques bio à une clientèle urbaine de 25-40 ans, soucieuse de l'environnement.",
+        "role": "Agis en tant que rédacteur spécialisé en e-commerce responsable.",
+        "action": "Rédige la fiche produit d'une crème hydratante bio.",
+        "format": "Titre, 3 paragraphes courts, 5 bullet points (bénéfices), 1 phrase d'appel à l'action.",
+        "tone": [
+          "accessible",
+          "inspirant",
+          "professionnel"
+        ]
+      },
+      "finalPrompt": "Contexte : Je vends des cosmétiques bio à une clientèle urbaine de 25-40 ans, soucieuse de l'environnement.\nRôle : Agis en tant que rédacteur spécialisé en e-commerce responsable.\nAction : Rédige la fiche produit d'une crème hydratante bio.\nFormat : Titre, 3 paragraphes courts, 5 bullet points (bénéfices), 1 phrase d'appel à l'action.\nTonalité : Adopte un ton accessible, inspirant et professionnel."
+    },
+    {
+      "id": "craft-8",
+      "title": "Résumé structuré d'articles",
+      "source": "SRC-BERNE",
+      "answers": {
+        "context": "Les articles ont été rédigés entre 2022 et 2024 et traitent des thèmes [X, Y, Z].",
+        "role": "Tu es une collaboratrice scientifique ayant de l'expertise dans la planification des transports.",
+        "action": "Rédige un résumé structuré de plusieurs articles relatifs à la planification des transports, en résumant les principales conclusions, tendances et implications.",
+        "format": "Un texte courant d'environ 300 mots.",
+        "tone": [
+          "clair",
+          "factuel",
+          "accessible"
+        ]
+      },
+      "finalPrompt": "Contexte : Les articles ont été rédigés entre 2022 et 2024 et traitent des thèmes [X, Y, Z].\nRôle : Tu es une collaboratrice scientifique ayant de l'expertise dans la planification des transports.\nAction : Rédige un résumé structuré de plusieurs articles relatifs à la planification des transports, en résumant les principales conclusions, tendances et implications.\nFormat : Un texte courant d'environ 300 mots.\nTonalité : Adopte un ton clair et informatif, factuel et accessible."
+    },
+    {
+      "id": "craft-9",
+      "title": "E-mail difficile : refus de congé",
+      "source": "SRC-GUIDE",
+      "answers": {
+        "context": "Un employé a demandé un congé alors que l'équipe est en période de forte activité.",
+        "role": "Tu es un manager bienveillant.",
+        "action": "Rédige un e-mail pour refuser poliment cette demande de congé, tout en proposant une alternative pour le mois suivant.",
+        "format": "Un e-mail court, avec un objet et un message poli.",
+        "tone": [
+          "professionnel",
+          "empathique"
+        ]
+      },
+      "finalPrompt": "Contexte : Un employé a demandé un congé alors que l'équipe est en période de forte activité.\nRôle : Tu es un manager bienveillant.\nAction : Rédige un e-mail pour refuser poliment cette demande de congé, tout en proposant une alternative pour le mois suivant.\nFormat : Un e-mail court, avec un objet et un message poli.\nTonalité : Adopte un ton professionnel et empathique."
+    }
+  ],
+  "limitations": [
+    "Pas d'exemples à imiter : style libre laissé à l'IA",
+    "Pas de contraintes explicites : pas de garde-fou",
+    "Pas de vérification : pas de contrôle qualité demandé",
+    "Pas de technique de raisonnement intégrée (CoT, few-shot…)"
+  ],
+  "nextStepIfFail": {
+    "method": "contexte-v",
+    "reason": "Si l'IA ne respecte pas tes limites, ton style ou tes exemples, passe à CONTEXTE-V : tu ajouteras des exemples à imiter, des contraintes explicites et une vérification."
+  },
+  "tips": [
+    "Le contexte est le bloc le plus sous-estimé : il dit POUR QUI et POURQUOI. Sans lui, l'IA devine.",
+    "L'action et le format sont deux choses différentes : QUOI vs COMMENT.",
+    "Maximum 3 adjectifs de ton. Au-delà, le ton se dilue.",
+    "Choisis des tons compatibles (voir tones.json).",
+    "Si la réponse est trop longue malgré un format précis, c'est souvent le contexte qui manque."
+  ],
+  "commonErrorsOverall": [
+    "Contexte trop court (« pour un blog »)",
+    "Confondre Action et Format",
+    "Ton contradictoire (« sérieux et très drôle »)",
+    "Oublier le public cible dans le contexte",
+    "Format absent : l'IA choisit, souvent trop long",
+    "Rôle sans rapport avec la tâche"
+  ],
+  "comparisonWithRtf": {
+    "adds": [
+      "context",
+      "tone"
+    ],
+    "removes": [],
+    "renames": [],
+    "note": "CRAFT est RTF avec un contexte et une tonalité en plus. Si tu maîtrises RTF, CRAFT est une extension naturelle."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-2",
+      "AJOUT",
+      "SRC-BERNE",
+      "SRC-GUIDE"
+    ],
+    "validated": true
+  }
+}

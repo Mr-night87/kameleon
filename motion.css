@@ -1,0 +1,164 @@
+/* motion.css — animations de Kameleon Prompter (intégrées dans l'appli, écrites pour ce projet) */
+:root{
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);   /* ressort : léger dépassement */
+  --glide:  cubic-bezier(0.16, 1, 0.3, 1);       /* glisse douce */
+  --slide:  cubic-bezier(0.65, 0, 0.35, 1);      /* va-et-vient */
+  --toast:  cubic-bezier(0.18, 1.25, 0.4, 1);
+}
+/* Mode économique : plus de ressorts, juste des fondus simples, pièces immobiles */
+:root[data-eco]{ --spring: ease-out; --toast: ease-out; --glide: ease-out; }
+:root[data-eco] .coin{animation:none;transform:rotate(var(--r))}
+/* Respect du réglage du téléphone "réduire les animations" */
+@media (prefers-reduced-motion: reduce){
+  :root:not([data-force]) *{ animation-duration: .001s !important; transition-duration: .001s !important; }
+  :root:not([data-force]) .coin{animation:none;transform:rotate(var(--r))}
+}
+
+/* ---------- onglets à pastille glissante (transform seulement) ---------- */
+.seg{position:relative;display:flex;background:var(--sunk);border:1px solid var(--line);border-radius:99px;padding:4px;--n:3;--i:0}
+.seg .pill{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/var(--n));background:var(--acc);border-radius:99px;transform:translateX(calc(var(--i)*100%));transition:transform .45s var(--spring)}
+.seg button{position:relative;z-index:1;flex:1;background:none;border:0;padding:10px 4px;border-radius:99px;color:var(--mut);font-size:15px;transition:color .3s ease}
+.seg button.on{color:var(--on-acc);font-weight:700}
+.stick{position:sticky;top:8px;z-index:5;margin:10px 14px}
+/* barre du bas : pastille flottante qui se cache hors des vues principales */
+
+/* barre du bas : trois ronds, une pastille ronde qui glisse */
+.dock{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:6;width:auto;gap:8px;padding:6px;transform:translateX(-50%);background:var(--card);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .5s var(--glide),opacity .3s ease}
+.dock.hide{transform:translate(-50%,170%);opacity:0;pointer-events:none}
+.dock .pill{left:6px;width:46px;top:6px;bottom:6px;transform:translateX(calc(var(--i)*54px))}
+.dock button{flex:none;width:46px;height:46px;padding:0;display:grid;place-items:center}
+.dock svg{width:21px;height:21px}
+
+/* ---------- repliable (accordéon, hauteur animée sans reflow brutal) ---------- */
+.fold{border:1px solid var(--line);border-radius:14px;background:var(--card);margin:8px 0;overflow:hidden}
+.fold>.fh{display:flex;justify-content:space-between;align-items:center;width:100%;background:none;border:0;padding:13px 14px;text-align:left;font-weight:600}
+.fold .chev{color:var(--acc);display:inline-block;transition:transform .5s var(--spring)}
+.fold.open .chev{transform:rotate(180deg)}
+.fold>.fb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--glide)}
+.fold.open>.fb{grid-template-rows:1fr}
+.fold .fi{overflow:hidden;min-height:0}
+.fold .fc{padding:0 14px 12px}
+
+/* ---------- bouton Copier ---------- */
+.copybtn{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:11px 18px;margin:4px 6px 4px 0}
+.copybtn.go{background:var(--txt);border-color:var(--txt);color:var(--bg);font-weight:700}
+.copybtn .ic{position:relative;width:18px;height:18px;display:inline-block}
+.copybtn svg{position:absolute;inset:0;width:18px;height:18px;transition:opacity .25s ease,transform .35s var(--spring)}
+.copybtn .ok{opacity:0;transform:scale(.4)}
+.copybtn.done .cp{opacity:0;transform:scale(.4)}
+.copybtn.done .ok{opacity:1;transform:scale(1)}
+
+/* ---------- chips et choix : petit rebond au toucher ---------- */
+.chip,.opt{transition:background .2s ease,color .2s ease,border-color .2s ease}
+.pop12{animation:pop12 .35s var(--spring)}
+@keyframes pop12{0%{transform:scale(1)}40%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+/* ---------- glisser pour confirmer ---------- */
+.slide{position:relative;width:100%;max-width:340px;height:56px;border-radius:99px;background:var(--sunk);border:1px solid var(--line);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;margin:10px 0}
+.slide .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--acc);opacity:.85;transition:width .5s var(--spring)}
+.slide .thumb{position:absolute;left:4px;top:4px;width:46px;height:46px;border-radius:50%;background:var(--txt);color:var(--bg);display:grid;place-items:center;font-weight:700;cursor:grab;transition:transform .5s var(--spring);z-index:2}
+.slide .lbl{position:absolute;inset:0;display:grid;place-items:center;color:var(--mut);font-size:14px;padding-left:40px;pointer-events:none;z-index:1}
+.slide.drag .thumb,.slide.drag .fill{transition:none}
+.slide.ok .lbl{color:var(--on-acc);font-weight:700;padding-left:0}
+
+/* ---------- barre d'étapes ---------- */
+.steps{position:relative;display:flex;justify-content:space-between;width:100%;margin:12px 0 6px}
+.stline,.stfill{position:absolute;top:14px;left:16px;right:16px;height:4px;border-radius:2px}
+.stline{background:var(--raise)}
+.stfill{background:var(--acc);transform-origin:left center;transform:scaleX(var(--p,0));transition:transform .6s var(--spring)}
+.stn{position:relative;z-index:1;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);border:2px solid var(--line2);color:var(--mut);font-weight:700;font-size:14px;transition:background .3s ease,border-color .3s ease,color .3s ease}
+.stn.on{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
+.stn.popn{animation:popn .45s var(--spring)}
+@keyframes popn{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
+
+/* ---------- interrupteur à ressort ---------- */
+.tgl{position:relative;width:64px;height:36px;border-radius:99px;border:0;padding:0;background:var(--line);transition:background .4s ease;touch-action:manipulation;flex:none}
+.tgl i{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:var(--mut);transition:transform .4s var(--spring),background .4s ease}
+.tgl.on{background:var(--acc)}
+.tgl.on i{transform:translateX(28px);background:#fff}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:8px 0}
+
+/* ---------- message qui monte avec ressort (toast) ---------- */
+.tst{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translate(-50%,180%) scale(.9);opacity:0;z-index:50;display:flex;gap:14px;align-items:center;background:var(--raise);border:1px solid var(--line2);border-radius:99px;padding:10px 18px;white-space:nowrap;transition:transform .55s var(--toast),opacity .3s ease}
+.tst.show{transform:translate(-50%,0) scale(1);opacity:1}
+.tst button{background:none;border:0;color:var(--acc);font-weight:700;padding:0}
+
+/* ---------- l'éditeur se calme en avançant : début vivant, fin posée ---------- */
+.wrap[data-phase]{position:relative}
+.wrap[data-phase]>*{position:relative}
+.wrap[data-phase]::before{content:"";position:absolute;left:0;right:0;top:-70px;height:240px;background:radial-gradient(ellipse at 50% 0,var(--acc-20),transparent 70%);opacity:.9;pointer-events:none;transition:opacity .8s ease}
+.wrap[data-phase="mid"]::before{opacity:.5}
+.wrap[data-phase="end"]::before{opacity:.15}
+.wrap[data-phase="end"]{--spring:var(--glide)}
+.q{animation:rise .5s var(--glide) both}
+.q.still{animation:none}
+.wrap[data-phase="end"] .q{animation-duration:.25s}
+.wrap[data-phase="end"] .pop12,.wrap[data-phase="end"] .stn.popn{animation-duration:.2s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---------- accueil : pièces à liseré rouge qui flottent doucement ---------- */
+.coin{position:absolute;width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:34px;color:var(--txt);background:radial-gradient(circle at 35% 30%,var(--raise),var(--sunk) 72%);border:3px solid var(--acc);box-shadow:0 0 22px var(--acc-40),inset 0 0 16px var(--acc-20);font-style:normal;animation:coin 6s ease-in-out infinite;transform:rotate(var(--r))}
+.coin:nth-child(1){left:52px;top:0;--r:-14deg}
+.coin:nth-child(2){left:0;top:80px;--r:10deg;width:76px;height:76px;font-size:28px;animation-delay:-2s}
+.coin:nth-child(3){left:84px;top:132px;--r:-6deg;animation-delay:-4s}
+@keyframes coin{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-9px) rotate(calc(var(--r) + 5deg))}}
+
+/* ================= MODALE (confirmation Oui / Non) ================= */
+.modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(5,6,8,0);transition:background .25s ease}
+.modal.show{background:rgba(5,6,8,.72)}
+.mbox{width:100%;max-width:380px;max-height:86vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;transform:translateY(24px) scale(.92);opacity:0;transition:transform .45s var(--spring),opacity .2s ease}
+.modal.show .mbox{transform:none;opacity:1}
+.mbox h3{margin:0 0 6px;font-size:19px}
+.mbox .mq{margin:0 0 10px;color:var(--mut);font-size:15px}
+.mbox .mpre{max-height:200px;overflow:auto;margin:0 0 14px}
+.mbtns{display:flex;gap:10px}
+.mbtns .btn{flex:1;margin:0;padding:14px;font-size:16px}
+
+/* signal d'erreur sans rouge : tremblement (transform seulement) */
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.shake{animation:shake .35s ease}
+
+/* ---------- effort : le texte se replie / se déplie (hauteur animée, sans re-rendu) ---------- */
+.cl{display:grid;grid-template-rows:1fr;transition:grid-template-rows .5s var(--glide),opacity .4s ease}
+.cl>.cli{overflow:hidden;min-height:0}
+.wrap[data-effort="min"] .cl.h,.wrap[data-effort="min"] .cl.exs,.wrap[data-effort="min"] .cl.pv,.wrap[data-effort="min"] .cl.efx,
+.wrap[data-effort]:not([data-effort="max"]) .cl.tips{grid-template-rows:0fr;opacity:0;pointer-events:none}
+.wrap[data-effort="max"] .fold>.fb{grid-template-rows:1fr}
+.wrap[data-effort="max"] .fold .chev{transform:rotate(180deg)}
+.wrap[data-effort="mid"] .hl,.wrap[data-effort="min"] .hl{display:none}
+.wrap[data-effort="max"] .hs{display:none}
+/* bouton rotatif à 3 crans */
+.kn{display:flex;align-items:center;gap:10px}
+.knob{--d:44px;position:relative;width:var(--d);height:var(--d);border-radius:50%;border:2px solid var(--line2);background:radial-gradient(circle at 35% 30%,var(--raise),var(--sunk));padding:0;flex:none}
+.knob i{position:absolute;left:50%;top:calc(var(--d)*.12);width:3px;height:calc(var(--d)*.34);margin-left:-1.5px;border-radius:2px;background:var(--acc);transform-origin:50% calc(var(--d)*.38 - 2px);transform:rotate(var(--rot,0deg));transition:transform .5s var(--spring)}
+.kn.lg .knob{--d:68px}
+.kls{display:flex;gap:6px}
+.kls button{background:none;border:0;padding:4px 8px;border-radius:99px;color:var(--mut);font-size:13px;transition:color .3s ease,background .3s ease}
+.kls button.on{color:var(--on-acc);background:var(--acc);font-weight:700}
+.kn.sm .kls button:not(.on){display:none}
+.rule{position:relative;height:20px;margin-top:10px;background:repeating-linear-gradient(90deg,var(--mut) 0 1px,transparent 1px 6px);opacity:.9;-webkit-mask:linear-gradient(0deg,#000 40%,transparent 100%);mask:linear-gradient(0deg,#000 40%,transparent 100%)}
+.rule u{text-decoration:none;position:absolute;left:0;top:-4px;bottom:-2px;width:3px;border-radius:2px;background:var(--acc);transform:translateX(calc(var(--p,.5)*100cqw));transition:transform .5s var(--spring)}
+.rule{container-type:inline-size}
+/* tags : Entrée ajoute, la croix retire */
+.tgs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.tg{display:inline-flex;align-items:center;gap:4px;background:var(--acc-soft);border:1px solid var(--acc-line);border-radius:99px;padding:4px 6px 4px 12px;font-size:14px;animation:pop12 .35s var(--spring)}
+.tg.ro{padding:4px 12px;animation:none}
+.tg button{background:none;border:0;width:22px;height:22px;border-radius:50%;color:var(--acc);padding:0;line-height:1;font-size:16px}
+.tagrow{display:flex;gap:8px;margin-bottom:10px}
+.tagrow .in{flex:1;margin:0}
+.tagrow button{width:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:20px}
+/* panneau du bas à bord ondulé */
+.sheet{position:relative;margin:14px -16px 0;animation:sheetUp .7s var(--spring) both}
+.sheet .wave{display:block;width:100%;height:22px;color:var(--sheet)}
+.sheet .sb{position:relative;padding:4px 16px 18px;background:linear-gradient(180deg,var(--sheet),var(--card) 75%)}
+.sheet .grab{position:absolute;left:50%;top:-8px;width:44px;height:18px;margin-left:-22px;background:none;border:0;padding:0}
+.sheet .grab::after{content:"";position:absolute;left:4px;right:4px;top:7px;height:4px;border-radius:2px;background:rgba(255,255,255,.4)}
+.sheet.col .cl.rws{grid-template-rows:0fr;opacity:0}
+@keyframes sheetUp{from{transform:translateY(36%);opacity:0}to{transform:none;opacity:1}}
+.rw{display:flex;align-items:center;gap:12px;padding:9px 0}
+.ri{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.12);font-weight:800}
+.rt{flex:1;min-width:0}.rt small{display:block;color:var(--mut)}
+.rt div{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14px}
+.rb{flex:none;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:var(--txt);font-size:16px}
+:root[data-theme="light"] .ri,:root[data-theme="light"] .rb{background:rgba(0,0,0,.07)}
+:root[data-theme="light"] .sheet .grab::after{background:rgba(0,0,0,.25)}

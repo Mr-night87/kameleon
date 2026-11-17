@@ -1,0 +1,329 @@
+{
+  "id": "chain-of-thought",
+  "label": "Chaîne de pensée",
+  "shortName": "CoT",
+  "fullName": "Chain of Thought",
+  "shortDescription": "Raisonner étape par étape. Décomposer avant de conclure.",
+  "description": "La chaîne de pensée (CoT) structure le prompt en une série de questions et de réponses qui guident l'IA à travers un raisonnement logique. L'IA est forcée de décomposer le problème, d'expliciter ses étapes, puis de conclure. C'est une technique particulièrement efficace : elle structure la pensée de l'IA, clarifie les attentes, oriente vers des solutions précises et bien argumentées. Elle est indispensable pour les calculs, la logique, le diagnostic et les décisions.",
+  "category": "raisonnement",
+  "difficulty": 2,
+  "estimatedTime": "1 à 2 minutes (ajout de déclencheurs)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Calcul (maths, finances, statistiques)",
+    "Logique et déduction",
+    "Diagnostic (trouver la cause d'un problème)",
+    "Décision (choisir entre plusieurs options)",
+    "Planification (construire un plan en étapes)",
+    "Analyse de code (trouver un bug)",
+    "Explication pédagogique (décomposer un concept)",
+    "Résolution d'un problème complexe"
+  ],
+  "whenNotToUse": [
+    "Question factuelle simple (→ zero-shot suffit)",
+    "Traduction (pas de raisonnement à décomposer)",
+    "Définition directe (pas besoin d'étapes)",
+    "Génération créative libre (la CoT bride l'imagination)",
+    "Quand tu veux une réponse courte et directe"
+  ],
+  "source": [
+    "SRC-1"
+  ],
+  "methodsCitation": "Keyrus : « Une technique particulièrement efficace est celle de la chain-of-thought (CoT) ou chaîne de pensée, où le prompt est structuré en une série de questions et de réponses, guidant ainsi l'IA à travers un processus de raisonnement logique. »",
+  "principle": "Décomposer le problème en sous-problèmes, faire expliciter les étapes, puis conclure. L'IA pense à voix haute avant de répondre.",
+  "triggerPhrases": [
+    "Raisonne étape par étape.",
+    "Décompose le problème en sous-problèmes avant de répondre.",
+    "Explique chaque étape de ton raisonnement.",
+    "Commence par lister les hypothèses, puis conclus.",
+    "Avant de donner ta réponse finale, montre ton raisonnement.",
+    "Détaille ta démarche, puis donne la conclusion.",
+    "Procède par étapes numérotées."
+  ],
+  "triggerPhraseNote": "La phrase la plus efficace est « Raisonne étape par étape » (en anglais : « Let's think step by step »). Elle force l'IA à décomposer, ce qui réduit les erreurs de raisonnement.",
+  "examplePrompts": [
+    {
+      "id": "cot-1",
+      "title": "Calcul avec réductions successives",
+      "prompt": "Un article coûte 40 $. Il est soldé de 25 %, puis une seconde remise de 10 % s'applique au prix soldé. Calcule étape par étape le prix final.",
+      "source": "AJOUT",
+      "note": "Sans CoT, l'IA pourrait additionner les réductions (35 % au lieu de 32,5 %). Avec CoT, elle calcule le prix après la première réduction, puis après la seconde."
+    },
+    {
+      "id": "cot-2",
+      "title": "Diagnostic de code (Keyrus / contexte jeu)",
+      "prompt": "Mon jeu ne retire pas de PV quand le joueur touche un ennemi. Analyse étape par étape : (1) où la collision est détectée, (2) où les PV sont modifiés, (3) où l'affichage est mis à jour. Puis indique la ligne la plus probable en cause.",
+      "source": "AJOUT",
+      "note": "La CoT force l'IA à investiguer méthodiquement au lieu de deviner."
+    },
+    {
+      "id": "cot-3",
+      "title": "Décision entre deux options (Keyrus / choix de stack)",
+      "prompt": "Je dois choisir entre Firebase et un serveur Python pour mon projet. Raisonne étape par étape avec : coût, difficulté, évolutivité. Conclus par une recommandation.",
+      "source": "AJOUT",
+      "note": "La CoT force l'IA à comparer critère par critère, puis à conclure, au lieu de donner un avis vague."
+    },
+    {
+      "id": "cot-4",
+      "title": "Question de référence Keyrus (relocalisation)",
+      "prompt": "Pour optimiser la préparation d'une relocalisation d'une activité en France, quels sont les aspects les plus importants à considérer ? Par exemple, pensons à la logistique, aux ressources humaines, et aux aspects réglementaires. Peux-tu décomposer ces catégories et suggérer des actions spécifiques pour chacune ?",
+      "source": "SRC-1",
+      "note": "C'est LA question que Keyrus utilise pour illustrer la CoT. Structure : question générale → catégories proposées → décomposition demandée → actions spécifiques."
+    },
+    {
+      "id": "cot-5",
+      "title": "Explication pédagogique",
+      "prompt": "Explique étape par étape comment une requête HTTP aboutit à l'affichage d'une page web. Décompose en : (1) la requête, (2) le serveur, (3) le rendu navigateur.",
+      "source": "AJOUT",
+      "note": "La CoT est aussi utile pour les explications : elle force l'IA à structurer son propos en étapes claires."
+    },
+    {
+      "id": "cot-6",
+      "title": "Résolution d'un problème mathématique",
+      "prompt": "Un train part de Paris à 9h00 à 120 km/h. Un autre part de Lyon à 10h00 à 100 km/h. Paris-Lyon = 465 km. À quelle heure les trains se croisent-ils ? Raisonne étape par étape.",
+      "source": "AJOUT",
+      "note": "Sans CoT, l'IA peut se tromper en oubliant de décaler l'heure de départ du second train. Avec CoT, elle pose les équations."
+    },
+    {
+      "id": "cot-7",
+      "title": "Formule Excel expliquée (Canton de Berne)",
+      "prompt": "Crée une formule Excel qui calcule la moyenne des chiffres de la colonne B, mais ne prend en compte que les valeurs supérieures à 1000. Explique chaque étape de façon détaillée.",
+      "source": "SRC-BERNE",
+      "note": "Demander d'expliquer chaque étape force l'IA à montrer son raisonnement : plus fiable pour la logique, le calcul et les tâches en plusieurs étapes."
+    }
+  ],
+  "keyrusExampleAnalysis": {
+    "originalPrompt": "Pour optimiser la préparation d'une relocalisation d'une activité en France, quels sont les aspects les plus importants à considérer ? Par exemple, pensons à la logistique, aux ressources humaines, et aux aspects réglementaires. Peux-tu décomposer ces catégories et suggérer des actions spécifiques pour chacune ?",
+    "structure": [
+      {
+        "step": 1,
+        "action": "Poser une question générale",
+        "extrait": "quels sont les aspects les plus importants à considérer ?"
+      },
+      {
+        "step": 2,
+        "action": "Proposer des catégories",
+        "extrait": "Par exemple, pensons à la logistique, aux ressources humaines, et aux aspects réglementaires."
+      },
+      {
+        "step": 3,
+        "action": "Demander une décomposition",
+        "extrait": "Peux-tu décomposer ces catégories"
+      },
+      {
+        "step": 4,
+        "action": "Demander des actions concrètes",
+        "extrait": "et suggérer des actions spécifiques pour chacune ?"
+      }
+    ],
+    "insight": "La CoT n'est pas juste « ajouter Raisonne étape par étape ». C'est structurer le prompt en 4 temps : (1) question générale, (2) catégories ou hypothèses, (3) décomposition, (4) conclusion ou actions."
+  },
+  "variants": [
+    {
+      "id": "basic",
+      "label": "CoT basique",
+      "description": "Ajouter simplement « Raisonne étape par étape ».",
+      "when": "Question simple, IA fiable sur le domaine",
+      "example": "Un article coûte 40 $. Il est soldé de 25 %, puis une seconde remise de 10 % s'applique au prix soldé. Calcule étape par étape le prix final."
+    },
+    {
+      "id": "structured",
+      "label": "CoT structurée",
+      "description": "Imposer explicitement les étapes numérotées.",
+      "when": "Problème complexe, plusieurs sous-parties",
+      "example": "Calcule le prix final de cet article (40 $, soldé 25 % puis 10 %) en suivant ces étapes : (1) prix après la première réduction, (2) prix après la seconde, (3) prix final. Vérifie chaque calcul."
+    },
+    {
+      "id": "guided",
+      "label": "CoT guidée",
+      "description": "Imposer les catégories à explorer (comme l'exemple Keyrus).",
+      "when": "Problème multidimensionnel, besoin de ne rien oublier",
+      "example": "Analyse cette décision (choisir entre Firebase et Python) selon trois critères : coût, difficulté, évolutivité. Pour chaque critère, détaille ton raisonnement. Puis conclus."
+    },
+    {
+      "id": "with-verification",
+      "label": "CoT avec vérification",
+      "description": "Ajouter une demande de vérification finale.",
+      "when": "Calcul critique, décision importante",
+      "example": "Raisonne étape par étape. À la fin, vérifie chaque étape en la relisant. Si tu trouves une erreur, corrige-la et indique où elle était."
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison zero-shot vs CoT pour un calcul.",
+    "zeroShot": "Un article coûte 40 $. Il est soldé de 25 %, puis une seconde remise de 10 % s'applique au prix soldé. Quel est le prix final ?",
+    "zeroShotRisk": "L'IA peut additionner les réductions (25 % + 10 % = 35 %), ce qui donne 26 $ au lieu du bon résultat (27 $).",
+    "withCoT": "Un article coûte 40 $. Il est soldé de 25 %, puis une seconde remise de 10 % s'applique au prix soldé. Calcule étape par étape le prix final.",
+    "cotResult": "Étape 1 : 40 × (1 - 0,25) = 30 $. Étape 2 : 30 × (1 - 0,10) = 27 $. Prix final : 27 $.",
+    "improvement": "La CoT force l'IA à calculer séquentiellement, ce qui évite l'erreur classique de l'addition des pourcentages."
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-basic-trigger",
+      "description": "Ajouter « Raisonne étape par étape » à la fin du prompt.",
+      "when": "Question de calcul ou de logique",
+      "result": "L'IA décompose"
+    },
+    {
+      "id": "add-structure",
+      "description": "Imposer les étapes numérotées (1, 2, 3…).",
+      "when": "Problème complexe",
+      "result": "L'IA suit un ordre précis"
+    },
+    {
+      "id": "add-categories",
+      "description": "Imposer les catégories à explorer (comme Keyrus).",
+      "when": "Problème multidimensionnel",
+      "result": "L'IA ne saute aucun aspect"
+    },
+    {
+      "id": "add-verification",
+      "description": "Ajouter une relecture finale.",
+      "when": "Calcul critique",
+      "result": "L'IA corrige ses erreurs"
+    },
+    {
+      "id": "remove-cot",
+      "description": "Retirer la CoT si la réponse est trop longue ou trop détaillée.",
+      "when": "Question simple qui n'a pas besoin d'étapes",
+      "result": "Retour à une réponse directe"
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "techniques": [
+      "few-shot",
+      "self-consistency",
+      "generate-knowledge",
+      "react",
+      "tree-of-thoughts",
+      "rag"
+    ],
+    "note": "La CoT se combine avec TOUTES les méthodes et presque toutes les techniques. C'est un modificateur universel de raisonnement."
+  },
+  "combinationExamples": [
+    {
+      "id": "cot-rtf",
+      "label": "CoT + RTF",
+      "description": "Ajouter un rôle et un format en plus de la CoT.",
+      "before": "Tu es un développeur JavaScript senior.\nTu dois expliquer la différence entre let et const.\nTa réponse devra contenir 3 exemples.",
+      "after": "Tu es un développeur JavaScript senior.\nTu dois expliquer la différence entre let et const en raisonnant étape par étape : (1) la portée, (2) la réassignation, (3) les bonnes pratiques.\nTa réponse devra contenir 3 exemples, un par étape."
+    },
+    {
+      "id": "cot-craft",
+      "label": "CoT + CRAFT",
+      "description": "Ajouter un contexte et une CoT structurée.",
+      "before": "Contexte : Je dois choisir entre Firebase et un serveur Python.\nRôle : Agis en tant qu'architecte logiciel.\nAction : Compare les deux options.\nFormat : Tableau 3 colonnes.\nTonalité : Neutre, factuel.",
+      "after": "Contexte : Je dois choisir entre Firebase et un serveur Python.\nRôle : Agis en tant qu'architecte logiciel.\nAction : Compare les deux options en raisonnant étape par étape : (1) coût, (2) difficulté, (3) évolutivité, (4) recommandation finale.\nFormat : Pour chaque étape, un paragraphe court. Puis un tableau récapitulatif 3 colonnes.\nTonalité : Neutre, factuel."
+    },
+    {
+      "id": "cot-contexte-v",
+      "label": "CoT + CONTEXTE-V",
+      "description": "La version complète : 9 blocs + CoT.",
+      "before": "Contexte : Je prépare une relocalisation d'activité en France.\nObjectif : Obtenir un plan d'action.\nNiveau : Expert en relocalisation.\nTâche : Propose un plan en 3 phases.\nExemples : —\nX-contraintes : 15 actions max, sans jargon.\nTonalité : Clair, informatif.\nEncodage : Tableau phase/action/durée.\nVérification : Vérifie que chaque action est concrète.",
+      "after": "Contexte : Je prépare une relocalisation d'activité en France.\nObjectif : Obtenir un plan d'action structuré.\nNiveau : Expert en relocalisation.\nTâche : Raisonne étape par étape : (1) logistique, (2) ressources humaines, (3) réglementations. Pour chaque catégorie, décompose en actions concrètes. Puis propose un plan en 3 phases.\nExemples : —\nX-contraintes : 15 actions max, sans jargon.\nTonalité : Clair, informatif.\nEncodage : Tableau phase/action/durée.\nVérification : Vérifie que chaque action est concrète et rattachée à une catégorie."
+    },
+    {
+      "id": "cot-few-shot",
+      "label": "CoT + Few-shot",
+      "description": "Exemples + CoT : style imposé ET raisonnement.",
+      "before": "Résous ce problème de maths en étape par étape : [problème].",
+      "after": "Résous ce problème de maths en étape par étape : [problème].\n\nVoici un exemple de raisonnement attendu :\nProblème : Un article coûte 40 $, soldé 25 % puis 10 %.\nÉtape 1 : 40 × (1 - 0,25) = 30 $.\nÉtape 2 : 30 × (1 - 0,10) = 27 $.\nRéponse : 27 $.\n\nInspire-toi de ce format, ne recopie pas le contenu."
+    }
+  ],
+  "technicalNote": "La CoT a été popularisée par la recherche en IA (Google, 2022) sous le nom « Chain of Thought prompting ». La phrase « Let's think step by step » (Raisonne étape par étape) est un déclencheur empiriquement efficace. Keyrus l'a reprise dans son guide. Attention : la CoT ne garantit pas l'exactitude, elle réduit seulement les erreurs de raisonnement.",
+  "scientificContext": {
+    "origin": "Article de recherche Google (Wei et al., 2022) : « Chain-of-Thought Prompting Elicits Reasoning in Large Language Models ».",
+    "finding": "Les LLMs produisent de meilleurs résultats sur les tâches de raisonnement quand on leur demande d'expliciter leur raisonnement.",
+    "caveat": "La CoT peut produire des raisonnements faux mais convaincants. L'IA peut inventer une étape plausible. Toujours vérifier."
+  },
+  "limitations": [
+    "Réponses plus longues (parfois trop)",
+    "Inutile pour une question factuelle simple",
+    "Peut produire des raisonnements faux mais convaincants (hallucination étape par étape)",
+    "Ralentit la réponse (plus de tokens générés)",
+    "Bride la créativité sur les tâches purement créatives",
+    "Peut devenir redondante si la question est déjà claire"
+  ],
+  "nextStepIfFail": {
+    "technique": "self-consistency",
+    "reason": "Si le raisonnement est plausible mais que tu doutes du résultat, ajoute l'auto-cohérence : demande plusieurs raisonnements différents, puis compare. Si le raisonnement est correct mais mal structuré, ajoute few-shot pour imposer le format."
+  },
+  "tips": [
+    "« Raisonne étape par étape » est la phrase la plus puissante du prompt engineering. Elle coûte 5 mots et change tout.",
+    "La CoT ne garantit pas l'exactitude : elle réduit les erreurs, elle ne les élimine pas.",
+    "Pour les calculs critiques, ajoute une vérification finale (« relis chaque étape »).",
+    "La CoT guidée (avec catégories imposées) est plus fiable que la CoT libre pour les problèmes multidimensionnels.",
+    "Sur les tâches créatives, la CoT bride l'imagination. Utilise-la seulement quand le raisonnement compte.",
+    "Si la réponse est trop longue, tu peux demander de « condenser le raisonnement en 3 étapes clés »."
+  ],
+  "commonErrorsOverall": [
+    "Attendre une réponse courte avec une CoT (elle sera longue)",
+    "Utiliser la CoT pour une question factuelle simple (perte de temps)",
+    "Faire confiance aveuglément au raisonnement (l'IA peut inventer une étape)",
+    "Oublier de demander une conclusion claire après le raisonnement",
+    "Utiliser la CoT sur une tâche créative (poème, histoire) : le résultat perd en naturel",
+    "Ne pas relire le raisonnement (l'IA peut se tromper en toute bonne foi)"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Calcul de marge, de TVA, de pourcentage",
+      "example": "Calcule étape par étape la marge nette de ce produit.",
+      "why": "La CoT évite les erreurs d'addition de pourcentages."
+    },
+    {
+      "useCase": "Diagnostic de bug",
+      "example": "Analyse étape par étape pourquoi mon code ne fonctionne pas.",
+      "why": "La CoT force l'IA à investiguer au lieu de deviner."
+    },
+    {
+      "useCase": "Décision entre plusieurs options",
+      "example": "Compare étape par étape Firebase et Supabase.",
+      "why": "La CoT force une comparaison critère par critère."
+    },
+    {
+      "useCase": "Planification de projet",
+      "example": "Construis étape par étape un plan de lancement en 3 semaines.",
+      "why": "La CoT garantit que rien n'est oublié."
+    },
+    {
+      "useCase": "Explication pédagogique",
+      "example": "Explique étape par étape comment fonctionne un moteur de recherche.",
+      "why": "La CoT structure l'explication en étapes logiques."
+    },
+    {
+      "useCase": "Analyse de texte argumentatif",
+      "example": "Analyse étape par étape la structure argumentative de ce discours.",
+      "why": "La CoT force une lecture méthodique."
+    }
+  ],
+  "keyrusReference": {
+    "originalQuestion": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+    "cotReformulation": "Pour optimiser la préparation d'une relocalisation d'une activité en France, quels sont les aspects les plus importants à considérer ? Par exemple, pensons à la logistique, aux ressources humaines, et aux aspects réglementaires. Peux-tu décomposer ces catégories et suggérer des actions spécifiques pour chacune ?",
+    "transformationObserved": "Passage d'une question large (zero-shot) à une question structurée en 4 temps : question générale, catégories, décomposition, actions.",
+    "note": "C'est LA démonstration que Keyrus fait pour illustrer la CoT. La transformation est visible : la question de départ est enrichie d'une structure de raisonnement."
+  },
+  "metrics": {
+    "tokenOverhead": "moyen (+ 20 à 50 % de tokens en sortie)",
+    "accuracyGain": "significatif sur les tâches de raisonnement",
+    "bestFor": "calculs, logique, diagnostic, décision",
+    "worstFor": "créativité, questions factuelles, réponses ultra-courtes"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-1",
+      "AJOUT (variantes, exemples)",
+      "SRC-BERNE"
+    ],
+    "validated": true
+  }
+}

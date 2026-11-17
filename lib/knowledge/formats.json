@@ -1,0 +1,159 @@
+{
+  "version": "1.0.0",
+  "description": "Catalogue des formats de sortie pour les prompts.",
+  "rule": "Toujours préciser le format ET la longueur.",
+  "formats": [
+    {
+      "id": "paragraph",
+      "label": "Paragraphe",
+      "description": "Un ou plusieurs paragraphes de texte continu.",
+      "bestFor": ["explication", "rédaction", "analyse"],
+      "example": "Rédige un paragraphe de 6 lignes maximum."
+    },
+    {
+      "id": "numbered-list",
+      "label": "Liste numérotée",
+      "description": "Points numérotés, un par ligne.",
+      "bestFor": ["étapes", "classement", "instructions"],
+      "example": "Liste numérotée de 5 points, une ligne chacun."
+    },
+    {
+      "id": "bullet-list",
+      "label": "Liste à puces",
+      "description": "Points non numérotés, un par ligne.",
+      "bestFor": ["énumération", "avantages", "caractéristiques"],
+      "example": "Liste à puces de 5 éléments."
+    },
+    {
+      "id": "table",
+      "label": "Tableau",
+      "description": "Tableau à N colonnes et M lignes.",
+      "bestFor": ["comparaison", "récapitulatif", "données structurées"],
+      "example": "Tableau à 3 colonnes : nom, rôle, exemple."
+    },
+    {
+      "id": "json",
+      "label": "JSON",
+      "description": "Objet JSON valide, avec des clés précises.",
+      "bestFor": ["API", "données structurées", "extraction"],
+      "example": "Réponds uniquement en JSON avec les clés : titre, résumé, tags."
+    },
+    {
+      "id": "csv",
+      "label": "CSV",
+      "description": "Valeurs séparées par des virgules.",
+      "bestFor": ["export tableur", "données"],
+      "example": "Réponds en CSV avec les colonnes : nom, prix, stock."
+    },
+    {
+      "id": "markdown",
+      "label": "Markdown",
+      "description": "Texte formaté avec titres, listes, gras.",
+      "bestFor": ["documentation", "articles", "notes"],
+      "example": "Rédige en Markdown avec des titres H2 et des listes à puces."
+    },
+    {
+      "id": "plan",
+      "label": "Plan avec titres",
+      "description": "Structure hiérarchique avec titres et sous-titres.",
+      "bestFor": ["présentation", "article", "projet"],
+      "example": "Plan en 3 parties, chacune avec 2 sous-parties."
+    },
+    {
+      "id": "checklist",
+      "label": "Checklist",
+      "description": "Liste d'items à cocher.",
+      "bestFor": ["vérification", "processus", "préparation"],
+      "example": "Checklist de 8 points à vérifier avant publication."
+    },
+    {
+      "id": "faq",
+      "label": "FAQ",
+      "description": "Questions-réponses.",
+      "bestFor": ["documentation", "support", "pédagogie"],
+      "example": "FAQ avec 5 questions et leurs réponses."
+    },
+    {
+      "id": "script",
+      "label": "Script de dialogue",
+      "description": "Dialogue entre personnages, avec didascalies.",
+      "bestFor": ["scénario", "théâtre", "vidéo"],
+      "example": "Script de 2 minutes avec 2 personnages."
+    },
+    {
+      "id": "code",
+      "label": "Code commenté",
+      "description": "Bloc de code avec commentaires.",
+      "bestFor": ["programmation", "tutoriel", "exemple"],
+      "example": "Code JavaScript commenté en français, dans un seul bloc."
+    },
+    {
+      "id": "email",
+      "label": "Email",
+      "description": "Message avec objet, corps, signature.",
+      "bestFor": ["communication", "relance", "excuse"],
+      "example": "Email de 6 lignes maximum : objet, corps, formule de politesse."
+    },
+    {
+      "id": "short-message",
+      "label": "Message court",
+      "description": "Message très court (SMS, chat, réseaux).",
+      "bestFor": ["notification", "réseaux sociaux", "chat"],
+      "example": "Message de 2 lignes maximum."
+    },
+    {
+      "id": "schema-text",
+      "label": "Schéma en texte",
+      "description": "Représentation visuelle en texte (ASCII art, indentation).",
+      "bestFor": ["architecture", "processus", "arborescence"],
+      "example": "Schéma en texte avec des flèches pour représenter les dépendances."
+    },
+    {
+      "id": "calendar",
+      "label": "Calendrier",
+      "description": "Planning sur des jours/semaines/mois.",
+      "bestFor": ["planification", "révisions", "projet"],
+      "example": "Calendrier sur 4 semaines, avec 2 tâches par semaine."
+    },
+    {
+      "id": "q-and-a",
+      "label": "Questions-réponses",
+      "description": "Liste de questions avec réponses.",
+      "bestFor": ["quiz", "test", "préparation"],
+      "example": "10 questions-réponses sur le sujet."
+    },
+    {
+      "id": "glossary",
+      "label": "Glossaire",
+      "description": "Liste de termes avec définitions.",
+      "bestFor": ["documentation", "pédagogie", "référence"],
+      "example": "Glossaire de 8 termes avec définition courte."
+    },
+    {
+      "id": "steps-with-duration",
+      "label": "Étapes avec durée",
+      "description": "Étapes numérotées, avec une durée estimée.",
+      "bestFor": ["planification", "tutoriel", "projet"],
+      "example": "5 étapes, avec durée estimée pour chacune."
+    },
+    {
+      "id": "narrative",
+      "label": "Récit",
+      "description": "Texte narratif continu (histoire, conte).",
+      "bestFor": ["histoire", "conte", "introduction"],
+      "example": "Récit de 10 lignes avec un début, un milieu et une fin."
+    }
+  ],
+  "lengthRules": {
+    "short": "2 à 5 lignes",
+    "medium": "6 à 15 lignes",
+    "long": "16 à 30 lignes",
+    "very-long": "30+ lignes"
+  },
+  "quickFormats": [
+    { "id": "quick", "formats": ["short-message", "bullet-list"], "useFor": "réponse rapide" },
+    { "id": "structured", "formats": ["table", "numbered-list", "checklist"], "useFor": "réponse structurée" },
+    { "id": "technical", "formats": ["json", "csv", "code"], "useFor": "réponse technique" },
+    { "id": "editorial", "formats": ["paragraph", "markdown", "narrative"], "useFor": "réponse éditoriale" }
+  ]
+}

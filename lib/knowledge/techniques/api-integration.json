@@ -1,0 +1,386 @@
+{
+  "id": "api-integration",
+  "label": "Intégration API",
+  "fullName": "API Integration",
+  "shortDescription": "Connecter l'IA à des données réelles (météo, prix, stock, calendrier).",
+  "description": "L'intégration API consiste à connecter l'IA à des programmes externes pour qu'elle accède à des données réelles et à jour. Une API est une porte qui permet à un programme de parler à un autre. Avec une API, l'IA peut obtenir la météo, un prix, un stock, une liste d'élèves, un calendrier, puis répondre avec des données réelles. C'est la technique de la vérité terrain : elle élimine les hallucinations sur les données factuelles. Attention : dans un chatbot standard, l'IA ne fait pas l'appel elle-même. C'est le programme qui appelle l'API, puis passe les données à l'IA. La technique nécessite donc une infrastructure logicielle.",
+  "category": "avancée",
+  "difficulty": 4,
+  "estimatedTime": "variable (dépend de l'API et de l'infrastructure)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Besoin de données à jour (météo, prix, stock, calendrier)",
+    "Besoin de données internes d'entreprise (base de données, CRM, ERP)",
+    "Besoin de données calculées ou agrégées (statistiques, moyennes)",
+    "Besoin d'actions réelles (envoyer un mail, créer un événement, passer une commande)",
+    "Quand RAG ne suffit pas (documents figés, besoin de temps réel)",
+    "Quand l'utilisateur veut un assistant qui agit, pas juste qui parle",
+    "Applications métier (support client, gestion de stock, réservation)"
+  ],
+  "whenNotToUse": [
+    "Question factuelle générale (→ zero-shot)",
+    "Calcul simple (→ CoT)",
+    "Document statique à analyser (→ RAG)",
+    "Brainstorming créatif (→ generate-knowledge)",
+    "Quand tu n'as pas d'API disponible",
+    "Quand tu ne peux pas sécuriser les clés API (voir securityWarning)",
+    "Quand tu ne veux pas coder d'infrastructure"
+  ],
+  "source": [
+    "SRC-1",
+    "AJOUT (explication, exemples, mise en garde)"
+  ],
+  "methodsCitation": "Keyrus : « l'intégration d'API et d'autres ressources complémentaires peut améliorer la précision des réponses et la capacité de l'IA à traiter des données spécifiques, enrichissant ainsi les interactions et augmentant la valeur des réponses générées. »",
+  "principle": "Le programme appelle une API (météo, stock, base de données), récupère les données réelles, puis les injecte dans le prompt de l'IA. L'IA répond avec des données à jour au lieu d'inventer.",
+  "triggerPhrases": [
+    "Voici les données récupérées via l'API [nom] : [données]. En te basant sur ces données, réponds à : [question].",
+    "L'API a renvoyé ce résultat : [résultat]. Utilise-le pour répondre. N'invente aucune donnée.",
+    "Voici les données à jour (météo, prix, stock) : [données]. Réponds uniquement à partir de ces données.",
+    "Appelle d'abord l'API [nom] pour obtenir [donnée], puis réponds à : [question].",
+    "Voici les données de la base : [données]. Analyse-les et réponds. Si une donnée manque, dis-le.",
+    "Utilise ces données réelles pour répondre. Distingue ce qui vient des données de ce que tu déduis."
+  ],
+  "triggerPhraseNote": "La phrase la plus puissante est « Voici les données récupérées via l'API : [données] ». Elle indique à l'IA que les données sont réelles et fiables. Sans cette phrase, l'IA peut compléter avec ses connaissances générales et halluciner.",
+  "examplePrompts": [
+    {
+      "id": "api-1",
+      "title": "Météo (API publique)",
+      "prompt": "Voici les données météo récupérées via l'API OpenWeatherMap pour Kinshasa : température 28°C, humidité 75 %, pluie prévue à 15h. En te basant sur ces données, rédige un conseil vestimentaire pour la journée. N'invente aucune donnée météo.",
+      "source": "AJOUT",
+      "note": "L'API météo fournit les données réelles. L'IA les utilise pour rédiger un conseil. Si l'utilisateur avait demandé « quel temps fait-il à Kinshasa ? » sans API, l'IA aurait inventé."
+    },
+    {
+      "id": "api-2",
+      "title": "Stock boutique (API interne)",
+      "prompt": "Voici les données de stock récupérées via l'API de la boutique :\n- Article A : 3 unités\n- Article B : 0 unité\n- Article C : 12 unités\n\nQuels articles sont en rupture ou proches de la rupture ? Propose un ordre de réapprovisionnement. N'invente aucun chiffre.",
+      "source": "AJOUT",
+      "note": "L'API interne fournit les stocks réels. L'IA analyse et propose. Elle ne peut pas inventer des chiffres."
+    },
+    {
+      "id": "api-3",
+      "title": "Calendrier (Google Calendar)",
+      "prompt": "Voici les événements récupérés via l'API Google Calendar pour demain :\n- 9h00 : Réunion équipe (1h)\n- 11h00 : Appel client (30 min)\n- 14h00 : Point projet (2h)\n\nPropose un planning réaliste pour la journée en ajoutant 2h de travail concentré. N'invente aucun événement.",
+      "source": "AJOUT",
+      "note": "L'API calendrier fournit les événements réels. L'IA propose un planning sans inventer de rendez-vous."
+    },
+    {
+      "id": "api-4",
+      "title": "Prix produits (API e-commerce)",
+      "prompt": "Voici les prix récupérés via l'API de 3 fournisseurs pour le même produit :\n- Fournisseur A : 12,50 €\n- Fournisseur B : 11,80 €\n- Fournisseur C : 13,20 €\n\nQuel fournisseur est le moins cher ? Calcule l'écart de prix avec le plus cher. N'invente aucun prix.",
+      "source": "AJOUT",
+      "note": "L'API fournit les prix réels. L'IA calcule et compare. Elle ne peut pas inventer de prix."
+    },
+    {
+      "id": "api-5",
+      "title": "Base de données interne (CRM)",
+      "prompt": "Voici les données du CRM récupérées via l'API :\n- Client A : 5 commandes, CA 1200 €\n- Client B : 12 commandes, CA 3500 €\n- Client C : 1 commande, CA 200 €\n\nQuels clients sont les plus fidèles ? Propose une action commerciale pour chacun. Base-toi uniquement sur les données fournies.",
+      "source": "AJOUT",
+      "note": "L'API CRM fournit les données réelles. L'IA analyse la fidélité et propose des actions."
+    },
+    {
+      "id": "api-6",
+      "title": "Action réelle (envoi de mail)",
+      "prompt": "Voici les données récupérées via l'API :\n- Destinataire : client@example.com\n- Objet : Relance facture n°1234\n- Montant : 450 €\n- Échéance dépassée : 5 jours\n\nRédige un mail de relance poli mais ferme. Le mail sera ensuite envoyé via l'API d'envoi. N'invente aucun montant.",
+      "source": "AJOUT",
+      "note": "L'API fournit les données. L'IA rédige le mail. Le programme l'envoie ensuite via une autre API. C'est un assistant qui agit."
+    }
+  ],
+  "keyrusExampleAnalysis": {
+    "originalText": "l'intégration d'API et d'autres ressources complémentaires peut améliorer la précision des réponses et la capacité de l'IA à traiter des données spécifiques, enrichissant ainsi les interactions et augmentant la valeur des réponses générées.",
+    "structure": [
+      {
+        "step": 1,
+        "action": "Intégration d'API",
+        "extrait": "l'intégration d'API et d'autres ressources complémentaires"
+      },
+      {
+        "step": 2,
+        "action": "Précision",
+        "extrait": "peut améliorer la précision des réponses"
+      },
+      {
+        "step": 3,
+        "action": "Traitement de données spécifiques",
+        "extrait": "la capacité de l'IA à traiter des données spécifiques"
+      },
+      {
+        "step": 4,
+        "action": "Enrichissement",
+        "extrait": "enrichissant ainsi les interactions"
+      },
+      {
+        "step": 5,
+        "action": "Valeur",
+        "extrait": "augmentant la valeur des réponses générées"
+      }
+    ],
+    "insight": "Keyrus ne détaille pas l'implémentation. Il mentionne 3 bénéfices : (1) précision, (2) traitement de données spécifiques, (3) valeur. Le mot clé est « données spécifiques » : l'API donne accès à des données que l'IA ne connaît pas (stock, prix, calendrier).",
+    "keyrusLimitation": "Keyrus reste très général. Kameleon Prompter doit expliquer concrètement ce qu'est une API, comment elle s'utilise, et pourquoi elle est différente de RAG."
+  },
+  "variants": [
+    {
+      "id": "read-only",
+      "label": "Lecture seule (GET)",
+      "description": "L'API renvoie des données, l'IA les utilise. Pas d'action.",
+      "when": "Météo, stock, prix, calendrier",
+      "example": "Voici les données récupérées via l'API : [données]. Réponds à : [question]."
+    },
+    {
+      "id": "write-action",
+      "label": "Action réelle (POST)",
+      "description": "L'IA rédige une action, le programme l'exécute (envoi de mail, création d'événement).",
+      "when": "Assistant qui agit",
+      "example": "Rédige un mail de relance. Le programme l'enverra via l'API."
+    },
+    {
+      "id": "chained",
+      "label": "API en chaîne",
+      "description": "Appeler une API, utiliser le résultat pour en appeler une autre.",
+      "when": "Processus complexe (ex : récupérer un prix, puis envoyer une alerte)",
+      "example": "Appelle l'API prix. Si le prix dépasse X, appelle l'API mail pour alerter."
+    },
+    {
+      "id": "with-rag",
+      "label": "API + RAG",
+      "description": "Combiner données réelles (API) et documents statiques (RAG).",
+      "when": "Données à jour + documents",
+      "example": "Voici les données de stock (API) et le contrat fournisseur (RAG). Analyse la situation."
+    },
+    {
+      "id": "with-verification",
+      "label": "API avec vérification",
+      "description": "Vérifier que les données API correspondent à ce que l'IA utilise.",
+      "when": "Sujet critique",
+      "example": "Après ta réponse, liste les données API que tu as utilisées. Vérifie qu'aucune n'a été inventée."
+    },
+    {
+      "id": "technical",
+      "label": "API technique (function calling)",
+      "description": "L'IA décide elle-même quand appeler une API (OpenAI function calling, outils).",
+      "when": "Agent autonome",
+      "example": "L'IA a accès à un outil « get_weather ». Elle décide de l'appeler si la question porte sur la météo."
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison RAG vs API pour la même question.",
+    "question": "Combien d'articles A me reste-t-il en stock ?",
+    "withRag": "Voici le catalogue de mes produits : [catalogue]. Combien d'articles A me reste-t-il ?",
+    "ragRisk": "Le catalogue est un document figé. Si le stock change, le catalogue ne le sait pas. L'IA répond avec la dernière valeur connue, qui peut être fausse.",
+    "withApi": "Voici les données de stock récupérées via l'API : Article A : 3 unités. Combien d'articles A me reste-t-il ?",
+    "apiResult": "L'API fournit la valeur en temps réel. L'IA répond avec la vraie valeur, pas une valeur figée.",
+    "improvement": "RAG répond avec des documents figés. API répond avec des données en temps réel. Pour un stock qui change souvent, l'API est indispensable."
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-api-data",
+      "description": "Injecter les données récupérées via une API dans le prompt.",
+      "when": "Besoin de données à jour",
+      "result": "L'IA répond avec les vraies données"
+    },
+    {
+      "id": "add-no-invention-rule",
+      "description": "Ajouter « N'invente aucune donnée ».",
+      "when": "L'IA risque d'inventer",
+      "result": "L'IA reste dans les données fournies"
+    },
+    {
+      "id": "add-source-citation",
+      "description": "Ajouter « Indique quelle donnée vient de l'API ».",
+      "when": "Sujet critique",
+      "result": "Les données utilisées sont traçables"
+    },
+    {
+      "id": "add-action-trigger",
+      "description": "Demander à l'IA de rédiger une action (mail, commande).",
+      "when": "Assistant qui agit",
+      "result": "L'action est rédigée, le programme l'exécute"
+    },
+    {
+      "id": "chain-apis",
+      "description": "Appeler plusieurs APIs en chaîne.",
+      "when": "Processus complexe",
+      "result": "L'IA orchestre plusieurs données"
+    },
+    {
+      "id": "combine-with-rag",
+      "description": "Combiner API (temps réel) et RAG (documents statiques).",
+      "when": "Données à jour + documents",
+      "result": "L'IA a une vue complète"
+    },
+    {
+      "id": "add-verification",
+      "description": "Demander une vérification des données utilisées.",
+      "when": "Sujet critique",
+      "result": "Les hallucinations sont détectées"
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "techniques": [
+      "chain-of-thought",
+      "self-consistency",
+      "rag",
+      "multi-agents",
+      "react"
+    ],
+    "note": "L'intégration API se combine avec toutes les méthodes et techniques. Elle est naturelle avec RAG (données statiques + dynamiques), ReAct (penser + agir), et multi-agents (chaque agent peut appeler ses propres APIs)."
+  },
+  "combinationExamples": [
+    {
+      "id": "api-cot",
+      "label": "API + CoT",
+      "description": "Raisonner étape par étape à partir des données API.",
+      "before": "Voici les données de stock : [données]. Propose un réapprovisionnement.",
+      "after": "Voici les données de stock récupérées via l'API : [données]. Raisonne étape par étape : (1) identifie les articles en rupture, (2) estime la demande, (3) propose un ordre de réapprovisionnement. N'invente aucun chiffre."
+    },
+    {
+      "id": "api-rag",
+      "label": "API + RAG",
+      "description": "Combiner données temps réel et documents statiques.",
+      "before": "Voici les données de stock : [données]. Analyse.",
+      "after": "Voici les données de stock récupérées via l'API : [données]. Voici le contrat fournisseur : [document]. Analyse la situation : respect du contrat ? stock suffisant ? Propose une action."
+    },
+    {
+      "id": "api-react",
+      "label": "API + ReAct",
+      "description": "Déclarer la situation, puis laisser l'IA réagir avec les données API.",
+      "before": "Voici la météo : [données]. Propose un planning.",
+      "after": "Je suis à Kinshasa demain, voici la météo récupérée via l'API : [données]. Réagis comme un organisateur d'événement : propose un planning adapté à la météo. N'invente aucune donnée météo."
+    },
+    {
+      "id": "api-ma",
+      "label": "API + Multi-agents",
+      "description": "Chaque agent appelle sa propre API.",
+      "before": "3 agents analysent un projet.",
+      "after": "Agent 1 (technique) : appelle l'API de monitoring pour obtenir les performances. Agent 2 (business) : appelle l'API CRM pour obtenir les revenus. Agent 3 (support) : appelle l'API tickets pour obtenir les plaintes. Puis un orchestrateur synthétise."
+    },
+    {
+      "id": "api-contexte-v",
+      "label": "API + CONTEXTE-V",
+      "description": "Version complète : données API + 9 blocs.",
+      "before": "Contexte : Gérer mon stock.\nObjectif : Éviter la rupture.\nNiveau : Gérant.\nTâche : Analyse le stock.\nExemples : —\nX-contraintes : Pas de jargon.\nTonalité : Clair.\nEncodage : Tableau.\nVérification : —",
+      "after": "Contexte : Voici les données de stock récupérées via l'API : [données].\nObjectif : Éviter la rupture de stock.\nNiveau : Tu es un gérant de boutique expérimenté.\nTâche : Analyse le stock. Identifie les articles en rupture ou proches de la rupture. Propose un ordre de réapprovisionnement priorisé.\nExemples : —\nX-contraintes : N'invente aucun chiffre. Pas de jargon. 5 actions max.\nTonalité : Clair, informatif.\nEncodage : Tableau article/stock/priorité/action.\nVérification : Vérifie que chaque chiffre vient des données API."
+    }
+  ],
+  "technicalNote": "L'intégration API existe en deux versions. La version SIMPLE : le programme appelle l'API, injecte les données dans le prompt, l'IA répond (accessible avec quelques lignes de code). La version AVANCÉE : l'IA décide elle-même quand appeler une API (OpenAI function calling, outils, agents autonomes). Dans un chatbot standard, l'IA ne fait pas l'appel : c'est le programme. Ne jamais exposer une clé API dans le prompt ou dans le code client (voir securityWarning).",
+  "scientificContext": {
+    "origin": "Le concept d'API existe depuis les années 1960 en informatique. L'intégration d'API aux LLMs a été popularisée par OpenAI function calling (2023), puis par les frameworks d'agents (LangChain, LlamaIndex).",
+    "finding": "Donner à l'IA accès à des APIs améliore significativement la précision sur les données factuelles et permet des actions réelles.",
+    "adaptation": "Dans un chatbot standard, on utilise la version simple : le programme appelle l'API, l'IA reçoit les données. Pour un agent autonome, on utilise function calling.",
+    "caveat": "L'IA peut halluciner si les données API sont incomplètes. Toujours vérifier que l'IA n'invente pas."
+  },
+  "limitations": [
+    "Nécessite une infrastructure logicielle (serveur, clé API, gestion des erreurs)",
+    "Coût d'une API (gratuit ou payant, selon l'API)",
+    "Latence (temps d'appel de l'API)",
+    "Sécurité des clés API (ne jamais exposer côté client)",
+    "L'IA peut halluciner si les données sont incomplètes",
+    "L'API peut être indisponible (gestion des erreurs nécessaire)",
+    "L'API peut être payante (surveiller les coûts)",
+    "Pas adaptée aux chatbots sans infrastructure",
+    "Risque RGPD si l'API envoie des données personnelles"
+  ],
+  "nextStepIfFail": {
+    "technique": "rag",
+    "reason": "Si tu n'as pas d'API disponible, utilise RAG : fournis le document ou les données statiques. Si tu as une API mais que l'IA hallucine, ajoute une vérification (« liste les données utilisées »). Si l'API est trop chère, cherche une alternative gratuite ou un cache."
+  },
+  "tips": [
+    "Ne JAMAIS exposer une clé API dans le prompt ou dans le code client.",
+    "Toujours ajouter « N'invente aucune donnée » : l'IA peut combler les trous avec des hallucinations.",
+    "Gérer les erreurs d'API (timeout, 500, 404) : l'IA doit recevoir un message clair.",
+    "Pour les actions réelles (envoi de mail, commande), demander une confirmation avant d'exécuter.",
+    "Distinguer API (temps réel) et RAG (documents statiques) : les deux sont complémentaires.",
+    "Pour les données personnelles, vérifier le RGPD avant d'envoyer à une API.",
+    "Utiliser un cache si l'API est appelée souvent avec les mêmes paramètres.",
+    "Pour les agents autonomes, encadrer strictement les APIs accessibles (pas d'accès administrateur)."
+  ],
+  "commonErrorsOverall": [
+    "Exposer une clé API dans le code client (faille critique)",
+    "Ne pas ajouter « N'invente aucune donnée » (l'IA hallucine)",
+    "Ne pas gérer les erreurs d'API (l'IA reçoit une erreur et répond n'importe quoi)",
+    "Envoyer des données personnelles sans vérifier le RGPD",
+    "Utiliser l'API pour des données qui pourraient être statiques (RAG suffit)",
+    "Confondre API et RAG (l'un est temps réel, l'autre est documentaire)",
+    "Ne pas vérifier que l'IA n'a pas inventé de données",
+    "Laisser l'IA faire des actions irréversibles sans confirmation"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Assistant météo personnel",
+      "example": "Récupérer la météo via API, proposer une tenue",
+      "why": "Données réelles, pas d'hallucination"
+    },
+    {
+      "useCase": "Gestion de stock automatisée",
+      "example": "API stock → IA analyse → alerte réapprovisionnement",
+      "why": "Décision basée sur des données réelles"
+    },
+    {
+      "useCase": "Assistant calendrier",
+      "example": "API Google Calendar → IA propose un planning",
+      "why": "Planning adapté aux vrais événements"
+    },
+    {
+      "useCase": "Comparateur de prix",
+      "example": "API de 3 fournisseurs → IA compare → recommandation",
+      "why": "Comparaison basée sur des prix réels"
+    },
+    {
+      "useCase": "Support client avec CRM",
+      "example": "API CRM → IA répond avec l'historique du client",
+      "why": "Réponse personnalisée, pas générique"
+    },
+    {
+      "useCase": "Assistant d'envoi de mail",
+      "example": "IA rédige → API mail envoie",
+      "why": "Assistant qui agit, pas juste qui parle"
+    },
+    {
+      "useCase": "Chatbot de réservation",
+      "example": "IA comprend la demande → API réservation → confirmation",
+      "why": "Action réelle avec confirmation"
+    }
+  ],
+  "keyrusReference": {
+    "originalText": "l'intégration d'API et d'autres ressources complémentaires peut améliorer la précision des réponses et la capacité de l'IA à traiter des données spécifiques, enrichissant ainsi les interactions et augmentant la valeur des réponses générées.",
+    "keyrusLabel": "Intégration d'API et de ressources complémentaires",
+    "transformationObserved": "Keyrus mentionne 3 bénéfices : précision, traitement de données spécifiques, valeur. Kameleon Prompter explicite concrètement ce qu'est une API et comment l'utiliser.",
+    "note": "Keyrus reste très général. Kameleon Prompter comble le manque avec des exemples concrets (météo, stock, calendrier) et une mise en garde sécurité."
+  },
+  "metrics": {
+    "tokenOverhead": "faible sur le prompt (+ 50 à 200 tokens pour les données API)",
+    "accuracyGain": "très élevé sur les données factuelles et en temps réel",
+    "bestFor": "données à jour, données internes, actions réelles",
+    "worstFor": "chatbot sans infrastructure, données personnelles non sécurisées"
+  },
+  "securityWarning": {
+    "title": "Sécurité et RGPD",
+    "details": [
+      "Ne JAMAIS exposer une clé API dans le prompt ou dans le code client (frontend).",
+      "Les clés API doivent être stockées dans des variables d'environnement côté serveur.",
+      "Vérifier le RGPD avant d'envoyer des données personnelles à une API.",
+      "Pour les actions irréversibles (envoi de mail, commande), demander une confirmation.",
+      "Limiter les APIs accessibles à un agent autonome (pas d'accès administrateur).",
+      "Surveiller les coûts : certaines APIs sont payantes à l'usage.",
+      "Voir SEC-09 pour les risques éthiques et légaux."
+    ]
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": [
+      "SRC-1",
+      "AJOUT (explication, exemples, mise en garde)"
+    ],
+    "validated": true
+  },
+  "shortName": "API"
+}

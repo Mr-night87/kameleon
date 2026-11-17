@@ -1,0 +1,347 @@
+{
+  "id": "tree-of-thoughts",
+  "label": "Arbre de pensées",
+  "shortName": "ToT",
+  "fullName": "Tree of Thoughts",
+  "shortDescription": "Plusieurs experts, branches parallèles, tri collectif. Pour les problèmes difficiles.",
+  "description": "L'arbre de pensées (ToT) simule plusieurs experts qui cherchent chacun un chemin de pensée différent. Ils partagent leurs idées, retiennent les plus pertinentes, abandonnent celles qui se révèlent fausses, puis développent leur réflexion sur les branches retenues. C'est une technique de raisonnement arborescent : plusieurs branches sont explorées en parallèle, puis élaguées. Elle est particulièrement efficace pour les problèmes difficiles, les décisions majeures, et les situations où une seule ligne de raisonnement peut passer à côté de la bonne solution.",
+  "category": "avancée",
+  "difficulty": 4,
+  "estimatedTime": "5 à 10 minutes (structure lourde)",
+  "techniqueType": "reasoning-modifier",
+
+  "whenToUse": [
+    "Problème difficile ou complexe (plusieurs dimensions)",
+    "Décision majeure (carrière, business, architecture)",
+    "Situation où une seule ligne de raisonnement peut se tromper",
+    "Quand CoT et self-consistency ne suffisent pas",
+    "Problème ouvert avec plusieurs solutions possibles",
+    "Quand tu veux voir plusieurs experts se contredire puis converger",
+    "Stratégie à long terme avec incertitude",
+    "Créativité structurée (explorer plusieurs pistes en parallèle)"
+  ],
+  "whenNotToUse": [
+    "Question factuelle simple (→ zero-shot)",
+    "Calcul court et vérifiable (→ CoT)",
+    "Décision entre 2-3 options connues (→ self-consistency)",
+    "Situation personnelle simple (→ ReAct)",
+    "Quand tu veux une réponse rapide (→ active ou RTF)",
+    "Quand le coût en tokens est un problème",
+    "Tâche purement créative libre (→ few-shot)"
+  ],
+
+  "source": ["SRC-1"],
+  "methodsCitation": "Keyrus : « Imagine que trois experts tentent de répondre à la question suivante : Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ? - Tous les experts utilisent des chemins de pensée différents puis les partagent avec le groupe - Collégialement, le groupe peut décider de suivre le ou les chemins de pensée les plus pertinents afin d'affiner leur réponse - Si un expert se rend compte qu'il a tort, il ne doit pas continuer sur son chemin de pensée - Ensuite, ils développent leur réflexion sur la base du ou des chemins de pensée choisis. »",
+
+  "principle": "Simuler plusieurs experts (3 en général), chacun avec un chemin de pensée différent. Les faire partager, comparer, élaguer les branches fausses, puis approfondir les branches retenues. Résultat : une réponse plus robuste, testée sous plusieurs angles.",
+
+  "triggerPhrases": [
+    "Imagine que trois experts tentent de répondre à la question suivante : [question]. Tous les experts utilisent des chemins de pensée différents puis les partagent avec le groupe. Collégialement, le groupe décide de suivre les chemins les plus pertinents. Si un expert se rend compte qu'il a tort, il ne continue pas sur son chemin. Ensuite, ils développent leur réflexion sur la base des chemins retenus.",
+    "Fais appel à 3 experts différents ([expert A], [expert B], [expert C]). Chacun propose son raisonnement. Puis les trois comparent. Si un expert voit son erreur, il l'abandonne. Le groupe retient la meilleure piste et la développe.",
+    "Explore 3 pistes de réflexion en parallèle. Pour chaque piste : le raisonnement, les avantages, les limites. Puis sélectionne la piste la plus solide et développe-la.",
+    "Simule un débat entre 3 experts qui ne sont pas d'accord au départ. Chacun défend son point de vue. Puis ils convergent vers une réponse commune.",
+    "Construis un arbre de pensées : 3 branches initiales, puis pour chaque branche, évalue la solidité. Élague les branches faibles. Approfondis les branches solides.",
+    "Trois consultants proposent chacun une solution. Ils partagent, se critiquent, puis choisissent ensemble la meilleure approche."
+  ],
+
+  "triggerPhraseNote": "La phrase la plus puissante est « Si un expert se rend compte qu'il a tort, il ne doit pas continuer sur son chemin de pensée ». C'est cette règle d'élagage qui distingue ToT d'un simple débat. Sans elle, les experts peuvent s'entêter.",
+
+  "examplePrompts": [
+    {
+      "id": "tot-1",
+      "title": "Question de référence Keyrus (relocalisation)",
+      "prompt": "Imagine que trois experts tentent de répondre à la question suivante : Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ? - Tous les experts utilisent des chemins de pensée différents puis les partagent avec le groupe - Collégialement, le groupe peut décider de suivre le ou les chemins de pensée les plus pertinents afin d'affiner leur réponse - Si un expert se rend compte qu'il a tort, il ne doit pas continuer sur son chemin de pensée - Ensuite, ils développent leur réflexion sur la base du ou des chemins de pensée choisis.",
+      "source": "SRC-1",
+      "note": "C'est LA question que Keyrus utilise pour illustrer ToT. Structure : 3 experts, chemins différents, partage, sélection, élagage, approfondissement."
+    },
+    {
+      "id": "tot-2",
+      "title": "Architecture de jeu multijoueur",
+      "prompt": "Imagine 3 experts (un développeur de jeux, un spécialiste réseau, un game designer) qui répondent à : comment faire tourner un jeu multijoueur de bataille royale depuis un téléphone ? Chacun propose sa piste. Le groupe garde la plus réaliste pour un débutant. Donne ensuite un plan en 6 étapes.",
+      "source": "AJOUT",
+      "note": "Les 3 experts ont des angles RADICALEMENT différents : technique, réseau, expérience utilisateur. Le tri final garde la piste la plus réaliste, pas la plus ambitieuse."
+    },
+    {
+      "id": "tot-3",
+      "title": "Décision de carrière majeure",
+      "prompt": "Imagine 3 experts (un recruteur tech, un entrepreneur, un coach de carrière) qui répondent à : un développeur junior en CDI doit-il passer freelance après 2 ans ? Chacun propose son raisonnement. Ils comparent, se contredisent, puis convergent. Le groupe retient la meilleure approche et la développe en 5 étapes concrètes.",
+      "source": "AJOUT",
+      "note": "Trois angles : marché de l'emploi, risque entrepreneurial, développement personnel. Le débat force à confronter les visions."
+    },
+    {
+      "id": "tot-4",
+      "title": "Stratégie de lancement musical",
+      "prompt": "Imagine 3 experts (un manager d'artiste, un community manager, un ingénieur du son) qui répondent à : comment lancer un single de rap mélancolique sans budget ? Chacun propose sa stratégie. Ils partagent, se critiquent, puis sélectionnent les 3 actions les plus efficaces. Le groupe développe ensuite un plan en 3 semaines.",
+      "source": "AJOUT",
+      "note": "Trois angles : carrière, promotion, qualité audio. Le tri force à choisir les actions vraiment utiles."
+    },
+    {
+      "id": "tot-5",
+      "title": "Diagnostic technique complexe",
+      "prompt": "Imagine 3 experts (un développeur JavaScript, un expert Phaser 3, un spécialiste physique de jeu) qui tentent de diagnostiquer : mon jeu ne retire pas de PV quand le joueur touche un ennemi. Chacun explore une piste différente. Ils partagent leurs hypothèses. Si une hypothèse est fausse, elle est abandonnée. Le groupe retient les 3 causes les plus probables et propose un test pour chacune.",
+      "source": "AJOUT",
+      "note": "ToT est aussi puissant en diagnostic : plusieurs experts explorent plusieurs causes en parallèle, puis élaguent."
+    },
+    {
+      "id": "tot-6",
+      "title": "Problème ouvert de design",
+      "prompt": "Imagine 3 designers (un UX designer, un game designer, un graphiste) qui réfléchissent à : comment rendre l'écran d'accueil d'une appli de prompts plus engageant ? Chacun propose une piste (simplicité, gamification, esthétique). Ils partagent, se critiquent. Le groupe retient les 2 pistes les plus prometteuses et les développe en wireframes textuels.",
+      "source": "AJOUT",
+      "note": "ToT fonctionne aussi pour les problèmes créatifs ouverts : plusieurs angles, puis convergence."
+    }
+  ],
+
+  "keyrusExampleAnalysis": {
+    "originalPrompt": "Imagine que trois experts tentent de répondre à la question suivante : Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ? - Tous les experts utilisent des chemins de pensée différents puis les partagent avec le groupe - Collégialement, le groupe peut décider de suivre le ou les chemins de pensée les plus pertinents afin d'affiner leur réponse - Si un expert se rend compte qu'il a tort, il ne doit pas continuer sur son chemin de pensée - Ensuite, ils développent leur réflexion sur la base du ou des chemins de pensée choisis.",
+    "structure": [
+      { "step": 1, "action": "Créer plusieurs branches", "extrait": "Imagine que trois experts tentent de répondre à la question suivante" },
+      { "step": 2, "action": "Forcer la diversité des chemins", "extrait": "Tous les experts utilisent des chemins de pensée différents" },
+      { "step": 3, "action": "Partager avec le groupe", "extrait": "puis les partagent avec le groupe" },
+      { "step": 4, "action": "Sélection collective", "extrait": "Collégialement, le groupe peut décider de suivre le ou les chemins de pensée les plus pertinents" },
+      { "step": 5, "action": "Élaguer les branches fausses", "extrait": "Si un expert se rend compte qu'il a tort, il ne doit pas continuer sur son chemin de pensée" },
+      { "step": 6, "action": "Approfondir les branches retenues", "extrait": "Ensuite, ils développent leur réflexion sur la base du ou des chemins de pensée choisis" }
+    ],
+    "insight": "ToT n'est pas juste « fais appel à 3 experts ». C'est un processus en 6 temps : (1) branches, (2) diversité, (3) partage, (4) sélection, (5) élagage, (6) approfondissement. L'étape 5 (élagage) est LA clé : sans elle, les experts peuvent s'entêter dans une mauvaise direction.",
+    "differenceWithSelfConsistency": "Self-consistency demande plusieurs options et les compare. ToT va plus loin : les experts SE CONTREDISENT, ABANDONNENT leurs branches fausses, et CONVERGENT vers une réponse commune. C'est un débat, pas juste une liste."
+  },
+
+  "variants": [
+    {
+      "id": "three-experts",
+      "label": "3 experts (version Keyrus)",
+      "description": "Trois experts avec des angles différents, partage, sélection, approfondissement.",
+      "when": "Problème complexe, décision majeure",
+      "example": "Imagine 3 experts (A, B, C) qui répondent à [question]. Chacun propose son chemin. Ils partagent. Le groupe retient les meilleurs chemins et les développe."
+    },
+    {
+      "id": "with-adversarial",
+      "label": "3 experts + avocat du diable",
+      "description": "Un des experts est un avocat du diable qui cherche à démolir les autres.",
+      "when": "Décision à fort enjeu, besoin de tester la solidité",
+      "example": "Imagine 2 experts qui proposent des solutions, et 1 avocat du diable qui cherche les failles de chaque solution. Le groupe ne retient que ce qui résiste à la critique."
+    },
+    {
+      "id": "with-elagage",
+      "label": "Avec élagage explicite",
+      "description": "Demander explicitement d'identifier et d'abandonner les branches fausses.",
+      "when": "Problème technique, diagnostic",
+      "example": "Explore 3 branches. Pour chaque branche, identifie les points faibles. Élague la branche la plus faible. Approfondis les 2 branches restantes."
+    },
+    {
+      "id": "with-iteration",
+      "label": "Itératif (plusieurs tours)",
+      "description": "Faire plusieurs tours d'exploration : tour 1 → tour 2 → convergence.",
+      "when": "Problème très difficile, plusieurs niveaux de complexité",
+      "example": "Tour 1 : explore 3 branches. Tour 2 : approfondis les 2 meilleures branches en 2 sous-branches chacune. Tour 3 : converge vers une réponse finale."
+    },
+    {
+      "id": "full",
+      "label": "ToT complet",
+      "description": "3 experts + avocat du diable + élagage + itération + convergence.",
+      "when": "Décision critique, enjeu majeur",
+      "example": "Imagine 3 experts + 1 avocat du diable. Tour 1 : chaque expert propose son chemin. Tour 2 : l'avocat critique, les experts se défendent. Tour 3 : le groupe élague les branches faibles. Tour 4 : le groupe développe la réponse finale."
+    }
+  ],
+
+  "comparisonExample": {
+    "description": "Comparaison Self-consistency vs ToT pour la même décision.",
+    "question": "Un développeur junior en CDI doit-il passer freelance après 2 ans ?",
+    "withSelfConsistency": "Propose 3 options (rester en CDI, passer freelance, créer une entreprise). Pour chacune : avantages, inconvénients, risque. Conclus par une recommandation.",
+    "scRisk": "L'IA liste 3 options et tranche. Mais elle n'a pas confronté les visions : elle peut choisir l'option la plus évidente sans tester sa solidité.",
+    "withTreeOfThoughts": "Imagine 3 experts (un recruteur tech, un entrepreneur, un coach de carrière) qui répondent à : un développeur junior en CDI doit-il passer freelance après 2 ans ? Chacun propose son raisonnement. Ils comparent, se contredisent. Le groupe retient les meilleures approches et les développe en 5 étapes concrètes.",
+    "totResult": "Les 3 experts apportent des angles : le recruteur voit le marché, l'entrepreneur voit le risque, le coach voit le développement personnel. Le débat force à confronter les visions. La réponse finale est plus robuste car testée sous plusieurs angles.",
+    "improvement": "Self-consistency donne plusieurs options. ToT fait DÉBATTRE plusieurs experts. Le débat révèle les angles morts que la liste d'options aurait laissés."
+  },
+
+  "transformationPatterns": [
+    {
+      "id": "add-experts",
+      "description": "Créer 3 experts avec des angles différents.",
+      "when": "Question complexe, décision majeure",
+      "result": "Plusieurs chemins de pensée en parallèle"
+    },
+    {
+      "id": "force-diversity",
+      "description": "Imposer que les experts aient des chemins RADICALEMENT différents.",
+      "when": "3 experts risquent de se ressembler",
+      "result": "Angles complémentaires, pas redondants"
+    },
+    {
+      "id": "add-sharing",
+      "description": "Forcer les experts à partager leurs raisonnements.",
+      "when": "Experts isolés",
+      "result": "Confrontation des idées"
+    },
+    {
+      "id": "add-selection",
+      "description": "Demander une sélection collective des meilleures branches.",
+      "when": "Toutes les branches se valent",
+      "result": "Tri objectif"
+    },
+    {
+      "id": "add-elagage",
+      "description": "Demander d'abandonner explicitement les branches fausses.",
+      "when": "Experts risquent de s'entêter",
+      "result": "Convergence plus rapide"
+    },
+    {
+      "id": "add-deepening",
+      "description": "Approfondir les branches retenues.",
+      "when": "Sélection faite mais pas assez creusée",
+      "result": "Réponse finale détaillée"
+    },
+    {
+      "id": "add-iteration",
+      "description": "Faire plusieurs tours d'exploration.",
+      "when": "Problème très difficile",
+      "result": "Exploration plus profonde"
+    },
+    {
+      "id": "add-adversarial",
+      "description": "Ajouter un avocat du diable.",
+      "when": "Besoin de tester la solidité",
+      "result": "Branches plus robustes"
+    }
+  ],
+
+  "combinableWith": {
+    "methods": ["rtf", "craft", "contexte-v", "qq", "active", "reverse"],
+    "techniques": ["chain-of-thought", "self-consistency", "generate-knowledge", "react", "rag"],
+    "note": "ToT se combine avec toutes les méthodes. Il est naturel avec CoT (chaque expert raisonne étape par étape) et avec generate-knowledge (chaque expert génère d'abord ses faits)."
+  },
+
+  "combinationExamples": [
+    {
+      "id": "tot-cot",
+      "label": "ToT + CoT",
+      "description": "Chaque expert raisonne étape par étape.",
+      "before": "Imagine 3 experts qui répondent à [question].",
+      "after": "Imagine 3 experts qui répondent à [question]. Chaque expert raisonne étape par étape : (1) pose ses hypothèses, (2) développe son raisonnement, (3) conclut. Puis ils partagent, sélectionnent, élaguent, approfondissent."
+    },
+    {
+      "id": "tot-sc",
+      "label": "ToT + Self-consistency",
+      "description": "Chaque expert propose plusieurs options.",
+      "before": "Imagine 3 experts.",
+      "after": "Imagine 3 experts. Chacun propose 2 options différentes. Le groupe dispose donc de 6 options. Ils les comparent, élague les plus faibles, retiennent les 2 meilleures et les développent."
+    },
+    {
+      "id": "tot-craft",
+      "label": "ToT + CRAFT",
+      "description": "Structurer le débat avec contexte et format.",
+      "before": "Contexte : Je dois choisir une techno.\nRôle : Architecte.\nAction : Compare.\nFormat : Tableau.\nTonalité : Neutre.",
+      "after": "Contexte : Je dois choisir une techno pour mon jeu multijoueur.\nRôle : Agis en tant qu'architecte logiciel qui anime un débat entre 3 experts (technique, réseau, UX).\nAction : Chaque expert propose son chemin. Ils partagent. Le groupe retient les 2 meilleurs chemins et les développe.\nFormat : Pour chaque expert, un paragraphe de raisonnement. Puis un tableau comparatif. Puis une recommandation.\nTonalité : Neutre, factuel."
+    },
+    {
+      "id": "tot-contexte-v",
+      "label": "ToT + CONTEXTE-V",
+      "description": "Version complète : 9 blocs + débat entre experts.",
+      "before": "Contexte : Je prépare une relocalisation.\nObjectif : Optimiser la préparation.\nNiveau : Expert.\nTâche : Propose un plan.\nExemples : —\nX-contraintes : 15 actions max.\nTonalité : Clair.\nEncodage : Tableau.\nVérification : —",
+      "after": "Contexte : Je prépare une relocalisation d'activité en France.\nObjectif : Optimiser la préparation en confrontant plusieurs approches.\nNiveau : Tu es un animateur d'experts.\nTâche : Simule 3 experts (logistique, RH, réglementation). Chacun propose son chemin de pensée. Ils partagent, se critiquent, élague les branches faibles, puis développent une réponse commune en 3 phases.\nExemples : —\nX-contraintes : 15 actions max. Pas de jargon. Chaque action doit être rattachée à un expert.\nTonalité : Clair, informatif.\nEncodage : Pour chaque expert : raisonnement. Puis plan commun en tableau phase/action/durée.\nVérification : Vérifie que chaque action découle d'un expert et que les branches faibles ont bien été élaguées."
+    }
+  ],
+
+  "technicalNote": "ToT a été popularisé par la recherche en IA (Yao et al., 2023) sous le nom « Tree of Thoughts: Deliberate Problem Solving with Large Language Models ». Le principe : explorer plusieurs branches de raisonnement, évaluer leur solidité, élaguer les branches faibles, approfondir les branches solides. Dans un chatbot standard, on simule ce processus en demandant à l'IA de jouer plusieurs experts et de faire le tri elle-même. Coût : élevé en tokens, mais gain significatif sur les problèmes difficiles.",
+
+  "scientificContext": {
+    "origin": "Article de recherche (Yao et al., 2023) : « Tree of Thoughts: Deliberate Problem Solving with Large Language Models ».",
+    "finding": "Explorer plusieurs branches de raisonnement et élaguer les branches faibles améliore significativement les performances sur les problèmes difficiles.",
+    "adaptation": "Dans un chatbot standard, on simule les branches en demandant à l'IA de jouer plusieurs experts, de partager, de sélectionner et d'élaguer.",
+    "caveat": "Le coût en tokens est élevé (5 à 10 fois plus qu'un prompt simple). À réserver aux problèmes difficiles."
+  },
+
+  "limitations": [
+    "Très coûteux en tokens (5 à 10 fois plus qu'un prompt simple)",
+    "Réponse très longue (parfois difficile à lire)",
+    "L'IA peut produire 3 experts qui se ressemblent (faux débat)",
+    "L'élagage peut être superficiel (l'IA garde tout)",
+    "Peut créer de la confusion si l'utilisateur veut une réponse simple",
+    "Risque de « théâtre » : l'IA simule un débat sans vraiment converger",
+    "Pas adapté aux questions simples",
+    "Pas adapté aux tâches créatives pures (l'IA pondère trop)"
+  ],
+
+  "nextStepIfFail": {
+    "technique": "multi-agents",
+    "reason": "Si les 3 experts se ressemblent ou si l'élagage est superficiel, passe au multi-agents réel : plusieurs appels IA distincts, chacun avec un rôle précis, et un agent « critique » qui synthétise. C'est plus coûteux mais plus robuste. Si le coût en tokens est un problème, redescends à self-consistency."
+  },
+
+  "tips": [
+    "Le mot le plus puissant est « chemins de pensée différents ». Sans lui, les 3 experts se ressemblent.",
+    "L'étape d'élagage est LA clé de ToT : sans elle, les experts s'entêtent dans une mauvaise direction.",
+    "Ajoute un avocat du diable pour tester la solidité des branches.",
+    "Demande une convergence explicite : sinon l'IA liste 3 branches sans trancher.",
+    "ToT coûte cher : réserve-le aux problèmes difficiles et aux décisions majeures.",
+    "Pour un débat plus réaliste, impose que les experts aient des angles RADICALEMENT différents (technique, humain, business).",
+    "Si l'IA produit 3 experts qui disent la même chose, impose : « chaque expert doit contredire au moins un autre »."
+  ],
+
+  "commonErrorsOverall": [
+    "Oublier l'étape d'élagage (les experts s'entêtent)",
+    "Ne pas forcer la diversité des chemins (3 experts identiques)",
+    "Oublier de demander une convergence finale (l'IA liste sans trancher)",
+    "Pas d'avocat du diable (débat trop consensuel)",
+    "Utiliser ToT pour une question simple (perte de temps et de tokens)",
+    "Laisser l'IA produire un débat de « théâtre » sans vraie contradiction"
+  ],
+
+  "realWorldUseCases": [
+    {
+      "useCase": "Décision de carrière majeure",
+      "example": "CDI vs freelance vs création d'entreprise",
+      "why": "3 angles (marché, risque, développement) confrontés"
+    },
+    {
+      "useCase": "Architecture technique complexe",
+      "example": "Choix d'architecture pour un jeu multijoueur",
+      "why": "3 experts (technique, réseau, UX) explorent 3 angles"
+    },
+    {
+      "useCase": "Diagnostic technique difficile",
+      "example": "Bug rare qui ne se reproduit pas systématiquement",
+      "why": "3 experts explorent 3 causes en parallèle"
+    },
+    {
+      "useCase": "Stratégie marketing",
+      "example": "Lancement de produit avec budget limité",
+      "why": "3 experts (marketing, finance, produit) confrontent leurs vues"
+    },
+    {
+      "useCase": "Problème de design ouvert",
+      "example": "Refonte d'une interface utilisateur",
+      "why": "3 designers explorent 3 pistes créatives"
+    },
+    {
+      "useCase": "Décision éthique ou sensible",
+      "example": "Faut-il automatiser un processus qui touche à l'humain ?",
+      "why": "3 angles (technique, éthique, humain) confrontés"
+    },
+    {
+      "useCase": "Résolution d'un problème scientifique",
+      "example": "Comment expliquer un résultat expérimental inattendu ?",
+      "why": "3 hypothèses explorées en parallèle, puis élagage"
+    }
+  ],
+
+  "keyrusReference": {
+    "originalQuestion": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+    "totReformulation": "Imagine que trois experts tentent de répondre à la question suivante : Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ? - Tous les experts utilisent des chemins de pensée différents puis les partagent avec le groupe - Collégialement, le groupe peut décider de suivre le ou les chemins de pensée les plus pertinents afin d'affiner leur réponse - Si un expert se rend compte qu'il a tort, il ne doit pas continuer sur son chemin de pensée - Ensuite, ils développent leur réflexion sur la base du ou des chemins de pensée choisis.",
+    "transformationObserved": "Passage d'une question unique à un processus en 6 temps : branches, diversité, partage, sélection, élagage, approfondissement.",
+    "note": "C'est LA démonstration la plus complexe de Keyrus. ToT est présenté comme la technique du raisonnement arborescent, à réserver aux problèmes difficiles."
+  },
+
+  "metrics": {
+    "tokenOverhead": "très élevé (+ 500 à 1000 % de tokens en sortie)",
+    "accuracyGain": "significatif sur les problèmes difficiles",
+    "bestFor": "décisions majeures, problèmes ouverts, diagnostic complexe",
+    "worstFor": "questions simples, tâches créatives pures, budget tokens serré"
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": ["SRC-1", "AJOUT (variantes, exemples)"],
+    "validated": true
+  }
+}

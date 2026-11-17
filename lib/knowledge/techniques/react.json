@@ -1,0 +1,343 @@
+{
+  "id": "react",
+  "label": "ReAct",
+  "fullName": "Reasoning + Acting",
+  "shortDescription": "Situation + inquiétudes → étapes concrètes. Pour les projets personnels.",
+  "description": "ReAct (Reasoning + Acting) est une technique qui combine le raisonnement et l'action. Dans sa version complète, l'IA alterne PENSER (raisonner) et AGIR (utiliser un outil comme la recherche web, une calculatrice ou une base de données). Dans la version simplifiée de Keyrus, on déclare sa situation, ses inquiétudes et ce qu'on ignore, puis on demande à l'IA comment elle réagirait pour conseiller, étape par étape. C'est la technique des situations personnelles et des projets où il manque des informations.",
+  "category": "raisonnement",
+  "difficulty": 3,
+  "estimatedTime": "2 à 3 minutes (ajout de contexte + structure)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Situation personnelle (projet, carrière, apprentissage)",
+    "Projet où il manque des informations",
+    "Diagnostic (trouver la cause d'un problème)",
+    "Besoin de conseils adaptés à TA situation précise",
+    "Quand tu as des inquiétudes ou des zones d'ignorance",
+    "Quand tu veux un plan d'action étape par étape",
+    "Quand l'IA doit poser des questions avant de répondre"
+  ],
+  "whenNotToUse": [
+    "Question factuelle simple (→ zero-shot)",
+    "Calcul pur (→ CoT)",
+    "Décision entre plusieurs options (→ self-consistency)",
+    "Quand tu as déjà toutes les informations (→ CoT ou RTF)",
+    "Tâche créative pure (→ zero-shot + few-shot)"
+  ],
+  "source": [
+    "SRC-1"
+  ],
+  "methodsCitation": "Keyrus : « Si je te dis que je dois relocaliser mon activité en France, que je suis préoccupé par la logistique et les ressources humaines, et que je ne connais pas bien les réglementations locales, comment pourrais-tu réagir pour me conseiller sur les étapes à suivre pour optimiser cette relocalisation ? »",
+  "principle": "Déclarer sa situation (ce que je fais), ses inquiétudes (ce qui m'inquiète), ses zones d'ignorance (ce que je ne sais pas), puis demander à l'IA d'adapter ses conseils étape par étape.",
+  "triggerPhrases": [
+    "Si je te dis que je dois [situation], que je suis préoccupé par [inquiétude], et que je ne connais pas bien [ignorance], comment pourrais-tu réagir pour me conseiller sur les étapes à suivre ?",
+    "Voici ma situation : [situation]. Mes inquiétudes : [inquiétudes]. Ce que je ne sais pas : [ignorance]. Réagis comme un mentor : pose-moi 3 questions si une info manque, puis donne 5 étapes dans l'ordre.",
+    "Je suis débutant en [domaine]. Je connais [ce que je sais]. Je ne comprends pas [ce que je ne sais pas]. Je veux [objectif]. Réagis étape par étape.",
+    "Voici mon problème : [problème]. Voici mes contraintes : [contraintes]. Voici ce que j'ai déjà essayé : [tentatives]. Que me conseilles-tu, étape par étape ?",
+    "Avant de répondre, pose-moi les questions nécessaires. Puis donne-moi un plan d'action adapté à ma situation.",
+    "Diagnostique ma situation comme un expert : [situation]. Identifie les points bloquants, puis propose un plan étape par étape."
+  ],
+  "triggerPhraseNote": "La phrase la plus puissante est « Comment pourrais-tu réagir pour me conseiller ? ». Elle force l'IA à se positionner comme un conseiller qui réagit, pas comme une encyclopédie qui récite.",
+  "examplePrompts": [
+    {
+      "id": "react-1",
+      "title": "Question de référence Keyrus (relocalisation)",
+      "prompt": "Si je te dis que je dois relocaliser mon activité en France, que je suis préoccupé par la logistique et les ressources humaines, et que je ne connais pas bien les réglementations locales, comment pourrais-tu réagir pour me conseiller sur les étapes à suivre pour optimiser cette relocalisation ?",
+      "source": "SRC-1",
+      "note": "C'est LA question que Keyrus utilise pour illustrer ReAct. Structure : situation + inquiétudes + zones d'ignorance → demande de conseil étape par étape."
+    },
+    {
+      "id": "react-2",
+      "title": "Apprentissage technique avec mentor",
+      "prompt": "Je suis débutant en backend Python. Je connais bien JavaScript. Je ne comprends pas bien les WebSocket et je veux faire un jeu multijoueur. Réagis comme un mentor : pose-moi d'abord 3 questions si une info manque, puis donne 5 étapes dans l'ordre, avec une action pour chacune.",
+      "source": "AJOUT",
+      "note": "L'utilisateur déclare sa situation (débutant Python, connaît JS), son ignorance (WebSocket), son objectif (jeu multijoueur). L'IA est invitée à poser des questions avant de conseiller."
+    },
+    {
+      "id": "react-3",
+      "title": "Diagnostic de bug",
+      "prompt": "Mon jeu Phaser 3 ne retire pas de PV quand le joueur touche un ennemi. Je suis débutant en JavaScript, je ne comprends pas bien les collisions physiques. Je n'ai pas d'erreur dans la console. Réagis comme un développeur senior : pose-moi 2 questions pour cerner le problème, puis propose un diagnostic étape par étape.",
+      "source": "AJOUT",
+      "note": "L'utilisateur donne un maximum d'infos pour aider l'IA à diagnostiquer. L'IA est invitée à poser des questions AVANT de deviner."
+    },
+    {
+      "id": "react-4",
+      "title": "Lancement de projet musical",
+      "prompt": "Je suis artiste indépendant, je distribue seul mes titres. J'ai 200 followers sur Instagram, aucun budget pub. Je sors un single dans 3 semaines et je ne sais pas comment promouvoir sans argent. Réagis comme un manager de musique indépendant : pose-moi 3 questions pour cerner ma situation, puis propose un plan d'action étape par étape.",
+      "source": "AJOUT",
+      "note": "Les inquiétudes sont claires (pas de budget), l'ignorance est claire (comment promouvoir sans argent). L'IA adapte son plan à cette situation précise."
+    },
+    {
+      "id": "react-5",
+      "title": "Préparation d'examen",
+      "prompt": "Je prépare un examen d'électronique dans 4 semaines. Je suis faible sur les signaux, les ondes et la préamplification. J'ai 2h par jour pour réviser. Je ne sais pas par où commencer. Réagis comme un professeur : pose-moi 2 questions pour évaluer mon niveau, puis propose un plan de révision adapté.",
+      "source": "AJOUT",
+      "note": "L'IA est invitée à évaluer le niveau avant de proposer un plan. C'est la force de ReAct : adapter le conseil à la situation."
+    },
+    {
+      "id": "react-6",
+      "title": "Décision de carrière avec doutes",
+      "prompt": "Je suis développeur junior, je travaille en CDI depuis 2 ans. Je veux devenir freelance mais je suis préoccupé par la stabilité financière et je ne connais pas bien le statut juridique. Réagis comme un coach de carrière : pose-moi 3 questions pour cerner ma situation, puis propose les étapes pour passer au freelance progressivement.",
+      "source": "AJOUT",
+      "note": "ReAct est aussi puissant pour les décisions personnelles : déclarer ses doutes permet à l'IA de conseiller sans être générique."
+    }
+  ],
+  "keyrusExampleAnalysis": {
+    "originalPrompt": "Si je te dis que je dois relocaliser mon activité en France, que je suis préoccupé par la logistique et les ressources humaines, et que je ne connais pas bien les réglementations locales, comment pourrais-tu réagir pour me conseiller sur les étapes à suivre pour optimiser cette relocalisation ?",
+    "structure": [
+      {
+        "step": 1,
+        "action": "Déclarer la situation",
+        "extrait": "je dois relocaliser mon activité en France"
+      },
+      {
+        "step": 2,
+        "action": "Déclarer les inquiétudes",
+        "extrait": "je suis préoccupé par la logistique et les ressources humaines"
+      },
+      {
+        "step": 3,
+        "action": "Déclarer l'ignorance",
+        "extrait": "je ne connais pas bien les réglementations locales"
+      },
+      {
+        "step": 4,
+        "action": "Demander une réaction conseil",
+        "extrait": "comment pourrais-tu réagir pour me conseiller sur les étapes à suivre"
+      }
+    ],
+    "insight": "ReAct n'est pas juste « donne-moi un plan ». C'est : (1) situation, (2) inquiétudes, (3) zones d'ignorance, (4) demande de réaction conseil. Les 3 informations déclarées permettent à l'IA d'adapter son conseil au lieu de réciter un plan générique.",
+    "differenceWithCoT": "La CoT décompose un problème. ReAct adapte un conseil à une situation. La CoT dit « comment faire ». ReAct dit « que dois-je faire, moi, dans ma situation »."
+  },
+  "variants": [
+    {
+      "id": "simple",
+      "label": "ReAct simple",
+      "description": "Déclarer situation + inquiétudes + ignorance, demander conseil.",
+      "when": "Situation personnelle simple",
+      "example": "Si je te dis que je dois [situation], que je suis préoccupé par [inquiétude], et que je ne connais pas bien [ignorance], comment pourrais-tu réagir pour me conseiller ?"
+    },
+    {
+      "id": "with-questions",
+      "label": "ReAct avec questions préalables",
+      "description": "Demander à l'IA de poser des questions avant de conseiller.",
+      "when": "Situation complexe, informations manquantes",
+      "example": "Réagis comme un mentor : pose-moi 3 questions si une info manque, puis donne 5 étapes dans l'ordre, avec une action pour chacune."
+    },
+    {
+      "id": "with-diagnosis",
+      "label": "ReAct avec diagnostic",
+      "description": "Demander un diagnostic étape par étape avant les conseils.",
+      "when": "Problème technique, bug, situation bloquée",
+      "example": "Diagnostique ma situation étape par étape : (1) identifie les points bloquants, (2) pour chaque point, donne une piste de solution, (3) conclus par un plan d'action."
+    },
+    {
+      "id": "with-tools",
+      "label": "ReAct complet (avec outils)",
+      "description": "Version technique complète : l'IA alterne PENSER et AGIR avec des outils.",
+      "when": "L'IA a accès au web, à une calculatrice, à une base de données",
+      "example": "Cherche d'abord sur le web les règles en vigueur. Puis calcule le coût. Puis rédige la réponse. À chaque étape, indique ce que tu as fait."
+    },
+    {
+      "id": "full",
+      "label": "ReAct complet (situation + questions + diagnostic + plan)",
+      "description": "Version la plus complète : situation, questions, diagnostic, plan.",
+      "when": "Situation complexe, enjeu important",
+      "example": "Voici ma situation : [situation]. Mes inquiétudes : [inquiétudes]. Ce que je ne sais pas : [ignorance]. Pose-moi 3 questions si une info manque. Puis diagnostique ma situation. Puis propose un plan étape par étape adapté à mon niveau."
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison CoT vs ReAct pour la même demande.",
+    "question": "Je veux apprendre le backend Python pour faire un jeu multijoueur.",
+    "withCoT": "Raisonne étape par étape : comment apprendre le backend Python pour faire un jeu multijoueur ?",
+    "cotRisk": "L'IA donne un plan générique, sans tenir compte de ce que l'utilisateur sait déjà (JavaScript) ni de ce qu'il ignore (WebSocket).",
+    "withReAct": "Je suis débutant en backend Python. Je connais bien JavaScript. Je ne comprends pas bien les WebSocket et je veux faire un jeu multijoueur. Réagis comme un mentor : pose-moi d'abord 3 questions si une info manque, puis donne 5 étapes dans l'ordre, avec une action pour chacune.",
+    "reactResult": "L'IA adapte son plan : elle ne réexplique pas les bases de la programmation, elle propose un pont entre JavaScript et Python, elle détaille les WebSocket, elle propose des étapes concrètes adaptées au niveau.",
+    "improvement": "La CoT décompose un problème générique. ReAct adapte un conseil à une situation personnelle."
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-situation",
+      "description": "Déclarer explicitement la situation.",
+      "when": "Question générique",
+      "result": "L'IA sait de quoi on parle"
+    },
+    {
+      "id": "add-concerns",
+      "description": "Déclarer les inquiétudes ou les points bloquants.",
+      "when": "L'utilisateur a des doutes",
+      "result": "L'IA adresse les vraies préoccupations"
+    },
+    {
+      "id": "add-ignorance",
+      "description": "Déclarer ce qu'on ne sait pas.",
+      "when": "L'utilisateur est débutant ou bloqué",
+      "result": "L'IA explique les zones d'ombre"
+    },
+    {
+      "id": "add-reaction-request",
+      "description": "Demander à l'IA de « réagir » comme un conseiller.",
+      "when": "Question posée comme une encyclopédie",
+      "result": "L'IA se positionne comme mentor"
+    },
+    {
+      "id": "add-question-invite",
+      "description": "Inviter l'IA à poser des questions avant de répondre.",
+      "when": "Informations manquantes",
+      "result": "L'IA comble les trous avant de conseiller"
+    },
+    {
+      "id": "add-diagnosis-step",
+      "description": "Demander un diagnostic étape par étape avant les conseils.",
+      "when": "Problème complexe",
+      "result": "L'IA identifie les points bloquants avant de proposer"
+    },
+    {
+      "id": "add-tool-use",
+      "description": "Demander à l'IA d'utiliser des outils (web, calcul).",
+      "when": "Besoin de données réelles",
+      "result": "L'IA alterne raisonnement et action"
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "techniques": [
+      "chain-of-thought",
+      "self-consistency",
+      "generate-knowledge",
+      "tree-of-thoughts",
+      "rag"
+    ],
+    "note": "ReAct se combine avec toutes les méthodes. Il est naturel avec CoT (le raisonnement étape par étape s'insère dans la réaction conseil) et avec generate-knowledge (l'IA génère d'abord les faits, puis réagit)."
+  },
+  "combinationExamples": [
+    {
+      "id": "react-cot",
+      "label": "ReAct + CoT",
+      "description": "Déclarer sa situation, puis demander un raisonnement étape par étape.",
+      "before": "Je suis débutant en Python, je veux faire un jeu multijoueur. Comment faire ?",
+      "after": "Je suis débutant en Python, je connais JavaScript. Je ne comprends pas les WebSocket. Je veux faire un jeu multijoueur. Réagis comme un mentor : raisonne étape par étape pour m'expliquer les WebSocket, puis donne-moi 5 étapes concrètes pour construire un prototype."
+    },
+    {
+      "id": "react-craft",
+      "label": "ReAct + CRAFT",
+      "description": "Structurer la réaction conseil avec contexte et ton.",
+      "before": "Contexte : Je veux passer freelance.\nRôle : Coach de carrière.\nAction : Donne un plan.\nFormat : 5 étapes.\nTonalité : Encourageant.",
+      "after": "Contexte : Je suis développeur junior en CDI depuis 2 ans. Je veux passer freelance mais je suis préoccupé par la stabilité financière et je ne connais pas bien le statut juridique.\nRôle : Agis en tant que coach de carrière spécialisé dans le freelancing tech.\nAction : Réagis comme un mentor : pose-moi 3 questions si une info manque, puis propose un plan progressif pour passer au freelance en 6 mois.\nFormat : 5 étapes numérotées, avec une action concrète par étape.\nTonalité : Adopte un ton encourageant et concret."
+    },
+    {
+      "id": "react-sc",
+      "label": "ReAct + Self-consistency",
+      "description": "Proposer plusieurs réactions conseil, puis comparer.",
+      "before": "Je veux apprendre le backend Python pour un jeu multijoueur.",
+      "after": "Je suis débutant en Python, je connais JavaScript. Je veux faire un jeu multijoueur. Propose 3 parcours d'apprentissage différents. Pour chacun : temps estimé, difficulté, risques. Puis, en tenant compte de mon profil, recommande le parcours le plus adapté."
+    },
+    {
+      "id": "react-gk",
+      "label": "ReAct + Generate Knowledge",
+      "description": "Générer d'abord les faits, puis réagir.",
+      "before": "Comment optimiser une relocalisation d'activité en France ?",
+      "after": "Je dois relocaliser mon activité en France. Je suis préoccupé par la logistique et les RH. Je ne connais pas les réglementations. Réagis comme un expert : liste d'abord 10 faits importants sur la relocalisation, puis propose un plan adapté à ma situation en tenant compte des points bloquants identifiés."
+    }
+  ],
+  "technicalNote": "ReAct a été popularisé par la recherche en IA (Yao et al., 2022) sous le nom « ReAct: Synergizing Reasoning and Acting in Language Models ». Dans sa version technique complète, l'IA alterne PENSER (raisonner) et AGIR (appeler un outil : recherche web, calculatrice, base de données). Dans un chatbot standard sans outils, on utilise la version simplifiée de Keyrus : déclarer situation + inquiétudes + ignorance, puis demander une réaction conseil.",
+  "scientificContext": {
+    "origin": "Article de recherche (Yao et al., 2022) : « ReAct: Synergizing Reasoning and Acting in Language Models ».",
+    "finding": "Alterner raisonnement et action (utilisation d'outils) améliore les performances sur les tâches qui demandent des informations externes.",
+    "adaptation": "Dans un chatbot standard, on utilise la version simplifiée : la « réaction » remplace l'« action outil ». L'IA réagit à la situation déclarée au lieu d'utiliser un outil.",
+    "caveat": "La version complète (avec outils) nécessite un agent qui peut réellement appeler des fonctions. Kameleon Prompter reste sur la version simplifiée, accessible à tous."
+  },
+  "limitations": [
+    "Réponses plus longues (diagnostic + questions + plan)",
+    "L'IA peut poser trop de questions et ne jamais répondre",
+    "L'IA peut mal interpréter la situation si elle est mal décrite",
+    "La version complète avec outils nécessite une architecture d'agent",
+    "Pas adaptée aux questions factuelles simples",
+    "L'IA peut être trop prudente et proposer des plans génériques",
+    "Demande à l'utilisateur de bien décrire sa situation (effort)"
+  ],
+  "nextStepIfFail": {
+    "technique": "tree-of-thoughts",
+    "reason": "Si l'IA pose des questions sans jamais répondre, ajoute « Après tes questions, donne quand même un plan provisoire ». Si la situation est trop complexe (plusieurs problèmes entremêlés), passe à l'arbre de pensées pour explorer plusieurs angles."
+  },
+  "tips": [
+    "Le mot le plus puissant est « réagir ». Il force l'IA à se positionner comme conseiller, pas comme encyclopédie.",
+    "Déclare TOUJOURS ce que tu ne sais pas. C'est ce qui permet à l'IA d'expliquer au bon niveau.",
+    "Demande à l'IA de poser des questions avant de répondre : elle comble les trous au lieu de deviner.",
+    "Si l'IA pose trop de questions, ajoute « Après tes questions, donne quand même un plan provisoire ».",
+    "ReAct est la technique des situations personnelles. Ne l'utilise pas pour des questions factuelles.",
+    "Si tu as plusieurs inquiétudes, liste-les explicitement : « je suis préoccupé par A, B et C ».",
+    "Combine avec CoT pour un raisonnement étape par étape plus profond."
+  ],
+  "commonErrorsOverall": [
+    "Oublier de déclarer sa situation (l'IA conseille dans le vide)",
+    "Oublier de déclarer ses inquiétudes (l'IA ne les adresse pas)",
+    "Oublier de déclarer son ignorance (l'IA explique au mauvais niveau)",
+    "Poser une question générique au lieu de déclarer sa situation",
+    "Ne pas demander de « réaction » conseil (l'IA récite)",
+    "Ne pas demander de questions préalables (l'IA devine)",
+    "Laisser l'IA poser 10 questions sans jamais conclure"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Diagnostic technique",
+      "example": "Mon jeu bug, voici ma situation, mes inquiétudes, ce que je ne comprends pas.",
+      "why": "L'IA diagnostique au lieu de deviner."
+    },
+    {
+      "useCase": "Décision de carrière",
+      "example": "Je veux passer freelance, voici mes doutes et ce que je ne connais pas.",
+      "why": "L'IA adapte son conseil à la situation."
+    },
+    {
+      "useCase": "Lancement de projet",
+      "example": "Je lance un single, j'ai 200 followers, pas de budget, je ne sais pas comment promouvoir.",
+      "why": "L'IA propose un plan adapté aux contraintes réelles."
+    },
+    {
+      "useCase": "Préparation d'examen",
+      "example": "Je prépare un examen, voici mes points faibles, je ne sais pas par où commencer.",
+      "why": "L'IA évalue le niveau et propose un plan adapté."
+    },
+    {
+      "useCase": "Apprentissage d'une nouvelle compétence",
+      "example": "Je veux apprendre X, je connais déjà Y, je ne comprends pas Z.",
+      "why": "L'IA construit un pont entre ce que tu sais et ce que tu veux apprendre."
+    },
+    {
+      "useCase": "Optimisation d'un processus existant",
+      "example": "Mon processus actuel, voici mes problèmes, je ne sais pas quoi améliorer en priorité.",
+      "why": "L'IA identifie les points bloquants avant de proposer."
+    }
+  ],
+  "keyrusReference": {
+    "originalQuestion": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+    "reactReformulation": "Si je te dis que je dois relocaliser mon activité en France, que je suis préoccupé par la logistique et les ressources humaines, et que je ne connais pas bien les réglementations locales, comment pourrais-tu réagir pour me conseiller sur les étapes à suivre pour optimiser cette relocalisation ?",
+    "transformationObserved": "Passage d'une question générique à une question contextualisée en 4 dimensions : situation, inquiétudes, zones d'ignorance, demande de réaction.",
+    "note": "Keyrus utilise cette technique pour montrer comment l'IA peut adapter ses conseils à une situation personnelle, au lieu de réciter un plan générique."
+  },
+  "metrics": {
+    "tokenOverhead": "moyen (+ 50 à 150 % de tokens en sortie)",
+    "accuracyGain": "significatif sur les situations personnelles",
+    "bestFor": "diagnostic, projets personnels, apprentissage",
+    "worstFor": "questions factuelles, calculs purs, tâches créatives"
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": [
+      "SRC-1",
+      "AJOUT (variantes, exemples)"
+    ],
+    "validated": true
+  },
+  "shortName": "ReAct"
+}

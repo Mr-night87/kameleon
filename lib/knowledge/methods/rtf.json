@@ -1,0 +1,354 @@
+{
+  "id": "rtf",
+  "label": "RTF",
+  "fullName": "Rôle – Tâche – Format",
+  "shortDescription": "La méthode la plus courte. 3 blocs. 30 secondes.",
+  "description": "RTF est la méthode la plus simple pour structurer un prompt. Elle se compose de trois blocs : un rôle (qui doit parler ?), une tâche (que doit-il faire ?) et un format (sous quelle forme ?). Idéale pour aller vite sur des demandes courtes du quotidien.",
+  "difficulty": 1,
+  "estimatedTime": "30 secondes",
+  "level": "débutant",
+  "whenToUse": [
+    "Réponses rapides et courtes",
+    "Demandes du quotidien (correction, résumé, liste, traduction)",
+    "Premier contact avec le prompt engineering",
+    "Quand tu sais exactement ce que tu veux et que c'est simple"
+  ],
+  "whenNotToUse": [
+    "Tâche complexe avec plusieurs contraintes",
+    "Besoin d'un ton ou d'un public précis (→ CRAFT)",
+    "Besoin d'exemples à imiter ou de vérification (→ CONTEXTE-V)"
+  ],
+  "source": [
+    "SRC-2"
+  ],
+  "methodsCitation": "Cavazza : la méthode la plus courte, trois blocs, idéale pour aller vite.",
+  "blocks": [
+    {
+      "id": "role",
+      "order": 1,
+      "letter": "R",
+      "label": "Rôle",
+      "amorce": "Tu es…",
+      "description": "Indique qui ou quoi l'IA doit représenter.",
+      "purpose": "Donne un cadre contextuel pour des réponses adaptées. Un rôle précis donne un vocabulaire précis.",
+      "question": "Quel rôle l'IA doit-elle jouer ?",
+      "hint": "Sois précis : métier + domaine + public visé.",
+      "placeholder": "Ex : développeur JavaScript senior qui explique à un débutant",
+      "type": "text",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 200,
+        "forbiddenPatterns": [
+          "^(expert|spécialiste|professionnel)$",
+          "^(un |une )?(expert|spécialiste)$"
+        ]
+      },
+      "examples": [
+        "enseignant spécialisé en vulgarisation scientifique, habitué à simplifier des concepts complexes",
+        "rédacteur spécialisé en SEO, avec une expertise pour attirer l'attention des lecteurs en ligne",
+        "expert en recherche d'informations fiable et synthétique",
+        "analyste en statistiques, expert dans l'interprétation des données",
+        "développeur JavaScript senior qui explique à un débutant",
+        "ingénieur du son spécialisé en mixage de voix",
+        "gérant de boutique expérimenté",
+        "professeur d'anglais pour débutants francophones",
+        "collaboratrice scientifique ayant de l'expertise dans la planification des transports",
+        "assistant de direction chargé de résumer des réunions",
+        "manager bienveillant",
+        "expert en analyse documentaire",
+        "spécialiste du droit des contrats"
+      ],
+      "helper": "Un rôle précis donne un vocabulaire précis. Évite « expert » tout seul — expert en quoi ?",
+      "commonErrors": [
+        "Rôle vide : « Tu es un expert » — expert en quoi ?",
+        "Rôle sans rapport avec la tâche (un poète pour un calcul)",
+        "Rôle trop vague : « assistant » sans domaine"
+      ],
+      "formula": "[métier précis] + [domaine précis] + [public ou niveau]"
+    },
+    {
+      "id": "task",
+      "order": 2,
+      "letter": "T",
+      "label": "Tâche",
+      "amorce": "Tu dois…",
+      "description": "Décris l'action précise ou le problème à résoudre.",
+      "purpose": "Oriente l'IA vers un objectif attendu clair. Une seule tâche à la fois.",
+      "question": "Quelle tâche précise doit-elle accomplir ?",
+      "hint": "Commence par un verbe d'action : Explique, Résume, Liste, Compare, Rédige, Analyse, Propose, Reformule.",
+      "placeholder": "Ex : explique la différence entre let et const",
+      "type": "text",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 300,
+        "mustStartWithActionVerb": true
+      },
+      "actionVerbs": [
+        "explique",
+        "définis",
+        "compare",
+        "crée",
+        "liste",
+        "résume",
+        "analyse",
+        "propose",
+        "reformule",
+        "rédige",
+        "traduis",
+        "corrige",
+        "génère",
+        "donne",
+        "trouve",
+        "identifie"
+      ],
+      "examples": [
+        "propose un titre accrocheur pour un article sur le café bio",
+        "reformule cette définition technique pour qu'un enfant de 12 ans puisse la comprendre",
+        "explique les bases du sujet choisi et ses principaux enjeux",
+        "explique les tendances clés d'un graphique représentant les ventes mensuelles",
+        "explique la différence entre let et const",
+        "donne 5 réglages de base pour nettoyer une voix enregistrée au téléphone",
+        "propose 5 règles simples pour suivre un stock de produits",
+        "explique la différence entre « do » et « make » en anglais",
+        "propose 5 idées de petites applications utiles à des étudiants",
+        "écris un message poli pour reporter un rendez-vous de lundi à jeudi",
+        "rédige un résumé structuré de plusieurs articles relatifs à la planification des transports",
+        "résume les principales conclusions des articles mis à disposition, en incluant les principales tendances et leurs implications",
+        "invente cinq idées créatives de posts pour les réseaux sociaux sur la promotion des transports publics de proximité",
+        "formule un post LinkedIn qui résume les principaux éléments de la nouvelle stratégie du personnel, de manière informative et attrayante",
+        "compare les caractéristiques de ces deux produits pour en identifier les points forts et les points faibles"
+      ],
+      "helper": "Une seule tâche à la fois. Si tu en as deux, fais deux prompts séparés.",
+      "commonErrors": [
+        "Tâche floue : « parle de… » — utilise un verbe d'action",
+        "Deux tâches mélangées dans la même phrase",
+        "Tâche sans objet clair : « améliore ça » — améliore quoi ?"
+      ],
+      "formula": "[verbe d'action] + [objet précis] + [contexte si nécessaire]"
+    },
+    {
+      "id": "format",
+      "order": 3,
+      "letter": "F",
+      "label": "Format",
+      "amorce": "Ta réponse devra…",
+      "description": "Précise le type et la structure de la réponse attendue.",
+      "purpose": "Garantit un résultat clair et utilisable immédiatement. Sans format, l'IA choisit seule — souvent trop long.",
+      "question": "Sous quelle forme veux-tu la réponse ?",
+      "hint": "Précise le format ET la longueur. Exemple : « liste numérotée de 5 points, une ligne chacun ».",
+      "placeholder": "Ex : liste numérotée de 5 points, une ligne chacun",
+      "type": "text",
+      "required": true,
+      "validation": {
+        "minLength": 5,
+        "maxLength": 200,
+        "shouldMentionLength": true
+      },
+      "examples": [
+        "limite le titre à 10 mots maximum",
+        "utilise une phrase courte et simple",
+        "fournis une réponse structurée en trois parties : définition, contexte, enjeux",
+        "fournis une analyse en 3 phrases claires",
+        "2 courts exemples de code et 3 lignes d'explication",
+        "liste numérotée, une ligne par réglage",
+        "tableau à deux colonnes : règle et raison",
+        "5 phrases d'exemple avec leur traduction",
+        "liste : nom de l'idée, problème résolu, une ligne",
+        "4 lignes maximum",
+        "un texte courant d'environ 300 mots",
+        "un tableau",
+        "une liste à puces",
+        "un résumé de 300 mots maximum",
+        "une seule page DIN A4",
+        "200 mots maximum, dans un langage professionnel adapté à une réunion d'équipe marketing"
+      ],
+      "helper": "Un format précis = une réponse utilisable tout de suite. « Fais court » ne suffit pas — précise la longueur.",
+      "commonErrors": [
+        "Oublier le format : l'IA écrit trois paragraphes au lieu d'une liste",
+        "Format contradictoire : « très détaillé » et « 50 mots maximum »",
+        "Format vague : « fais bien » — précise la structure"
+      ],
+      "formula": "[type de sortie] + [nombre ou longueur] + [structure interne]"
+    }
+  ],
+  "template": {
+    "pattern": "Tu es {role}.\nTâche : {task}.\nFormat de la réponse : {format}.",
+    "example": "Tu es rédacteur spécialisé en SEO, avec une expertise pour attirer l'attention des lecteurs en ligne.\nTâche : propose un titre accrocheur pour un article sur [sujet].\nFormat de la réponse : limite le titre à 10 mots maximum.",
+    "assembly": [
+      "role",
+      "task",
+      "format"
+    ]
+  },
+  "examples": [
+    {
+      "id": "rtf-1",
+      "title": "Créer un titre accrocheur",
+      "source": "SRC-2",
+      "answers": {
+        "role": "rédacteur spécialisé en SEO, avec une expertise pour attirer l'attention des lecteurs en ligne",
+        "task": "propose un titre accrocheur pour un article sur [sujet]",
+        "format": "limite le titre à 10 mots maximum"
+      },
+      "finalPrompt": "Tu es rédacteur spécialisé en SEO, avec une expertise pour attirer l'attention des lecteurs en ligne.\nTâche : propose un titre accrocheur pour un article sur [sujet].\nFormat de la réponse : limite le titre à 10 mots maximum."
+    },
+    {
+      "id": "rtf-2",
+      "title": "Reformuler une phrase",
+      "source": "SRC-2",
+      "answers": {
+        "role": "enseignant spécialisé en vulgarisation scientifique, habitué à simplifier des concepts complexes",
+        "task": "reformule cette définition technique pour qu'un enfant de 12 ans puisse la comprendre",
+        "format": "utilise une phrase courte et simple"
+      },
+      "finalPrompt": "Tu es enseignant spécialisé en vulgarisation scientifique, habitué à simplifier des concepts complexes.\nTâche : reformule cette définition technique pour qu'un enfant de 12 ans puisse la comprendre.\nFormat de la réponse : utilise une phrase courte et simple."
+    },
+    {
+      "id": "rtf-3",
+      "title": "S'informer sur un sujet",
+      "source": "SRC-2",
+      "answers": {
+        "role": "expert en recherche d'informations fiable et synthétique",
+        "task": "explique les bases du sujet choisi et ses principaux enjeux",
+        "format": "fournis une réponse structurée en trois parties : définition, contexte, enjeux"
+      },
+      "finalPrompt": "Tu es expert en recherche d'informations fiable et synthétique.\nTâche : explique les bases du sujet choisi et ses principaux enjeux.\nFormat de la réponse : fournis une réponse structurée en trois parties : définition, contexte, enjeux."
+    },
+    {
+      "id": "rtf-4",
+      "title": "Analyser des données",
+      "source": "SRC-2",
+      "answers": {
+        "role": "analyste en statistiques, expert dans l'interprétation des données",
+        "task": "explique les tendances clés d'un graphique représentant les ventes mensuelles",
+        "format": "fournis une analyse en 3 phrases claires"
+      },
+      "finalPrompt": "Tu es analyste en statistiques, expert dans l'interprétation des données.\nTâche : explique les tendances clés d'un graphique représentant les ventes mensuelles.\nFormat de la réponse : fournis une analyse en 3 phrases claires."
+    },
+    {
+      "id": "rtf-5",
+      "title": "Code",
+      "source": "AJOUT",
+      "answers": {
+        "role": "développeur JavaScript senior qui explique à un débutant",
+        "task": "explique la différence entre let et const",
+        "format": "2 courts exemples de code et 3 lignes d'explication"
+      },
+      "finalPrompt": "Tu es développeur JavaScript senior qui explique à un débutant.\nTâche : explique la différence entre let et const.\nFormat de la réponse : 2 courts exemples de code et 3 lignes d'explication."
+    },
+    {
+      "id": "rtf-6",
+      "title": "Musique",
+      "source": "AJOUT",
+      "answers": {
+        "role": "ingénieur du son spécialisé en mixage de voix",
+        "task": "me donne 5 réglages de base pour nettoyer une voix enregistrée au téléphone",
+        "format": "liste numérotée, une ligne par réglage"
+      },
+      "finalPrompt": "Tu es ingénieur du son spécialisé en mixage de voix.\nTâche : me donne 5 réglages de base pour nettoyer une voix enregistrée au téléphone.\nFormat de la réponse : liste numérotée, une ligne par réglage."
+    },
+    {
+      "id": "rtf-7",
+      "title": "Gestion",
+      "source": "AJOUT",
+      "answers": {
+        "role": "gérant de boutique expérimenté",
+        "task": "propose 5 règles simples pour suivre un stock de produits",
+        "format": "tableau à deux colonnes : règle et raison"
+      },
+      "finalPrompt": "Tu es gérant de boutique expérimenté.\nTâche : propose 5 règles simples pour suivre un stock de produits.\nFormat de la réponse : tableau à deux colonnes : règle et raison."
+    },
+    {
+      "id": "rtf-8",
+      "title": "Apprentissage d'une langue",
+      "source": "AJOUT",
+      "answers": {
+        "role": "professeur d'anglais pour débutants francophones",
+        "task": "m'explique la différence entre « do » et « make »",
+        "format": "5 phrases d'exemple avec leur traduction"
+      },
+      "finalPrompt": "Tu es professeur d'anglais pour débutants francophones.\nTâche : m'explique la différence entre « do » et « make ».\nFormat de la réponse : 5 phrases d'exemple avec leur traduction."
+    },
+    {
+      "id": "rtf-9",
+      "title": "Idées de projet",
+      "source": "AJOUT",
+      "answers": {
+        "role": "conseiller en idées de produits numériques",
+        "task": "propose 5 idées de petites applications utiles à des étudiants",
+        "format": "liste : nom de l'idée, problème résolu, une ligne"
+      },
+      "finalPrompt": "Tu es conseiller en idées de produits numériques.\nTâche : propose 5 idées de petites applications utiles à des étudiants.\nFormat de la réponse : liste : nom de l'idée, problème résolu, une ligne."
+    },
+    {
+      "id": "rtf-10",
+      "title": "Texte professionnel",
+      "source": "AJOUT",
+      "answers": {
+        "role": "assistant administratif",
+        "task": "écris un message poli pour reporter un rendez-vous de lundi à jeudi",
+        "format": "4 lignes maximum"
+      },
+      "finalPrompt": "Tu es assistant administratif.\nTâche : écris un message poli pour reporter un rendez-vous de lundi à jeudi.\nFormat de la réponse : 4 lignes maximum."
+    },
+    {
+      "id": "rtf-11",
+      "title": "Résumer des articles spécialisés",
+      "source": "SRC-BERNE",
+      "answers": {
+        "role": "collaboratrice scientifique ayant de l'expertise dans la planification des transports",
+        "task": "rédige un résumé structuré de plusieurs articles relatifs à la planification des transports",
+        "format": "un texte courant d'environ 300 mots"
+      },
+      "finalPrompt": "Tu es collaboratrice scientifique ayant de l'expertise dans la planification des transports.\nTâche : rédige un résumé structuré de plusieurs articles relatifs à la planification des transports.\nFormat de la réponse : un texte courant d'environ 300 mots."
+    },
+    {
+      "id": "rtf-12",
+      "title": "Résumer une réunion",
+      "source": "SRC-GUIDE",
+      "answers": {
+        "role": "assistant de direction",
+        "task": "extrais les 5 décisions principales, les actions à mener avec les responsables assignés, et les prochaines étapes de la réunion de ce matin",
+        "format": "un tableau"
+      },
+      "finalPrompt": "Tu es assistant de direction.\nTâche : extrais les 5 décisions principales, les actions à mener avec les responsables assignés, et les prochaines étapes de la réunion de ce matin.\nFormat de la réponse : un tableau."
+    }
+  ],
+  "limitations": [
+    "Pas de contexte : l'IA ne sait pas POURQUOI tu demandes",
+    "Pas de ton : elle choisit elle-même le registre",
+    "Pas de contraintes explicites : pas de garde-fou",
+    "Pas de vérification : pas de contrôle qualité",
+    "Pas d'exemples à imiter : style libre"
+  ],
+  "nextStepIfFail": {
+    "method": "craft",
+    "reason": "Si la réponse est à côté (ton inadapté, contexte manquant), ajoute un contexte et une tonalité avec CRAFT."
+  },
+  "tips": [
+    "Commence par RTF pour toute demande rapide. Si insatisfait, monte d'un niveau (CRAFT).",
+    "Un rôle précis + une tâche avec verbe d'action + un format chiffré = 80 % du travail.",
+    "Teste toujours le prompt avant de le sauvegarder. L'IA peut surprendre."
+  ],
+  "commonErrorsOverall": [
+    "Rôle vide ou vague (« expert »)",
+    "Tâche sans verbe d'action",
+    "Format oublié (l'IA choisit, souvent trop long)",
+    "Deux tâches dans une seule case",
+    "Rôle sans rapport avec la tâche"
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-2",
+      "AJOUT",
+      "SRC-BERNE",
+      "SRC-GUIDE"
+    ],
+    "validated": true
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "version": "1.0.0",
+  "description": "Catalogue des 21 tons avec compatibilités et incompatibilités.",
+  "maxSelection": 3,
+  "rule": "Maximum 3 tons. Éviter les contradictions.",
+  "tones": [
+    {
+      "id": "pedagogique",
+      "label": "Pédagogique",
+      "effect": "Explications progressives, exemples, vérification de la compréhension.",
+      "useFor": ["cours", "tutoriels", "explications"],
+      "compatible": ["encourageant", "accessible", "clair", "bienveillant"],
+      "example": "Adopte un ton pédagogique, engageant et adapté aux débutants."
+    },
+    {
+      "id": "encourageant",
+      "label": "Encourageant",
+      "effect": "Valorise les efforts, motive, positive.",
+      "useFor": ["débutants", "motivation", "coaching"],
+      "compatible": ["pedagogique", "motivant", "empathique", "bienveillant"],
+      "example": "Adopte un ton encourageant et bienveillant."
+    },
+    {
+      "id": "clair",
+      "label": "Clair et informatif",
+      "effect": "Phrases directes, pas de décor, information nette.",
+      "useFor": ["consignes", "fiches", "rapports"],
+      "compatible": ["professionnel", "neutre", "accessible", "pedagogique", "factuel"],
+      "example": "Le ton doit être clair et informatif."
+    },
+    {
+      "id": "professionnel",
+      "label": "Professionnel",
+      "effect": "Vocabulaire soigné, structuré, crédible.",
+      "useFor": ["mails", "rapports", "présentations"],
+      "compatible": ["clair", "formel", "direct", "neutre"],
+      "example": "Adopte un ton professionnel, clair et inspirant."
+    },
+    {
+      "id": "formel",
+      "label": "Formel",
+      "effect": "Vouvoiement, politesse, distance respectueuse.",
+      "useFor": ["administratif", "courriers officiels"],
+      "compatible": ["professionnel", "neutre"],
+      "example": "Adopte un ton formel et respectueux."
+    },
+    {
+      "id": "familier",
+      "label": "Familier",
+      "effect": "Phrases courtes, expressions, proximité.",
+      "useFor": ["réseaux sociaux", "jeunes publics"],
+      "compatible": ["ludique", "accessible", "concret"],
+      "example": "Adopte un ton familier et proche du public."
+    },
+    {
+      "id": "ludique",
+      "label": "Ludique",
+      "effect": "Humour léger, images, jeux de mots.",
+      "useFor": ["jeunes publics", "contenus légers"],
+      "compatible": ["accessible", "familier", "inspirant"],
+      "example": "Adopte un ton ludique et accessible."
+    },
+    {
+      "id": "inspirant",
+      "label": "Inspirant",
+      "effect": "Verbes forts, vision, élévation.",
+      "useFor": ["discours", "vision", "motivation"],
+      "compatible": ["motivant", "professionnel", "persuasif", "ludique"],
+      "example": "Utilise un ton professionnel, clair et inspirant."
+    },
+    {
+      "id": "motivant",
+      "label": "Motivant",
+      "effect": "Action, énergie, dépassement.",
+      "useFor": ["coaching", "sport", "objectifs"],
+      "compatible": ["inspirant", "concret", "encourageant"],
+      "example": "Adopte un ton motivant et concret."
+    },
+    {
+      "id": "serieux",
+      "label": "Sérieux",
+      "effect": "Factuel, sobre, posé.",
+      "useFor": ["sujets sensibles", "rapports officiels"],
+      "compatible": ["neutre", "professionnel", "factuel"],
+      "example": "Adopte un ton sérieux et factuel."
+    },
+    {
+      "id": "empathique",
+      "label": "Empathique",
+      "effect": "Reconnaît les émotions, valide, rassure.",
+      "useFor": ["soutien", "service client", "santé"],
+      "compatible": ["bienveillant", "accessible", "encourageant"],
+      "example": "Adopte un ton empathique et bienveillant."
+    },
+    {
+      "id": "direct",
+      "label": "Direct",
+      "effect": "Dit les choses sans détour, sans agressivité.",
+      "useFor": ["critique", "audit", "feedback"],
+      "compatible": ["professionnel", "bienveillant", "factuel", "concret"],
+      "example": "Adopte un ton direct mais bienveillant."
+    },
+    {
+      "id": "neutre",
+      "label": "Neutre",
+      "effect": "Pas d'opinion, faits, objectivité.",
+      "useFor": ["comparaisons", "rapports", "analyses"],
+      "compatible": ["factuel", "professionnel", "serieux", "clair"],
+      "example": "Adopte un ton neutre et factuel."
+    },
+    {
+      "id": "persuasif",
+      "label": "Persuasif",
+      "effect": "Arguments, appel à l'action, conviction.",
+      "useFor": ["vente", "marketing", "discours"],
+      "compatible": ["inspirant", "professionnel", "motivant"],
+      "example": "Adopte un ton persuasif et inspirant."
+    },
+    {
+      "id": "poetique",
+      "label": "Poétique",
+      "effect": "Images, rythme, émotion.",
+      "useFor": ["paroles", "textes littéraires"],
+      "compatible": ["narratif", "inspirant", "personnel"],
+      "example": "Adopte un ton poétique et personnel."
+    },
+    {
+      "id": "narratif",
+      "label": "Narratif",
+      "effect": "Raconte, scène, personnages.",
+      "useFor": ["histoires", "scénarios", "contes"],
+      "compatible": ["poetique", "accessible", "engageant"],
+      "example": "Adopte un ton narratif et engageant."
+    },
+    {
+      "id": "technique",
+      "label": "Technique",
+      "effect": "Termes précis, rigueur, documentation.",
+      "useFor": ["experts", "documentation", "tutoriels avancés"],
+      "compatible": ["professionnel", "direct", "factuel", "précis"],
+      "example": "Adopte un ton technique et précis."
+    },
+    {
+      "id": "accessible",
+      "label": "Accessible",
+      "effect": "Mots simples, sans jargon, grand public.",
+      "useFor": ["vulgarisation", "grand public", "débutants"],
+      "compatible": ["pedagogique", "clair", "familier", "ludique", "empathique"],
+      "example": "Adopte un ton accessible et sans jargon."
+    },
+    {
+      "id": "bienveillant",
+      "label": "Bienveillant",
+      "effect": "Attention à l'autre, respect, douceur.",
+      "useFor": ["critique utile", "soutien", "feedback"],
+      "compatible": ["empathique", "direct", "encourageant", "pedagogique"],
+      "example": "Adopte un ton direct mais bienveillant."
+    },
+    {
+      "id": "concret",
+      "label": "Concret",
+      "effect": "Exemples, actions, applicabilité.",
+      "useFor": ["plans d'action", "conseils", "tutoriels"],
+      "compatible": ["motivant", "direct", "familier", "précis"],
+      "example": "Adopte un ton concret et motivant."
+    },
+    {
+      "id": "factuel",
+      "label": "Factuel",
+      "effect": "Chiffres, sources, vérifiabilité.",
+      "useFor": ["rapports", "analyses", "audits"],
+      "compatible": ["neutre", "direct", "serieux", "technique", "clair"],
+      "example": "Adopte un ton neutre et factuel."
+    }
+  ],
+  "incompatibilities": [
+    { "pair": ["serieux", "ludique"], "reason": "Contradiction : sobre vs humoristique." },
+    { "pair": ["formel", "familier"], "reason": "Contradiction : vouvoiement vs proximité." },
+    { "pair": ["tres-detaille", "tres-court"], "reason": "Contradiction : exhaustif vs concis." },
+    { "pair": ["poetique", "technique"], "reason": "Contradiction : images vs termes précis." },
+    { "pair": ["neutre", "persuasif"], "reason": "Contradiction : objectivité vs conviction." }
+  ],
+  "quickPairs": [
+    { "id": "learning", "tones": ["pedagogique", "encourageant", "accessible"], "useFor": "apprentissage" },
+    { "id": "business", "tones": ["professionnel", "clair", "direct"], "useFor": "travail" },
+    { "id": "feedback", "tones": ["direct", "bienveillant", "concret"], "useFor": "critique utile" },
+    { "id": "coaching", "tones": ["motivant", "concret", "bienveillant"], "useFor": "plan d'action" },
+    { "id": "vulgarisation", "tones": ["accessible", "précis", "engageant"], "useFor": "grand public" }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+  "id": "coaching",
+  "version": "1.0.0",
+  "locale": "fr-FR",
+  "title": "Comprendre le prompting",
+  "sources": {
+    "SRC-BERNE": "Prompting (Canton de Berne)",
+    "SRC-ADOBE": "Prompts pour l'Assistant IA (Adobe)",
+    "SRC-GUIDE": "Guide complet du prompting"
+  },
+  "definition": {
+    "prompt": "Un prompt (ou requête, ou instruction générative) est le texte que tu écris dans l'outil d'IA pour obtenir le résultat que tu veux. Le prompting est l'art de formuler ces requêtes.",
+    "tone": "La plupart des outils d'IA permettent de personnaliser le ton des réponses dans les paramètres (par exemple « Instructions personnalisées »)."
+  },
+  "analogy": {
+    "title": "Comment parler à une IA",
+    "intro": "Imagine une collaboratrice infatigable qui ne se lasse jamais de répondre. Mais même la meilleure aime les consignes claires et précises.",
+    "rules": [
+      "Dis-lui ce que tu veux, pas juste « un truc sympa ».",
+      "Mets-la dans le bon rôle.",
+      "Définis le format, sinon elle part en freestyle.",
+      "Fixe les limites : elle n'est pas devin."
+    ],
+    "summary": "Plus ta demande est précise, plus la réponse sera bonne."
+  },
+  "notASearchEngine": {
+    "title": "Une IA n'est pas un moteur de recherche",
+    "text": "Les outils d'IA sont utiles pour générer des textes, trouver des idées ou traiter des informations dans un contexte connu. Pour des résultats précis, actuels et fiables, les moteurs de recherche et les sources spécialisées restent indispensables.",
+    "tip": "Dans le doute, demande à l'IA le degré d'actualité de ses connaissances et les sources auxquelles elle a accès."
+  },
+  "frameworks": {
+    "berne": {
+      "label": "Le modèle en 6 étapes",
+      "source": "SRC-BERNE",
+      "intro": "Définir l'objectif, préciser la tâche, définir le format, ajouter du contexte, indiquer la tonalité, et attribuer un rôle.",
+      "steps": [
+        {
+          "id": "role",
+          "label": "Attribuer un rôle",
+          "prompt": "Tu es une collaboratrice scientifique ayant de l'expertise dans la planification des transports.",
+          "why": "Ce rôle aide l'IA à comprendre le contexte et le degré de spécialisation de la demande."
+        },
+        {
+          "id": "objective",
+          "label": "Définir l'objectif",
+          "prompt": "Rédige un résumé structuré de plusieurs articles relatifs à la planification des transports.",
+          "why": "Un objectif clair guide l'IA dans la bonne direction."
+        },
+        {
+          "id": "task",
+          "label": "Préciser la tâche",
+          "prompt": "Résume les principales conclusions des articles mis à disposition, incluant les principales tendances et leurs implications.",
+          "why": "Une consigne précise réduit la probabilité d'obtenir des résultats non pertinents."
+        },
+        {
+          "id": "format",
+          "label": "Définir le format",
+          "prompt": "Rédige un texte courant d'environ 300 mots.",
+          "why": "Un format précis donne une réponse claire et exploitable.",
+          "remark": "Une IA ne peut pas générer un nombre exact de caractères. En revanche, elle peut compter les caractères d'une réponse déjà donnée."
+        },
+        {
+          "id": "context",
+          "label": "Ajouter du contexte",
+          "prompt": "Les articles ont été rédigés entre 2022 et 2024 et traitent des thèmes [X, Y, Z].",
+          "why": "Les informations de contexte permettent à l'IA de produire des résultats plus pertinents et plus ciblés."
+        },
+        {
+          "id": "tone",
+          "label": "Indiquer la tonalité",
+          "prompt": "Formule le résumé dans une langue claire, objective et facilement compréhensible.",
+          "why": "Un style adapté rend les résultats accessibles au public visé."
+        }
+      ]
+    },
+    "adobe": {
+      "label": "Le cadre en 4 éléments",
+      "source": "SRC-ADOBE",
+      "intro": "Un bon prompt contient une tâche, un contexte, et si besoin des attentes et un format.",
+      "elements": [
+        {
+          "id": "task",
+          "label": "Tâche",
+          "optional": false,
+          "advice": "Décris clairement la tâche. Évite l'argot, le jargon et le langage informel."
+        },
+        {
+          "id": "context",
+          "label": "Contexte",
+          "optional": false,
+          "advice": "Donne les informations nécessaires. Ne pars pas du principe que l'IA connaît déjà la tâche."
+        },
+        {
+          "id": "expectations",
+          "label": "Attentes",
+          "optional": true,
+          "advice": "Indique l'objectif de la réponse. Vérifie que tes instructions sont claires et non contradictoires."
+        },
+        {
+          "id": "format",
+          "label": "Format",
+          "optional": true,
+          "advice": "Décris le résultat souhaité et les contraintes éventuelles, comme un nombre de mots."
+        }
+      ],
+      "example": {
+        "task": "Créer un résumé des avis client récents sur un produit.",
+        "expectations": "Le résumé doit identifier les thèmes clés et le sentiment général.",
+        "format": "Ne pas dépasser 200 mots et utiliser un langage professionnel adapté à une réunion d'équipe marketing."
+      }
+    }
+  },
+  "goodPractices": [
+    {
+      "id": "gp-1",
+      "title": "Ne laisse rien au hasard",
+      "text": "Réfléchis à ce que tu attends de l'IA et dis clairement ton objectif."
+    },
+    {
+      "id": "gp-2",
+      "title": "Privilégie la simplicité",
+      "text": "Exprime-toi dans un langage facile à comprendre."
+    },
+    {
+      "id": "gp-3",
+      "title": "Ne lésine pas sur les détails",
+      "text": "Précise les contraintes : nombre de mots, format."
+    },
+    {
+      "id": "gp-4",
+      "title": "Laisse parler ta personnalité",
+      "text": "Indique le style ou le ton que tu veux."
+    },
+    {
+      "id": "gp-5",
+      "title": "Définis un plan d'ensemble",
+      "text": "Pour un prompt complexe, dresse une liste d'étapes."
+    },
+    {
+      "id": "gp-6",
+      "title": "Affine au fur et à mesure",
+      "text": "Si le résultat n'est pas parfait, reformule."
+    }
+  ],
+  "mistakes": [
+    {
+      "id": "er-1",
+      "title": "Un prompt trop vague",
+      "text": "Fais preuve d'une grande clarté."
+    },
+    {
+      "id": "er-2",
+      "title": "Demander des informations inappropriées",
+      "text": "Respecte les lois, les règlements et les droits d'auteur."
+    },
+    {
+      "id": "er-3",
+      "title": "Employer du jargon",
+      "text": "L'argot et le langage informel nuisent à la qualité."
+    },
+    {
+      "id": "er-4",
+      "title": "Donner des instructions contradictoires",
+      "text": "L'IA aura du mal à comprendre l'objectif."
+    },
+    {
+      "id": "er-5",
+      "title": "Compliquer inutilement",
+      "text": "Trop d'instructions créent de la confusion."
+    },
+    {
+      "id": "er-6",
+      "title": "Croire que l'IA sait tout",
+      "text": "Vérifie toujours l'exactitude des réponses."
+    }
+  ],
+  "checklist": [
+    {
+      "id": "ck-1",
+      "element": "rôle",
+      "question": "Ai-je donné un rôle précis à l'IA ?"
+    },
+    {
+      "id": "ck-2",
+      "element": "tâche",
+      "question": "La tâche est-elle décrite avec précision ?"
+    },
+    {
+      "id": "ck-3",
+      "element": "contexte",
+      "question": "Ai-je donné toutes les informations utiles ?"
+    },
+    {
+      "id": "ck-4",
+      "element": "format",
+      "question": "Ai-je précisé le format voulu ?"
+    },
+    {
+      "id": "ck-5",
+      "element": "éthique",
+      "question": "Ai-je évité d'écrire des informations confidentielles ou personnelles ?"
+    },
+    {
+      "id": "ck-6",
+      "element": "exclusions",
+      "question": "Ai-je dit clairement ce qu'il faut exclure du résultat ?"
+    },
+    {
+      "id": "ck-7",
+      "element": "langue",
+      "question": "La langue est-elle adaptée (par exemple « claire et concise ») ?"
+    },
+    {
+      "id": "ck-8",
+      "element": "affiner",
+      "question": "Suis-je prêt à améliorer mon prompt après les premiers résultats ?"
+    }
+  ],
+  "ethics": [
+    {
+      "id": "eth-1",
+      "title": "Données et confidentialité",
+      "text": "N'écris jamais dans un outil d'IA des informations qui ne sont pas publiques : données personnelles, informations classifiées, secret professionnel.",
+      "action": "Si un texte en contient, supprime, masque ou reformule ces passages avant de l'envoyer."
+    },
+    {
+      "id": "eth-2",
+      "title": "Vérification des résultats",
+      "text": "L'IA peut produire des résultats faux ou biaisés (on parle d'hallucinations).",
+      "action": "Relis toujours le résultat avant de l'utiliser : contenu et langue."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Zero-shot",
+      "definition": "L'IA résout une tâche sans qu'on lui donne d'exemple.",
+      "technique": "zero-shot"
+    },
+    {
+      "term": "One-shot",
+      "definition": "On donne un seul exemple pour montrer le style ou la structure attendue.",
+      "technique": "few-shot"
+    },
+    {
+      "term": "Few-shot",
+      "definition": "On donne plusieurs exemples : plus de contexte et de direction, donc un résultat plus précis et plus cohérent.",
+      "technique": "few-shot"
+    },
+    {
+      "term": "Chaînage de prompts",
+      "definition": "On découpe une tâche complexe en petites étapes. Le résultat d'une étape sert à construire la suivante.",
+      "technique": "prompt-chaining"
+    },
+    {
+      "term": "Métaprompting",
+      "definition": "On demande à l'IA d'analyser des requêtes ou des résultats, d'y trouver les faiblesses et de proposer des améliorations.",
+      "technique": "metaprompting"
+    },
+    {
+      "term": "Chaîne de pensée",
+      "definition": "On demande à l'IA de raisonner étape par étape et d'expliquer son argumentation, ce qui améliore la précision en logique, en calcul et sur les tâches à plusieurs étapes.",
+      "technique": "chain-of-thought"
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-11-03",
+    "updatedAt": "2026-11-03",
+    "validated": true
+  }
+}

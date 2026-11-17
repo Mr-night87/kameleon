@@ -1,0 +1,461 @@
+{
+  "id": "multi-agents",
+  "label": "Multi-agents",
+  "fullName": "Multi-agents collaboration",
+  "shortDescription": "Plusieurs IA spécialisées collaborent. Version simulée ou réelle.",
+  "description": "Le multi-agents consiste à faire collaborer plusieurs agents IA spécialisés pour accomplir une tâche globale. Chaque agent est spécialisé dans un domaine précis, et ensemble ils combinent leurs expertises pour fournir des réponses complètes et de haute qualité. Deux implémentations existent : (1) la version SIMULÉE, où un seul prompt demande à l'IA de jouer plusieurs rôles successivement ; (2) la version RÉELLE, où plusieurs appels IA distincts sont orchestrés (chaque appel a son propre rôle, et un agent « chef d'orchestre » synthétise). La version simulée est accessible à tous. La version réelle est plus robuste mais nécessite une architecture logicielle.",
+  "category": "avancée",
+  "difficulty": 4,
+  "estimatedTime": "3 à 10 minutes (simulée) / infrastructure (réelle)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Tâche complexe qui demande plusieurs expertises",
+    "Projet qui nécessite des angles complémentaires (technique, business, UX)",
+    "Besoin d'une critique structurée avant de finaliser",
+    "Décision majeure où plusieurs avis valent mieux qu'un",
+    "Production de livrables qui demandent vérification et critique",
+    "Quand ToT (simulé) ne suffit pas et que tu veux une vraie séparation des rôles",
+    "Quand tu veux faire jouer la concurrence entre plusieurs IA",
+    "Quand tu veux un « critique » qui cherche les failles avant livraison"
+  ],
+  "whenNotToUse": [
+    "Question simple ou factuelle (→ zero-shot)",
+    "Calcul court (→ CoT)",
+    "Décision entre 2-3 options connues (→ self-consistency)",
+    "Quand tu n'as pas les moyens d'orchestrer plusieurs appels (version réelle)",
+    "Quand le coût en tokens est critique",
+    "Quand tu veux une réponse rapide",
+    "Quand tu n'as pas d'API pour orchestrer (version réelle impossible)"
+  ],
+  "source": [
+    "SRC-1",
+    "SRC-2 (faites jouer la concurrence)",
+    "AJOUT (distinction simulé/réel)"
+  ],
+  "methodsCitation": "Keyrus : « l'utilisation de multi-agents, où plusieurs agents IA collaborent pour accomplir une tâche globale, peut s'avérer particulièrement efficace. Chaque agent peut être spécialisé dans un domaine précis, et ensemble, ils peuvent combiner leurs expertises pour fournir des réponses complètes et de haute qualité. » Cavazza : « N'hésitez pas à demander à un chatbot de critiquer la réponse d'un autre chatbot et de proposer des améliorations, puis soumettez ces améliorations au premier chatbot pour qu'il affine sa réponse. »",
+  "principle": "Décomposer une tâche en rôles spécialisés, faire travailler chaque rôle, puis orchestrer la synthèse. Version simulée : un seul prompt joue tous les rôles. Version réelle : plusieurs appels IA distincts avec un orchestrateur.",
+  "triggerPhrases": [
+    "Joue trois personnes à tour de rôle : l'analyste, le rédacteur et le critique. L'analyste pose les questions. Le rédacteur écrit le prompt. Le critique cherche les défauts. Puis le rédacteur corrige.",
+    "Fais appel à 4 agents spécialisés : un analyste, un rédacteur, un critique et un vérificateur. Chacun intervient dans l'ordre. Le critique cherche les failles. Le vérificateur contrôle la conformité.",
+    "Simule une équipe projet : un chef de projet, un développeur, un testeur et un client. Chacun donne son point de vue. Puis le chef de projet synthétise.",
+    "Demande à un premier agent de proposer une réponse, puis à un second agent de la critiquer, puis à un troisième de l'améliorer.",
+    "Fais jouer la concurrence : demande à 3 agents de proposer chacun une solution, puis compare-les et garde la meilleure.",
+    "Voici un livrable : [texte]. Fais-le réviser par 3 agents : un expert du domaine, un relecteur orthographique, un spécialiste du public cible. Chacun propose des corrections. Puis donne la version corrigée."
+  ],
+  "triggerPhraseNote": "La phrase la plus puissante est « Joue N personnes à tour de rôle ». Elle force l'IA à séparer les rôles au lieu de tout mélanger. Sans cette phrase, l'IA donne une réponse monolithique.",
+  "examplePrompts": [
+    {
+      "id": "ma-1",
+      "title": "Création de prompt avec 3 agents (simulé)",
+      "prompt": "Joue trois personnes à tour de rôle : l'analyste, le rédacteur et le critique. L'analyste pose les questions pour comprendre le besoin. Le rédacteur écrit le prompt. Le critique cherche les défauts. Puis le rédacteur corrige.\n\nBesoin : je veux un prompt pour rédiger une description de morceau de rap mélancolique.",
+      "source": "SRC-1 (inspiré de l'architecture Kameleon Prompter)",
+      "note": "C'est la version simulée : un seul prompt, 3 rôles successifs. C'est aussi l'architecture interne de Kameleon Prompter (analyste → rédacteur → critique)."
+    },
+    {
+      "id": "ma-2",
+      "title": "Concurrence entre agents (Cavazza)",
+      "prompt": "Voici une réponse proposée par un premier agent : [réponse 1]. Joue le rôle d'un critique expert. Liste 5 faiblesses de cette réponse. Puis propose une version améliorée. Enfin, compare les deux versions et dis laquelle est la meilleure.",
+      "source": "SRC-2 (faites jouer la concurrence)",
+      "note": "C'est la technique de Cavazza : un agent critique la réponse d'un autre. Version simplifiée en un seul prompt."
+    },
+    {
+      "id": "ma-3",
+      "title": "Équipe projet simulée",
+      "prompt": "Simule une équipe projet pour concevoir une appli de prompts. 4 agents : un chef de projet (priorise), un développeur (propose la technique), un designer (propose l'UX), un client (exprime les besoins). Chacun donne son point de vue en 5 lignes. Puis le chef de projet synthétise en un plan d'action de 5 étapes.",
+      "source": "AJOUT",
+      "note": "La version simulée est accessible à tous. Chaque agent a un rôle et un format de sortie précis."
+    },
+    {
+      "id": "ma-4",
+      "title": "Critique structurée d'un livrable",
+      "prompt": "Voici mon CV : [CV]. Fais-le réviser par 3 agents : (1) un recruteur tech (cherche les points forts et les points faibles), (2) un expert en ATS (cherche les problèmes de format), (3) un coach de carrière (cherche les incohérences avec mon projet professionnel). Chacun liste 3 remarques. Puis propose une version corrigée du CV.",
+      "source": "AJOUT",
+      "note": "La critique multi-agents est plus riche qu'une critique unique : chaque agent voit un angle différent."
+    },
+    {
+      "id": "ma-5",
+      "title": "Débat entre agents avec convergence",
+      "prompt": "Simule un débat entre 3 agents : un optimiste (défend le projet), un pessimiste (cherche les risques), un pragmatique (cherche les conditions de faisabilité). Sujet : lancer une chaîne YouTube de tutoriels code en 2026. Chacun défend son point de vue en 5 lignes. Puis les 3 convergent vers 3 conditions de réussite.",
+      "source": "AJOUT",
+      "note": "La convergence finale est essentielle : sans elle, le débat reste stérile."
+    },
+    {
+      "id": "ma-6",
+      "title": "Agent rédacteur + agent critique + agent optimiseur",
+      "prompt": "Joue 3 agents successifs pour améliorer ce message client : [message]. Agent 1 (rédacteur) : propose une version plus claire. Agent 2 (critique) : liste 3 faiblesses de la version proposée. Agent 3 (optimiseur) : donne la version finale en corrigeant les faiblesses. Format : les 3 versions, puis la version finale en gras.",
+      "source": "AJOUT",
+      "note": "La version séquentielle est la plus pédagogique : on voit le processus d'amélioration."
+    },
+    {
+      "id": "ma-7",
+      "title": "Multi-agents réel (orchestration via API)",
+      "prompt": "Architecture réelle (nécessite plusieurs appels) :\n1. Agent « analyste » : pose 3 questions à l'utilisateur.\n2. Agent « rédacteur » : écrit un prompt avec la méthode CRAFT.\n3. Agent « critique » : cherche 3 faiblesses dans le prompt.\n4. Agent « optimiseur » : corrige le prompt.\n5. Agent « vérificateur » : contrôle que toutes les contraintes sont respectées.\n\nChaque agent est un appel API distinct. L'orchestrateur enchaîne les appels et transmet le résultat de chaque étape au suivant.",
+      "source": "AJOUT (architecture Kameleon Prompter)",
+      "note": "Version réelle : chaque agent est un appel séparé. Plus robuste, mais plus coûteux et plus complexe à implémenter. C'est l'architecture interne de Kameleon Prompter."
+    }
+  ],
+  "keyrusExampleAnalysis": {
+    "originalText": "l'utilisation de multi-agents, où plusieurs agents IA collaborent pour accomplir une tâche globale, peut s'avérer particulièrement efficace. Chaque agent peut être spécialisé dans un domaine précis, et ensemble, ils peuvent combiner leurs expertises pour fournir des réponses complètes et de haute qualité.",
+    "structure": [
+      {
+        "step": 1,
+        "action": "Plusieurs agents",
+        "extrait": "plusieurs agents IA"
+      },
+      {
+        "step": 2,
+        "action": "Collaboration",
+        "extrait": "collaborent pour accomplir une tâche globale"
+      },
+      {
+        "step": 3,
+        "action": "Spécialisation",
+        "extrait": "chaque agent est spécialisé dans un domaine précis"
+      },
+      {
+        "step": 4,
+        "action": "Combinaison d'expertises",
+        "extrait": "ensemble, ils combinent leurs expertises"
+      },
+      {
+        "step": 5,
+        "action": "Résultat de qualité",
+        "extrait": "réponses complètes et de haute qualité"
+      }
+    ],
+    "insight": "Le multi-agents n'est pas juste « fais appel à plusieurs IA ». C'est un processus en 5 temps : (1) plusieurs agents, (2) collaboration, (3) spécialisation, (4) combinaison, (5) qualité. Le mot clé est « spécialisé » : chaque agent doit avoir un angle précis, sinon il y a redondance.",
+    "keyrusLimitation": "Keyrus mentionne la version réelle (« plusieurs agents IA collaborent ») sans détailler l'implémentation. Kameleon Prompter propose la version simulée (accessible) et signale la version réelle (avancée)."
+  },
+  "cavazzaExampleAnalysis": {
+    "originalText": "N'hésitez pas à demander à un chatbot de critiquer la réponse d'un autre chatbot et de proposer des améliorations, puis soumettez ces améliorations au premier chatbot pour qu'il affine sa réponse.",
+    "structure": [
+      {
+        "step": 1,
+        "action": "Demander à un agent de critiquer",
+        "extrait": "demander à un chatbot de critiquer la réponse d'un autre chatbot"
+      },
+      {
+        "step": 2,
+        "action": "Proposer des améliorations",
+        "extrait": "et de proposer des améliorations"
+      },
+      {
+        "step": 3,
+        "action": "Soumettre au premier agent",
+        "extrait": "soumettre ces améliorations au premier chatbot"
+      },
+      {
+        "step": 4,
+        "action": "Affiner la réponse",
+        "extrait": "pour qu'il affine sa réponse"
+      }
+    ],
+    "insight": "Cavazza propose la version « concurrence » : un agent critique, un autre améliore, puis retour au premier. C'est une boucle d'amélioration à deux agents. C'est la version réelle la plus simple à implémenter (2 appels)."
+  },
+  "variants": [
+    {
+      "id": "simulated",
+      "label": "Multi-agents simulé (1 prompt)",
+      "description": "Un seul prompt demande à l'IA de jouer plusieurs rôles successivement.",
+      "when": "Chatbot standard, pas d'API",
+      "example": "Joue trois personnes à tour de rôle : l'analyste, le rédacteur et le critique."
+    },
+    {
+      "id": "sequential",
+      "label": "Séquentiel (rédacteur → critique → optimiseur)",
+      "description": "Chaque agent intervient dans l'ordre, avec un format de sortie précis.",
+      "when": "Amélioration itérative d'un livrable",
+      "example": "Agent 1 (rédacteur) : propose une version. Agent 2 (critique) : liste 3 faiblesses. Agent 3 (optimiseur) : donne la version finale."
+    },
+    {
+      "id": "debate",
+      "label": "Débat avec convergence",
+      "description": "Plusieurs agents avec des avis opposés, puis convergence.",
+      "when": "Décision, stratégie",
+      "example": "3 agents : optimiste, pessimiste, pragmatique. Chacun défend son point de vue. Puis ils convergent vers 3 conditions de réussite."
+    },
+    {
+      "id": "jury",
+      "label": "Jury d'experts",
+      "description": "Plusieurs agents experts évaluent un livrable selon leurs critères.",
+      "when": "Validation d'un livrable, décision majeure",
+      "example": "3 experts (technique, business, UX) évaluent ce prototype. Chacun donne une note sur 10 et une critique. Puis le jury donne un verdict."
+    },
+    {
+      "id": "competition",
+      "label": "Concurrence (Cavazza)",
+      "description": "Un agent critique la réponse d'un autre, puis le premier affine.",
+      "when": "Amélioration d'une réponse existante",
+      "example": "Voici la réponse d'un agent. Joue le critique. Liste 5 faiblesses. Puis le premier agent affine sa réponse."
+    },
+    {
+      "id": "real",
+      "label": "Multi-agents réel (API)",
+      "description": "Plusieurs appels IA distincts, orchestrés par un chef d'orchestre.",
+      "when": "Infrastructure disponible, tâche critique",
+      "example": "5 agents : analyste, rédacteur, critique, optimiseur, vérificateur. Chaque agent est un appel API. L'orchestrateur enchaîne les appels."
+    },
+    {
+      "id": "full",
+      "label": "Multi-agents complet",
+      "description": "Analyste + rédacteur + critique + optimiseur + vérificateur + synthèse.",
+      "when": "Tâche critique, livrable important",
+      "example": "5 agents successifs + un agent « synthèse » qui consolide le résultat final."
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison ToT (simulé, 1 appel) vs Multi-agents (réel, N appels) pour la même tâche.",
+    "task": "Choisir une architecture pour un jeu multijoueur.",
+    "withTreeOfThoughts": "Imagine 3 experts (technique, réseau, UX) qui débattent. Chacun propose son chemin. Le groupe élague les branches faibles. Puis développe la meilleure.",
+    "totLimitation": "ToT simule le débat dans UN SEUL appel. Les 3 experts sont joués par la même IA, dans la même conversation. Risque : les experts se ressemblent, l'élagage est superficiel.",
+    "withMultiAgentsReal": "Appel 1 (agent technique) : propose une architecture technique. Appel 2 (agent réseau) : critique l'architecture au niveau réseau. Appel 3 (agent UX) : critique l'architecture au niveau expérience utilisateur. Appel 4 (orchestrateur) : synthétise les 3 avis et propose une architecture finale.",
+    "maResult": "Chaque agent est un appel séparé avec son propre contexte. Les avis sont vraiment indépendants (pas de contamination par la même conversation). L'orchestrateur synthétise.",
+    "improvement": "ToT simule un débat. Multi-agents réels fait un vrai débat. Le résultat est plus robuste, mais le coût est plus élevé (N appels au lieu d'1)."
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-roles",
+      "description": "Identifier N rôles complémentaires.",
+      "when": "Tâche complexe multi-dimension",
+      "result": "Chaque rôle apporte un angle"
+    },
+    {
+      "id": "add-sequence",
+      "description": "Imposer une séquence entre les agents (rédacteur → critique → optimiseur).",
+      "when": "Amélioration itérative",
+      "result": "Chaque agent s'appuie sur le précédent"
+    },
+    {
+      "id": "add-convergence",
+      "description": "Demander une convergence finale après le débat.",
+      "when": "Agents avec avis opposés",
+      "result": "Le groupe tranche"
+    },
+    {
+      "id": "add-critic",
+      "description": "Ajouter un agent « critique » qui cherche les failles.",
+      "when": "Livrable important",
+      "result": "Les faiblesses sont identifiées"
+    },
+    {
+      "id": "add-verifier",
+      "description": "Ajouter un agent « vérificateur » qui contrôle la conformité.",
+      "when": "Livrable avec contraintes",
+      "result": "Le respect des contraintes est validé"
+    },
+    {
+      "id": "add-orchestrator",
+      "description": "Ajouter un agent « chef d'orchestre » qui synthétise.",
+      "when": "Toujours (version réelle)",
+      "result": "Le résultat final est cohérent"
+    },
+    {
+      "id": "split-into-calls",
+      "description": "Séparer les rôles en appels API distincts.",
+      "when": "Version réelle",
+      "result": "Indépendance réelle des agents"
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "techniques": [
+      "chain-of-thought",
+      "self-consistency",
+      "generate-knowledge",
+      "react",
+      "tree-of-thoughts",
+      "rag"
+    ],
+    "note": "Multi-agents se combine avec toutes les méthodes et techniques. Il est naturel avec ToT (chaque expert peut être un agent réel) et avec RAG (chaque agent peut avoir ses propres documents)."
+  },
+  "combinationExamples": [
+    {
+      "id": "ma-cot",
+      "label": "Multi-agents + CoT",
+      "description": "Chaque agent raisonne étape par étape.",
+      "before": "Joue 3 agents (analyste, rédacteur, critique).",
+      "after": "Joue 3 agents (analyste, rédacteur, critique). Chaque agent raisonne étape par étape : (1) pose ses hypothèses, (2) développe son raisonnement, (3) conclut. Puis le groupe synthétise."
+    },
+    {
+      "id": "ma-sc",
+      "label": "Multi-agents + Self-consistency",
+      "description": "Chaque agent propose plusieurs options.",
+      "before": "3 agents proposent une solution.",
+      "after": "3 agents proposent chacun 2 solutions différentes. Chaque solution est évaluée par les autres agents. Le groupe retient la solution la plus robuste."
+    },
+    {
+      "id": "ma-rag",
+      "label": "Multi-agents + RAG",
+      "description": "Chaque agent a ses propres documents.",
+      "before": "3 agents analysent un projet.",
+      "after": "Agent 1 (technique) analyse [doc technique]. Agent 2 (juridique) analyse [doc juridique]. Agent 3 (business) analyse [doc business]. Chacun répond à partir de ses documents. Puis un orchestrateur synthétise."
+    },
+    {
+      "id": "ma-tot",
+      "label": "Multi-agents + ToT",
+      "description": "ToT pour le débat, multi-agents pour l'implémentation réelle.",
+      "before": "Imagine 3 experts qui débattent.",
+      "after": "Version réelle : 3 appels API distincts. Appel 1 (agent A) : propose son chemin. Appel 2 (agent B) : propose un chemin différent. Appel 3 (agent C) : critique les 2 chemins. Appel 4 (orchestrateur) : élague les faiblesses et développe la meilleure branche."
+    },
+    {
+      "id": "ma-contexte-v",
+      "label": "Multi-agents + CONTEXTE-V",
+      "description": "Version complète : 9 blocs + orchestration multi-agents.",
+      "before": "Contexte : Concevoir une appli de prompts.\nRôle : Chef de projet.\nAction : Propose un plan.\nFormat : 5 étapes.\nTonalité : Neutre.",
+      "after": "Contexte : Concevoir une appli de prompts pour débutants.\nObjectif : Obtenir un plan validé par plusieurs experts.\nNiveau : Tu joues 4 agents (chef de projet, développeur, designer, client).\nTâche : Chaque agent donne son point de vue en 5 lignes. Puis le chef de projet synthétise un plan en 5 étapes.\nExemples : —\nX-contraintes : 5 étapes max. Pas de jargon.\nTonalité : Neutre, factuel.\nEncodage : Pour chaque agent : point de vue. Puis plan en 5 étapes.\nVérification : Vérifie que chaque étape découle d'un agent."
+    }
+  ],
+  "technicalNote": "Le multi-agents existe en deux versions. La version SIMULÉE est un prompt qui demande à l'IA de jouer plusieurs rôles (accessible à tous, 1 seul appel). La version RÉELLE orchestre plusieurs appels API distincts, chacun avec son propre rôle et son propre contexte (plus robuste, N appels). Dans la littérature, le multi-agents fait référence à la version réelle (frameworks comme AutoGen, CrewAI, LangGraph). Pour Kameleon Prompter, la version simulée est proposée par défaut ; la version réelle est l'architecture interne de l'app.",
+  "scientificContext": {
+    "origin": "Le concept de multi-agents est ancien en IA distribué (années 1990). Il a été popularisé pour les LLMs par des frameworks comme AutoGen (Microsoft, 2023), CrewAI (2023), LangGraph (2024).",
+    "finding": "Faire collaborer plusieurs agents spécialisés améliore les performances sur les tâches complexes, au prix d'un coût plus élevé.",
+    "adaptation": "Dans un chatbot standard, on simule le multi-agents en demandant à l'IA de jouer plusieurs rôles. Pour une version réelle, il faut orchestrer plusieurs appels.",
+    "caveat": "Le multi-agents réel nécessite une architecture logicielle (orchestrateur, gestion des appels, synthèse). La version simulée est plus accessible mais moins robuste."
+  },
+  "limitations": [
+    "Version simulée : les agents peuvent se ressembler (même IA, même contexte)",
+    "Version réelle : coût très élevé (N appels API)",
+    "Version réelle : infrastructure complexe à mettre en place",
+    "Risque de « théâtre » : les agents débattent sans vraiment converger",
+    "L'orchestrateur peut mal synthétiser les avis",
+    "Difficile de garantir l'indépendance réelle des agents",
+    "La convergence finale peut être artificielle",
+    "Pas adapté aux questions simples"
+  ],
+  "nextStepIfFail": {
+    "technique": "rag",
+    "reason": "Si les agents hallucinent ou inventent des faits, ajoute RAG : chaque agent peut avoir ses propres documents. Si les agents ne convergent pas, ajoute un agent « synthèse » explicite. Si le coût est trop élevé, redescends à ToT (simulé)."
+  },
+  "tips": [
+    "Le mot le plus puissant est « spécialisé » : chaque agent doit avoir un angle RADICALEMENT différent.",
+    "Ajoute TOUJOURS un agent « synthèse » ou « orchestrateur » : sinon les agents produisent des avis isolés.",
+    "La version simulée est accessible : commence par elle. La version réelle est pour les projets critiques.",
+    "Pour faire jouer la concurrence (Cavazza), utilise 2 agents : un qui propose, un qui critique.",
+    "Pour une critique riche, utilise 3 agents avec des angles différents (technique, business, humain).",
+    "L'agent « vérificateur » est souvent oublié : il contrôle que le livrable respecte les contraintes.",
+    "Si les agents se ressemblent, impose : « chaque agent doit contredire au moins un autre ».",
+    "Le coût de la version réelle est N fois celui d'un prompt simple. À réserver aux tâches critiques."
+  ],
+  "commonErrorsOverall": [
+    "Agents qui se ressemblent (pas de spécialisation)",
+    "Oublier l'agent de synthèse (avis isolés)",
+    "Débat sans convergence (théâtre)",
+    "Version réelle pour une tâche simple (coût inutile)",
+    "Version simulée pour une tâche critique (manque de robustesse)",
+    "Pas d'agent critique (livrable non testé)",
+    "Pas d'agent vérificateur (contraintes non contrôlées)",
+    "Orchestrateur qui écrase les avis des agents (synthèse dictatoriale)"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Création de prompt (architecture Kameleon Prompter)",
+      "example": "Analyste → rédacteur → critique → optimiseur → vérificateur",
+      "why": "Chaque agent a un rôle précis, le résultat est plus robuste."
+    },
+    {
+      "useCase": "Validation de CV",
+      "example": "Recruteur + expert ATS + coach de carrière",
+      "why": "Trois angles complémentaires sur le même livrable."
+    },
+    {
+      "useCase": "Décision d'architecture technique",
+      "example": "Expert technique + expert réseau + expert UX",
+      "why": "Chaque expert voit un aspect différent."
+    },
+    {
+      "useCase": "Rédaction d'article",
+      "example": "Rédacteur + correcteur + expert SEO",
+      "why": "Le texte est amélioré sur trois dimensions."
+    },
+    {
+      "useCase": "Débat stratégique",
+      "example": "Optimiste + pessimiste + pragmatique",
+      "why": "Tous les angles d'une décision sont explorés."
+    },
+    {
+      "useCase": "Critique d'un prompt existant",
+      "example": "Expert prompt engineering + expert du domaine + relecteur",
+      "why": "Chaque expert voit une faille différente."
+    },
+    {
+      "useCase": "Concurrence entre IA (Cavazza)",
+      "example": "ChatGPT propose, Claude critique, ChatGPT affine",
+      "why": "Deux IA différentes voient des choses différentes."
+    }
+  ],
+  "keyrusReference": {
+    "originalText": "l'utilisation de multi-agents, où plusieurs agents IA collaborent pour accomplir une tâche globale, peut s'avérer particulièrement efficace. Chaque agent peut être spécialisé dans un domaine précis, et ensemble, ils peuvent combiner leurs expertises pour fournir des réponses complètes et de haute qualité.",
+    "transformationObserved": "Keyrus présente le multi-agents comme une collaboration entre agents spécialisés. Le mot clé est « spécialisé ».",
+    "note": "Keyrus ne détaille pas l'implémentation. Kameleon Prompter propose la version simulée (accessible) et signale la version réelle (avancée)."
+  },
+  "cavazzaReference": {
+    "originalText": "N'hésitez pas à demander à un chatbot de critiquer la réponse d'un autre chatbot et de proposer des améliorations, puis soumettez ces améliorations au premier chatbot pour qu'il affine sa réponse.",
+    "transformationObserved": "Cavazza propose la version « concurrence » : 2 agents (proposeur + critique), puis retour au premier pour affiner.",
+    "note": "C'est la version réelle la plus simple : 2 appels, une boucle d'amélioration."
+  },
+  "kameleonArchitecture": {
+    "description": "L'architecture interne de Kameleon Prompter est un système multi-agents.",
+    "agents": [
+      {
+        "id": "analyst",
+        "role": "Analyste du besoin",
+        "task": "Pose des questions à l'utilisateur"
+      },
+      {
+        "id": "writer",
+        "role": "Rédacteur de prompt",
+        "task": "Écrit le prompt avec CRAFT ou CONTEXTE-V"
+      },
+      {
+        "id": "critic",
+        "role": "Critique",
+        "task": "Cherche les failles du prompt"
+      },
+      {
+        "id": "optimizer",
+        "role": "Optimiseur",
+        "task": "Propose une version améliorée"
+      },
+      {
+        "id": "verifier",
+        "role": "Vérificateur",
+        "task": "Contrôle le respect des contraintes"
+      }
+    ],
+    "note": "Kameleon Prompter est lui-même un multi-agents réel. Chaque agent correspond à une étape du parcours utilisateur."
+  },
+  "metrics": {
+    "tokenOverhead": "simulé : élevé (+ 200 à 500 %) / réel : très élevé (N × coût d'un appel)",
+    "accuracyGain": "significatif sur les tâches critiques",
+    "bestFor": "création de prompt, validation, décision majeure",
+    "worstFor": "questions simples, budget tokens serré, réponses rapides"
+  },
+  "securityWarning": {
+    "title": "Attention à la confidentialité dans la version réelle",
+    "details": [
+      "La version réelle envoie les mêmes données à plusieurs appels IA.",
+      "Vérifie que chaque agent a les mêmes garanties de confidentialité.",
+      "Ne mélange pas agents publics et agents privés sur des données sensibles.",
+      "Voir SEC-09 pour les risques éthiques et légaux."
+    ]
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": [
+      "SRC-1",
+      "SRC-2",
+      "AJOUT (distinction simulé/réel, architecture Kameleon Prompter)"
+    ],
+    "validated": true
+  },
+  "shortName": "MA"
+}

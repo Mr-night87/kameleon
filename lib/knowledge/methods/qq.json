@@ -1,0 +1,306 @@
+{
+  "id": "qq",
+  "label": "QQ",
+  "fullName": "Qui – Quoi – Comment – Pourquoi",
+  "shortDescription": "4 questions pour cadrer vite un besoin. 1 minute.",
+  "description": "QQ structure la réflexion de l'IA autour de quatre questions fondamentales : QUI est concerné, QUOI exactement, COMMENT procéder, POURQUOI le faire. C'est une méthode de cadrage, idéale comme « premier jet » avant de passer à CRAFT. Elle force à identifier le public, le livrable, la manière et l'enjeu — les quatre piliers de toute demande claire.",
+  "difficulty": 1,
+  "estimatedTime": "1 minute",
+  "level": "débutant",
+  "whenToUse": [
+    "Quand tu n'as pas de rôle précis en tête",
+    "Quand tu veux cadrer rapidement un besoin flou",
+    "Comme premier jet avant de passer à CRAFT",
+    "Quand le sujet est simple mais que tu veux vérifier que tu n'oublies rien",
+    "Pour les demandes orales retranscrites à l'écrit"
+  ],
+  "whenNotToUse": [
+    "Besoin d'un ton précis et d'un rôle détaillé (→ CRAFT)",
+    "Besoin d'exemples ou de contraintes (→ CONTEXTE-V)",
+    "Demande ultra-rapide (→ RTF)"
+  ],
+  "source": [
+    "SRC-1 (mention)",
+    "AJOUT (structure détaillée)"
+  ],
+  "methodsCitation": "Keyrus : la méthode QQ (qui, quoi, comment, pourquoi) structure la réflexion de l'IA. Le document ne la détaille pas ; la structure ci-dessous est une explicitation d'usage.",
+  "disclaimer": "Contrairement à RTF, CRAFT et CONTEXTE-V, la méthode QQ n'est pas détaillée dans les sources. Les blocs, exemples et validations ci-dessous sont construits par Kameleon Prompter pour rendre la méthode opérationnelle.",
+  "blocks": [
+    {
+      "id": "who",
+      "order": 1,
+      "letter": "Q1",
+      "label": "Qui",
+      "amorce": "Qui est concerné ?",
+      "description": "Identifie le public ou le rôle.",
+      "purpose": "Cadre le niveau de langage, le ton et le vocabulaire adaptés à l'audience.",
+      "question": "Qui est concerné par ta demande ?",
+      "hint": "Qui parle ? Qui lit ? À qui s'adresse la réponse ?",
+      "placeholder": "Ex : je suis débutant en programmation, je parle à un mentor",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 250,
+        "shouldMentionAudienceOrRole": true
+      },
+      "examples": [
+        "Je suis débutant en programmation, je parle à un mentor.",
+        "Je suis chef de projet et je m'adresse à une équipe technique.",
+        "Je suis étudiant et je prépare une présentation pour des professeurs.",
+        "Je suis community manager et mon public est composé de jeunes de 16-25 ans.",
+        "Je suis gérant de boutique et je m'adresse à mes employés.",
+        "Je suis artiste indépendant et mon public est composé de fans de rap.",
+        "Je suis responsable de l'organisation d'un événement d'entreprise de 100 personnes."
+      ],
+      "helper": "Le QUI détermine le ton et le vocabulaire. Un débutant n'a pas besoin du même langage qu'un expert.",
+      "commonErrors": [
+        "Oublier le public (« je veux comprendre » — pour qui ?)",
+        "Confondre « qui parle » et « à qui on parle »"
+      ],
+      "formula": "Je suis [qui je suis] et je m'adresse à [public]."
+    },
+    {
+      "id": "what",
+      "order": 2,
+      "letter": "Q2",
+      "label": "Quoi",
+      "amorce": "Quoi exactement ?",
+      "description": "Précise le sujet et le livrable attendu.",
+      "purpose": "Définit clairement ce que tu veux obtenir. Évite le vague.",
+      "question": "Que veux-tu obtenir exactement ?",
+      "hint": "Le sujet + le type de livrable (explication, liste, code, texte…).",
+      "placeholder": "Ex : je veux comprendre ce qu'est une variable",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 300,
+        "mustBeConcrete": true
+      },
+      "examples": [
+        "Je veux comprendre ce qu'est une variable.",
+        "Je veux une explication du fonctionnement d'une API REST.",
+        "Je veux une liste de 5 idées de titres pour mon article.",
+        "Je veux un plan de révision pour un examen.",
+        "Je veux une description de mon morceau pour les plateformes.",
+        "Je veux une fonction JavaScript qui calcule la moyenne d'un tableau.",
+        "Je veux une checklist exhaustive de toutes les tâches à accomplir."
+      ],
+      "helper": "Le QUOI dit ce que tu veux au final. Pas comment, pas pourquoi : juste quoi.",
+      "commonErrors": [
+        "Sujet trop vague (« parle-moi de l'IA »)",
+        "Mélanger plusieurs livrables (explication + liste + code)"
+      ],
+      "formula": "Je veux [type de livrable] sur [sujet précis]."
+    },
+    {
+      "id": "how",
+      "order": 3,
+      "letter": "Q3",
+      "label": "Comment",
+      "amorce": "Comment faut-il procéder ?",
+      "description": "Précise la manière, la méthode, le format et la longueur.",
+      "purpose": "Oriente la forme de la réponse. Sans COMMENT, l'IA choisit seule.",
+      "question": "Comment veux-tu que la réponse soit construite ?",
+      "hint": "Format (liste, tableau, texte), longueur, étapes, méthode.",
+      "placeholder": "Ex : explique avec 3 exemples en JavaScript, du plus simple au plus difficile",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 300,
+        "shouldMentionFormat": true
+      },
+      "examples": [
+        "Explique avec 3 exemples en JavaScript, du plus simple au plus difficile.",
+        "Présente sous forme de tableau à 2 colonnes : terme et définition.",
+        "Donne une réponse en 5 étapes numérotées, avec un exemple concret par étape.",
+        "Fais une liste de 7 points, une ligne chacun.",
+        "Rédige un paragraphe de 6 lignes maximum.",
+        "Structure en trois parties : définition, exemple, piège à éviter.",
+        "Classe les tâches par ordre chronologique : 3 mois avant, 1 mois avant, J-1, Jour J, post-événement."
+      ],
+      "helper": "Le COMMENT dit sous quelle forme. C'est la partie « format » de ta demande.",
+      "commonErrors": [
+        "Format absent (« explique bien »)",
+        "Format contradictoire (« très détaillé » et « 3 lignes »)",
+        "Confondre COMMENT (forme) et QUOI (sujet)"
+      ],
+      "formula": "Explique / présente sous forme de [format] avec [longueur/étapes]."
+    },
+    {
+      "id": "why",
+      "order": 4,
+      "letter": "Q4",
+      "label": "Pourquoi",
+      "amorce": "Pourquoi ?",
+      "description": "Précise le but final, l'enjeu, la raison d'être.",
+      "purpose": "Donne un cap à l'IA. Sans POURQUOI, elle peut répondre à côté.",
+      "question": "Pourquoi veux-tu cette réponse ? Quel est ton but final ?",
+      "hint": "Qu'est-ce que tu vas faire avec cette réponse ? Quel est l'enjeu ?",
+      "placeholder": "Ex : pour pouvoir écrire mon premier mini-jeu cette semaine",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 250,
+        "mustMentionGoal": true
+      },
+      "examples": [
+        "Pour pouvoir écrire mon premier mini-jeu cette semaine.",
+        "Pour comprendre la base avant de passer à un projet plus complexe.",
+        "Pour publier mon article demain matin.",
+        "Pour réussir mon examen dans 4 semaines.",
+        "Pour promouvoir mon morceau sur Instagram et TikTok.",
+        "Pour automatiser une tâche répétitive dans mon travail.",
+        "Pour ne rien oublier avant, pendant et après l'événement."
+      ],
+      "helper": "Le POURQUOI donne le cap. L'IA adapte ses explications et ses exemples selon l'enjeu.",
+      "commonErrors": [
+        "POURQUOI absent (« je veux comprendre, c'est tout »)",
+        "POURQUOI trop vague (« pour m'améliorer »)",
+        "Confondre POURQUOI (but) et COMMENT (forme)"
+      ],
+      "formula": "Pour [but final / usage concret]."
+    }
+  ],
+  "template": {
+    "pattern": "Qui : {who}\nQuoi : {what}\nComment : {how}\nPourquoi : {why}",
+    "example": "Qui : Je suis débutant en programmation, je parle à un mentor.\nQuoi : Je veux comprendre ce qu'est une variable.\nComment : Explique avec 3 exemples en JavaScript, du plus simple au plus difficile.\nPourquoi : Pour pouvoir écrire mon premier mini-jeu cette semaine.",
+    "assembly": [
+      "who",
+      "what",
+      "how",
+      "why"
+    ]
+  },
+  "examples": [
+    {
+      "id": "qq-1",
+      "title": "Comprendre une variable en programmation",
+      "source": "AJOUT",
+      "answers": {
+        "who": "Je suis débutant en programmation, je parle à un mentor.",
+        "what": "Je veux comprendre ce qu'est une variable.",
+        "how": "Explique avec 3 exemples en JavaScript, du plus simple au plus difficile.",
+        "why": "Pour pouvoir écrire mon premier mini-jeu cette semaine."
+      },
+      "finalPrompt": "Qui : Je suis débutant en programmation, je parle à un mentor.\nQuoi : Je veux comprendre ce qu'est une variable.\nComment : Explique avec 3 exemples en JavaScript, du plus simple au plus difficile.\nPourquoi : Pour pouvoir écrire mon premier mini-jeu cette semaine."
+    },
+    {
+      "id": "qq-2",
+      "title": "Préparer une présentation",
+      "source": "AJOUT",
+      "answers": {
+        "who": "Je suis étudiant et je m'adresse à des professeurs.",
+        "what": "Je veux un plan de présentation sur le réchauffement climatique.",
+        "how": "Structure en introduction, 3 parties, conclusion — avec une phrase d'accroche.",
+        "why": "Pour réussir mon oral de fin d'année dans 2 semaines."
+      },
+      "finalPrompt": "Qui : Je suis étudiant et je m'adresse à des professeurs.\nQuoi : Je veux un plan de présentation sur le réchauffement climatique.\nComment : Structure en introduction, 3 parties, conclusion — avec une phrase d'accroche.\nPourquoi : Pour réussir mon oral de fin d'année dans 2 semaines."
+    },
+    {
+      "id": "qq-3",
+      "title": "Promouvoir un morceau",
+      "source": "AJOUT",
+      "answers": {
+        "who": "Je suis artiste indépendant, mon public a entre 16 et 30 ans.",
+        "what": "Je veux une description courte pour accompagner mon single sur les plateformes.",
+        "how": "5 lignes max, avec une accroche et un appel à écouter.",
+        "why": "Pour promouvoir le morceau sur Instagram et TikTok dès sa sortie."
+      },
+      "finalPrompt": "Qui : Je suis artiste indépendant, mon public a entre 16 et 30 ans.\nQuoi : Je veux une description courte pour accompagner mon single sur les plateformes.\nComment : 5 lignes max, avec une accroche et un appel à écouter.\nPourquoi : Pour promouvoir le morceau sur Instagram et TikTok dès sa sortie."
+    },
+    {
+      "id": "qq-4",
+      "title": "Automatiser une tâche",
+      "source": "AJOUT",
+      "answers": {
+        "who": "Je suis gérant de boutique et je parle à un développeur junior.",
+        "what": "Je veux un script qui calcule le total des ventes de la journée.",
+        "how": "Code Python simple, avec commentaires en français, pas de bibliothèque externe.",
+        "why": "Pour arrêter de calculer manuellement chaque soir et éviter les erreurs."
+      },
+      "finalPrompt": "Qui : Je suis gérant de boutique et je parle à un développeur junior.\nQuoi : Je veux un script qui calcule le total des ventes de la journée.\nComment : Code Python simple, avec commentaires en français, pas de bibliothèque externe.\nPourquoi : Pour arrêter de calculer manuellement chaque soir et éviter les erreurs."
+    },
+    {
+      "id": "qq-5",
+      "title": "Comprendre une notion d'électronique",
+      "source": "AJOUT",
+      "answers": {
+        "who": "Je suis élève de terminale et je parle à un professeur.",
+        "what": "Je veux comprendre ce qu'est un signal sinusoïdal.",
+        "how": "Explique avec une analogie du quotidien et un schéma en texte.",
+        "why": "Pour réviser mon examen dans 3 semaines."
+      },
+      "finalPrompt": "Qui : Je suis élève de terminale et je parle à un professeur.\nQuoi : Je veux comprendre ce qu'est un signal sinusoïdal.\nComment : Explique avec une analogie du quotidien et un schéma en texte.\nPourquoi : Pour réviser mon examen dans 3 semaines."
+    },
+    {
+      "id": "qq-6",
+      "title": "Checklist d'événement",
+      "source": "SRC-GUIDE",
+      "answers": {
+        "who": "Je suis responsable de l'organisation d'un événement d'entreprise de 100 personnes.",
+        "what": "Je veux une checklist exhaustive de toutes les tâches à accomplir.",
+        "how": "Classe les tâches par ordre chronologique : 3 mois avant, 1 mois avant, J-1, Jour J, post-événement.",
+        "why": "Pour ne rien oublier avant, pendant et après l'événement."
+      },
+      "finalPrompt": "Qui : Je suis responsable de l'organisation d'un événement d'entreprise de 100 personnes.\nQuoi : Je veux une checklist exhaustive de toutes les tâches à accomplir.\nComment : Classe les tâches par ordre chronologique : 3 mois avant, 1 mois avant, J-1, Jour J, post-événement.\nPourquoi : Pour ne rien oublier avant, pendant et après l'événement."
+    }
+  ],
+  "limitations": [
+    "Pas de tonalité explicite (le QUI en donne une idée, mais c'est implicite)",
+    "Pas d'exemples à imiter formellement",
+    "Pas de vérification demandée",
+    "Pas de contraintes strictes",
+    "Structure moins « pro » que CRAFT ou CONTEXTE-V"
+  ],
+  "nextStepIfFail": {
+    "method": "craft",
+    "reason": "Si la réponse manque de ton ou de contexte, passe à CRAFT : tu ajouteras une tonalité explicite et un contexte plus riche. QQ est un cadrage, CRAFT est une structuration."
+  },
+  "tips": [
+    "QQ est une méthode de cadrage : elle t'aide à savoir ce que tu veux avant de le demander.",
+    "Utilise QQ comme premier jet. Une fois les 4 réponses posées, tu peux les transformer en CRAFT en 2 minutes.",
+    "Le QUI et le POURQUOI sont les plus sous-estimés : ce sont eux qui donnent la direction.",
+    "Si ton POURQUOI est flou, c'est souvent que ton besoin n'est pas encore clair.",
+    "QQ fonctionne aussi à l'oral : pose-toi les 4 questions avant d'écrire à une IA."
+  ],
+  "commonErrorsOverall": [
+    "Oublier le QUI (public flou, ton inadapté)",
+    "QUOI trop vague (« parle-moi de… »)",
+    "COMMENT absent (l'IA choisit, souvent trop long)",
+    "POURQUOI absent (réponse à côté du besoin réel)",
+    "Confondre COMMENT (forme) et QUOI (sujet)"
+  ],
+  "comparisonWithRtf": {
+    "adds": [
+      "who",
+      "why"
+    ],
+    "removes": [],
+    "renames": [
+      {
+        "from": "task",
+        "to": "what"
+      },
+      {
+        "from": "format",
+        "to": "how"
+      }
+    ],
+    "note": "QQ et RTF se ressemblent : QQ est une version « cadrage » (public + but) là où RTF est une version « structure » (rôle + tâche + format). Les deux sont complémentaires."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-1 (mention)",
+      "AJOUT (structure)",
+      "SRC-GUIDE"
+    ],
+    "validated": true
+  }
+}

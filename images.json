@@ -1,0 +1,10 @@
+{
+  "_aide": "Mets une URL d'image pour chaque cle. Si une URL ne charge pas, un fond degrade avec la lettre s'affiche. Pas trop d'images : 7 emplacements.",
+  "avatar": "https://google/images_ia.png",
+  "rtf": "https://google/images_ia.png",
+  "craft": "https://google/images_ia.png",
+  "contexte-v": "https://google/images_ia.png",
+  "qq": "https://google/images_ia.png",
+  "active": "https://google/images_ia.png",
+  "reverse": "https://google/images_ia.png"
+}

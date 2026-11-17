@@ -1,0 +1,20 @@
+const U = require("../ux.js"); let n = 0;
+const ok = (c, m) => { if (!c) { console.error("ÉCHEC:", m); process.exit(1); } n++; };
+ok(U.phaseOf(0, 3) === "early" && U.phaseOf(1, 3) === "mid" && U.phaseOf(2, 3) === "end", "3 étapes : début, milieu, fin");
+ok(U.phaseOf(0, 8) === "early" && U.phaseOf(2, 8) === "early" && U.phaseOf(4, 8) === "mid" && U.phaseOf(7, 8) === "end", "8 étapes");
+ok(U.phaseOf(0, 1) === "early" && U.phaseOf(0, 0) === "early", "1 étape / vide : pas de plantage");
+ok(U.swipeDone(85, 100) && !U.swipeDone(84, 100) && !U.swipeDone(0, 0), "seuil de confirmation 85 %");
+ok(U.clamp(-5, 0, 10) === 0 && U.clamp(99, 0, 10) === 10 && U.clamp(4, 0, 10) === 4, "clamp");
+ok(U.progress(0, 5) === 0 && U.progress(4, 5) === 1 && U.progress(0, 1) === 1, "progression");
+console.log("ux OK :", n, "contrôles");
+{ let n2 = 0; const ok2 = (c, m) => { if (!c) { console.error("ÉCHEC:", m); process.exit(1); } n2++; };
+  ok2(U.nextEffort("min") === "mid" && U.nextEffort("mid") === "max" && U.nextEffort("max") === "min" && U.nextEffort("zz") === "max", "cycle d'effort");
+  ok2(U.effortOf(null) === "mid" && U.effortDeg("min") === -60 && U.effortPos("max") === 1, "effort par défaut et position");
+  let t = U.addTag([], "  musique  ");
+  ok2(t.length === 1 && t[0] === "musique", "tag ajouté, espaces retirés");
+  ok2(U.addTag(t, "MUSIQUE") === t && U.addTag(t, "   ") === t, "doublon et vide refusés");
+  ok2(U.addTag(Array(12).fill("x").map((x, i) => x + i), "autre").length === 12, "maximum 12 tags");
+  ok2(U.addTag([], "a".repeat(80))[0].length === 40, "tag limité à 40 caractères");
+  ok2(U.removeTag(["a", "b", "c"], 1).join() === "a,c" && U.removeTag(null, 0).length === 0, "retrait d'un tag");
+  ok2(U.shortHint("Un texte très long pour tester la coupe propre en fin de mot", 20).endsWith("…") && U.shortHint("court", 20) === "court", "aide raccourcie");
+  console.log("ux effort + tags OK :", n2, "contrôles"); }

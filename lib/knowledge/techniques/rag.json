@@ -1,0 +1,367 @@
+{
+  "id": "rag",
+  "label": "RAG",
+  "fullName": "Retrieval-Augmented Generation",
+  "shortDescription": "Réponse appuyée sur TES documents. Moins d'invention, plus de fiabilité.",
+  "description": "RAG (Retrieval-Augmented Generation) consiste à enrichir les réponses de l'IA avec des informations contextuelles pertinentes, récupérées dans des documents ou des bases de données actualisées. Au lieu de répondre uniquement avec ce qu'elle a appris pendant son entraînement, l'IA s'appuie sur TES sources. C'est la technique de la fiabilité : elle réduit les hallucinations et rend les réponses vérifiables. Keyrus l'appelle « apprentissage thématique ». Elle est essentielle pour les sujets sensibles (santé, juridique, entreprise) et les documents internes.",
+  "category": "avancée",
+  "difficulty": 3,
+  "estimatedTime": "2 à 5 minutes (ajout de documents)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Sujet sensible (santé, juridique, finance) où l'exactitude est critique",
+    "Documents internes d'entreprise (procédures, contrats, notes)",
+    "Base de connaissances à jour (catalogue, tarifs, réglementation)",
+    "Quand tu veux des sources vérifiables",
+    "Quand l'IA hallucine régulièrement sur un sujet",
+    "Quand tu veux que l'IA réponde uniquement à partir de TES documents",
+    "Quand tu as un long texte à analyser (rapport, article, livre)"
+  ],
+  "whenNotToUse": [
+    "Question factuelle simple (→ zero-shot)",
+    "Brainstorming créatif (→ generate-knowledge)",
+    "Calcul pur (→ CoT)",
+    "Quand tu n'as pas de document fiable à fournir",
+    "Quand le document est trop long pour le contexte de l'IA (découper)",
+    "Quand le document est confidentiel et que tu ne peux pas le partager (voir SEC-09)"
+  ],
+  "source": [
+    "SRC-1",
+    "AJOUT (variante manuelle, mise en garde)"
+  ],
+  "methodsCitation": "Keyrus : « l'apprentissage thématique (Retrieval-Augmented Generation), qui permet d'enrichir les réponses de l'IA avec des informations contextuelles pertinentes en temps réel. En intégrant des ressources internes spécifiques et en accédant à des bases de données actualisées, l'IA peut fournir des réponses plus précises et adaptées aux besoins immédiats. »",
+  "principle": "Fournir à l'IA TES documents (ou une base de données), puis lui demander de répondre UNIQUEMENT à partir de ces documents. Si l'information n'y est pas, elle doit le dire.",
+  "triggerPhrases": [
+    "Voici mon document : [texte]. Réponds uniquement à partir de ce document. Si l'information n'y est pas, dis-le.",
+    "Voici 3 extraits de mes notes : [extraits]. En te basant uniquement sur ces extraits, réponds à : [question].",
+    "Voici la documentation officielle : [texte]. Cite les passages que tu utilises pour répondre.",
+    "Voici mon contrat : [texte]. Analyse-le et réponds à mes questions en te basant uniquement sur ce contrat.",
+    "Base-toi sur ce texte pour répondre. N'invente rien. Si une information manque, indique-la clairement.",
+    "Voici mes données internes : [texte]. Réponds comme si tu étais un expert de ces données. Cite les passages utilisés.",
+    "Analyse ce document et réponds à la question. Distingue ce qui est explicite dans le document de ce que tu déduis."
+  ],
+  "triggerPhraseNote": "La phrase la plus puissante est « Réponds uniquement à partir de ce document. Si l'information n'y est pas, dis-le. » Sans cette phrase, l'IA complète avec ses connaissances générales et peut halluciner.",
+  "examplePrompts": [
+    {
+      "id": "rag-1",
+      "title": "RAG manuel simple (sans code)",
+      "prompt": "Voici le règlement intérieur de mon entreprise : [texte du règlement]. Réponds uniquement à partir de ce document. Question : combien de jours de télétravail par semaine sont autorisés ? Si l'information n'est pas dans le document, dis-le clairement.",
+      "source": "AJOUT",
+      "note": "La version la plus accessible : l'utilisateur colle son document dans le prompt. Fonctionne avec n'importe quel chatbot."
+    },
+    {
+      "id": "rag-2",
+      "title": "RAG avec citation des sources",
+      "prompt": "Voici trois extraits d'articles scientifiques sur le sommeil : [extrait 1], [extrait 2], [extrait 3]. Question : combien d'heures de sommeil sont recommandées pour un adulte ? Pour ta réponse, cite les extraits utilisés (extrait 1, extrait 2, etc.). Si les extraits se contredisent, signale-le.",
+      "source": "AJOUT",
+      "note": "L'IA doit citer les sources et signaler les contradictions. Indispensable pour les sujets sensibles."
+    },
+    {
+      "id": "rag-3",
+      "title": "RAG avec distinction explicite/déduit",
+      "prompt": "Voici le contrat de travail de mon client : [texte du contrat]. Question : quelles sont les clauses de non-concurrence ? Pour chaque clause, distingue : (a) ce qui est explicitement écrit dans le contrat, (b) ce que tu déduis par interprétation. Ne mélange pas les deux.",
+      "source": "AJOUT",
+      "note": "La distinction explicite/déduit est essentielle pour les documents juridiques."
+    },
+    {
+      "id": "rag-4",
+      "title": "RAG sur un document long",
+      "prompt": "Voici un rapport de 5 pages : [texte]. Analyse-le et réponds aux questions suivantes : (1) quels sont les 3 principaux risques identifiés ? (2) quelles sont les recommandations proposées ? Pour chaque réponse, cite le passage du rapport qui la justifie.",
+      "source": "AJOUT",
+      "note": "RAG fonctionne aussi pour analyser un document long. L'IA extrait les informations clés."
+    },
+    {
+      "id": "rag-5",
+      "title": "RAG avec base de données (version technique)",
+      "prompt": "Voici la liste des produits de ma boutique avec leurs prix et stocks : [données]. Question : quels produits sont en rupture de stock et quel est leur prix ? Réponds sous forme de tableau. N'ajoute aucun produit qui n'est pas dans la liste.",
+      "source": "AJOUT",
+      "note": "Version pseudo-technique : l'utilisateur colle une base de données (CSV, JSON, tableau). L'IA répond en s'appuyant dessus."
+    },
+    {
+      "id": "rag-6",
+      "title": "RAG avec vérification de complétude",
+      "prompt": "Voici le manuel utilisateur de mon appareil : [texte]. Question : comment régler la luminosité ? Réponds uniquement à partir du manuel. Si le manuel ne contient pas l'information, dis-le. Si l'information est incomplète, signale ce qui manque.",
+      "source": "AJOUT",
+      "note": "L'IA est invitée à signaler les informations manquantes ou incomplètes, pas à combler les trous avec ses connaissances."
+    }
+  ],
+  "keyrusExampleAnalysis": {
+    "originalText": "l'apprentissage thématique (Retrieval-Augmented Generation), qui permet d'enrichir les réponses de l'IA avec des informations contextuelles pertinentes en temps réel. En intégrant des ressources internes spécifiques et en accédant à des bases de données actualisées, l'IA peut fournir des réponses plus précises et adaptées aux besoins immédiats.",
+    "structure": [
+      {
+        "step": 1,
+        "action": "Récupérer des informations",
+        "extrait": "informations contextuelles pertinentes"
+      },
+      {
+        "step": 2,
+        "action": "En temps réel",
+        "extrait": "récupérées en temps réel"
+      },
+      {
+        "step": 3,
+        "action": "Intégrer des ressources internes",
+        "extrait": "ressources internes spécifiques"
+      },
+      {
+        "step": 4,
+        "action": "Accéder à des bases actualisées",
+        "extrait": "bases de données actualisées"
+      },
+      {
+        "step": 5,
+        "action": "Répondre plus précisément",
+        "extrait": "réponses plus précises et adaptées"
+      }
+    ],
+    "insight": "Keyrus décrit RAG comme un processus en 5 temps : (1) récupération, (2) temps réel, (3) ressources internes, (4) bases actualisées, (5) réponse précise. Le mot « temps réel » est important : RAG ne se contente pas de documents figés, il peut accéder à des données à jour.",
+    "limitation": "Keyrus ne détaille pas l'implémentation technique (base vectorielle, embeddings…). Dans Kameleon Prompter, on propose la version manuelle (coller le document) qui ne nécessite aucune infrastructure."
+  },
+  "variants": [
+    {
+      "id": "manual",
+      "label": "RAG manuel (sans code)",
+      "description": "L'utilisateur colle son document directement dans le prompt.",
+      "when": "Document court à moyen, chatbot standard",
+      "example": "Voici mon document : [texte]. Réponds uniquement à partir de ce document."
+    },
+    {
+      "id": "with-citation",
+      "label": "RAG avec citation",
+      "description": "L'IA doit citer les passages utilisés.",
+      "when": "Sujet sensible, besoin de vérifier",
+      "example": "Réponds en citant les passages exacts du document que tu utilises."
+    },
+    {
+      "id": "with-distinction",
+      "label": "RAG avec distinction explicite/déduit",
+      "description": "L'IA distingue ce qui est écrit de ce qu'elle déduit.",
+      "when": "Document juridique, contrat",
+      "example": "Distingue : (a) ce qui est explicitement dans le document, (b) ce que tu déduis."
+    },
+    {
+      "id": "with-completeness-check",
+      "label": "RAG avec vérification de complétude",
+      "description": "L'IA signale les informations manquantes.",
+      "when": "Manuel, documentation",
+      "example": "Si l'information n'est pas dans le document, dis-le. Si elle est incomplète, signale ce qui manque."
+    },
+    {
+      "id": "multi-documents",
+      "label": "RAG multi-documents",
+      "description": "Fournir plusieurs documents et demander à l'IA de les croiser.",
+      "when": "Comparaison de sources, synthèse",
+      "example": "Voici 3 documents : [doc1], [doc2], [doc3]. Synthétise les informations. Si les documents se contredisent, signale-le."
+    },
+    {
+      "id": "technical",
+      "label": "RAG technique (avec base vectorielle)",
+      "description": "Version avancée : base vectorielle, embeddings, recherche sémantique.",
+      "when": "Grande base de documents, production",
+      "example": "L'utilisateur a une base de documents indexée. Le système récupère les passages pertinents avant de les envoyer à l'IA."
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison generate-knowledge vs RAG pour la même question.",
+    "question": "Quels sont les jours de télétravail autorisés dans mon entreprise ?",
+    "withGenerateKnowledge": "Imagine que tu es un expert en droit du travail. Combien de jours de télétravail sont autorisés en France ?",
+    "gkRisk": "L'IA donne la réponse générique de la loi française (2 jours/semaine en moyenne), mais elle ne connaît pas le règlement intérieur de l'entreprise. Elle peut halluciner ou donner une réponse inadaptée.",
+    "withRAG": "Voici le règlement intérieur de mon entreprise : [texte du règlement]. Question : combien de jours de télétravail par semaine sont autorisés ? Réponds uniquement à partir de ce document. Si l'information n'y est pas, dis-le.",
+    "ragResult": "L'IA lit le règlement et donne la réponse exacte de l'entreprise (par exemple 3 jours/semaine). Si l'info n'est pas dans le règlement, elle le dit au lieu d'inventer.",
+    "improvement": "RAG répond avec TES documents. Generate-knowledge répond avec les connaissances générales de l'IA. Pour un sujet spécifique (entreprise, dossier personnel), RAG est indispensable."
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-document",
+      "description": "Ajouter un document dans le prompt.",
+      "when": "Besoin de fiabilité sur un sujet spécifique",
+      "result": "L'IA s'appuie sur le document"
+    },
+    {
+      "id": "add-constraint",
+      "description": "Ajouter « Réponds uniquement à partir de ce document ».",
+      "when": "L'IA complète avec ses connaissances générales",
+      "result": "L'IA reste dans le document"
+    },
+    {
+      "id": "add-missing-info-rule",
+      "description": "Ajouter « Si l'information n'y est pas, dis-le ».",
+      "when": "L'IA invente pour combler les trous",
+      "result": "L'IA signale les manques"
+    },
+    {
+      "id": "add-citation",
+      "description": "Ajouter « Cite les passages utilisés ».",
+      "when": "Besoin de vérifier les sources",
+      "result": "L'IA cite les extraits"
+    },
+    {
+      "id": "add-distinction",
+      "description": "Ajouter « Distingue explicite et déduit ».",
+      "when": "Document juridique, contrat",
+      "result": "L'IA sépare les deux"
+    },
+    {
+      "id": "split-documents",
+      "description": "Fournir plusieurs documents séparés.",
+      "when": "Comparaison de sources",
+      "result": "L'IA croise les documents"
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "techniques": [
+      "chain-of-thought",
+      "self-consistency",
+      "generate-knowledge",
+      "react",
+      "tree-of-thoughts"
+    ],
+    "note": "RAG se combine avec toutes les méthodes. Il est naturel avec CONTEXTE-V (le document peut être mis dans le bloc Exemples ou dans une section dédiée) et avec CoT (le raisonnement s'appuie sur les documents)."
+  },
+  "combinationExamples": [
+    {
+      "id": "rag-cot",
+      "label": "RAG + CoT",
+      "description": "Raisonner étape par étape à partir des documents.",
+      "before": "Voici mon contrat : [texte]. Analyse-le.",
+      "after": "Voici mon contrat : [texte]. Analyse-le étape par étape : (1) identifie les parties, (2) identifie les obligations de chaque partie, (3) identifie les clauses de non-concurrence, (4) identifie les clauses de résiliation. Pour chaque étape, cite le passage du contrat qui correspond."
+    },
+    {
+      "id": "rag-sc",
+      "label": "RAG + Self-consistency",
+      "description": "Analyser le document sous plusieurs angles.",
+      "before": "Voici mon rapport : [texte]. Analyse-le.",
+      "after": "Voici mon rapport : [texte]. Analyse-le sous 3 angles différents : (1) angle financier, (2) angle opérationnel, (3) angle stratégique. Pour chaque angle, cite les passages du rapport qui justifient ton analyse. Conclus par les 3 points les plus importants."
+    },
+    {
+      "id": "rag-craft",
+      "label": "RAG + CRAFT",
+      "description": "Structurer l'analyse documentaire avec contexte et format.",
+      "before": "Contexte : Je dois analyser un contrat.\nRôle : Juriste.\nAction : Analyse le contrat.\nFormat : 5 points.\nTonalité : Neutre.",
+      "after": "Contexte : Je dois analyser le contrat de travail de mon client : [texte].\nRôle : Agis en tant que juriste spécialisé en droit du travail.\nAction : Analyse les clauses de non-concurrence. Distingue ce qui est explicite de ce que tu déduis. Cite les passages utilisés.\nFormat : 5 points numérotés, chacun avec un extrait du contrat.\nTonalité : Neutre, factuel."
+    },
+    {
+      "id": "rag-gk",
+      "label": "RAG + Generate Knowledge",
+      "description": "Compléter les documents avec des connaissances générales (avec précaution).",
+      "before": "Voici mon document : [texte]. Analyse-le.",
+      "after": "Voici mon document : [texte]. Analyse-le en distinguant : (a) ce qui vient du document, (b) ce que tu ajoutes comme connaissance générale. Pour (b), signale-le clairement."
+    }
+  ],
+  "technicalNote": "RAG a été popularisé par la recherche en IA (Lewis et al., 2020) sous le nom « Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks ». Le principe : récupérer des documents pertinents dans une base, puis les envoyer à l'IA avec la question. Dans un chatbot standard, on utilise la version manuelle : l'utilisateur colle le document. Pour une base de documents volumineuse, il faut une base vectorielle (Pinecone, Weaviate, Chroma…) et un système d'embeddings.",
+  "scientificContext": {
+    "origin": "Article de recherche (Lewis et al., 2020) : « Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks ».",
+    "finding": "Fournir à l'IA des documents pertinents au moment de la réponse améliore significativement la précision et réduit les hallucinations.",
+    "adaptation": "Dans un chatbot standard, on colle le document dans le prompt. Pour une base volumineuse, on utilise une base vectorielle qui récupère les passages pertinents.",
+    "caveat": "La qualité de la réponse dépend de la qualité du document. Un document biaisé produit une réponse biaisée. Un document obsolète produit une réponse obsolète."
+  },
+  "limitations": [
+    "La qualité de la réponse dépend de la qualité du document",
+    "Les documents doivent être à jour (un document obsolète = réponse obsolète)",
+    "La taille du document est limitée par la fenêtre de contexte de l'IA",
+    "L'IA peut mal interpréter un document ambigu",
+    "Un document biaisé produit une réponse biaisée",
+    "La version manuelle ne fonctionne pas pour de très gros documents (il faut découper)",
+    "Ne jamais envoyer de données confidentielles à une IA sans autorisation (SEC-09)",
+    "L'IA peut quand même halluciner si le document est incomplet"
+  ],
+  "nextStepIfFail": {
+    "technique": "self-consistency",
+    "reason": "Si RAG donne une réponse incomplète, c'est souvent que le document est incomplet. Ajoute self-consistency : demande à l'IA d'analyser le document sous plusieurs angles pour repérer les manques. Si l'IA hallucine malgré le document, renforce la consigne : « Réponds UNIQUEMENT à partir du document. Si l'information n'y est pas, dis-le. »"
+  },
+  "tips": [
+    "La phrase la plus puissante est « Réponds uniquement à partir de ce document ». Sans elle, l'IA complète avec ses connaissances.",
+    "Ajoute toujours « Si l'information n'y est pas, dis-le ». Cela évite les hallucinations.",
+    "Pour les sujets sensibles (juridique, santé), demande à l'IA de citer les passages utilisés.",
+    "Distingue « explicite » et « déduit » : l'IA doit séparer les deux.",
+    "Si le document est trop long, découpe-le en sections et pose une question par section.",
+    "Ne jamais envoyer de données confidentielles à une IA sans autorisation (SEC-09).",
+    "Un document biaisé produit une réponse biaisée : vérifie tes sources avant."
+  ],
+  "commonErrorsOverall": [
+    "Oublier « Réponds uniquement à partir de ce document » (l'IA complète avec ses connaissances)",
+    "Oublier « Si l'information n'y est pas, dis-le » (l'IA invente)",
+    "Fournir un document biaisé ou obsolète",
+    "Envoyer des données confidentielles sans autorisation",
+    "Document trop long (dépasse la fenêtre de contexte)",
+    "Ne pas distinguer explicite et déduit (confusion juridique)",
+    "Faire confiance aveuglément à l'IA sur un document ambigu"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Analyse de contrat",
+      "example": "Voici mon contrat de travail. Quelles sont les clauses de non-concurrence ?",
+      "why": "L'IA répond à partir du contrat, pas de la loi générale."
+    },
+    {
+      "useCase": "Règlement intérieur",
+      "example": "Combien de jours de télétravail sont autorisés dans mon entreprise ?",
+      "why": "L'IA répond à partir du règlement, pas d'une moyenne nationale."
+    },
+    {
+      "useCase": "Documentation produit",
+      "example": "Comment régler la luminosité de mon appareil ?",
+      "why": "L'IA répond à partir du manuel, pas de connaissances générales."
+    },
+    {
+      "useCase": "Base de données interne",
+      "example": "Quels produits sont en rupture de stock ?",
+      "why": "L'IA répond à partir des données de la boutique."
+    },
+    {
+      "useCase": "Article scientifique",
+      "example": "Que dit cet article sur les effets du sommeil ?",
+      "why": "L'IA répond à partir de l'article, pas de connaissances générales."
+    },
+    {
+      "useCase": "Analyse de rapport financier",
+      "example": "Quels sont les 3 principaux risques identifiés dans ce rapport ?",
+      "why": "L'IA extrait les informations du rapport."
+    },
+    {
+      "useCase": "Sujet sensible (santé, juridique)",
+      "example": "Voici les résultats de mes analyses. Que signifient-ils ?",
+      "why": "L'IA répond à partir des résultats, avec prudence. Mais ne remplace pas un médecin."
+    }
+  ],
+  "keyrusReference": {
+    "originalText": "l'apprentissage thématique (Retrieval-Augmented Generation), qui permet d'enrichir les réponses de l'IA avec des informations contextuelles pertinentes en temps réel. En intégrant des ressources internes spécifiques et en accédant à des bases de données actualisées, l'IA peut fournir des réponses plus précises et adaptées aux besoins immédiats.",
+    "keyrusLabel": "Apprentissage thématique",
+    "transformationObserved": "Keyrus présente RAG comme un moyen d'enrichir les réponses avec des ressources internes et des bases actualisées, pour plus de précision.",
+    "note": "Keyrus ne détaille pas l'implémentation. Kameleon Prompter propose la version manuelle (coller le document) qui ne nécessite aucune infrastructure, et signale la version technique pour les grandes bases."
+  },
+  "metrics": {
+    "tokenOverhead": "élevé (dépend de la taille du document, + 100 à 1000 % de tokens en entrée)",
+    "accuracyGain": "significatif sur les sujets spécifiques et sensibles",
+    "bestFor": "sujets sensibles, documents internes, sources vérifiables",
+    "worstFor": "brainstorming, questions générales, documents confidentiels"
+  },
+  "securityWarning": {
+    "title": "Ne jamais envoyer de données confidentielles sans autorisation",
+    "details": [
+      "Les contrats, dossiers médicaux, données clients, secrets industriels ne doivent pas être partagés avec une IA sans autorisation.",
+      "Les IA grand public peuvent conserver les conversations.",
+      "Pour les données sensibles, utilise une IA d'entreprise avec des garanties de confidentialité.",
+      "Voir SEC-09 pour les risques éthiques et légaux."
+    ]
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": [
+      "SRC-1",
+      "AJOUT (variante manuelle, mise en garde)"
+    ],
+    "validated": true
+  },
+  "shortName": "RAG"
+}

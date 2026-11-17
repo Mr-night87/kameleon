@@ -1,0 +1,329 @@
+{
+  "id": "reverse",
+  "label": "Ingénierie inversée",
+  "fullName": "Reverse engineering",
+  "shortDescription": "Définir le résultat idéal AVANT d'écrire le prompt. 5 étapes.",
+  "description": "L'ingénierie inversée consiste à définir les résultats souhaités AVANT de concevoir le prompt. On part de la réponse idéale, on la rend mesurable, on liste ce que l'IA doit savoir, on choisit la structure adaptée, puis on écrit le prompt et on le compare au résultat idéal. Cette méthode garantit que chaque prompt guide l'IA vers un objectif clair et mesurable, réduisant le risque de résultats aléatoires ou incohérents.",
+  "difficulty": 2,
+  "estimatedTime": "5 à 10 minutes",
+  "level": "intermédiaire",
+  "methodType": "procedural",
+
+  "whenToUse": [
+    "Quand tu hésites sur ce que tu veux obtenir",
+    "Quand tes prompts donnent des résultats « à côté »",
+    "Quand tu dois produire le même type de livrable régulièrement (rapports, fiches, argumentaires)",
+    "Quand tu veux garantir un résultat mesurable et reproductible",
+    "Avant de rédiger un prompt complexe (pour éviter de partir dans la mauvaise direction)"
+  ],
+  "whenNotToUse": [
+    "Demande ultra-rapide où tu sais déjà ce que tu veux (→ Active ou RTF)",
+    "Besoin d'un ton précis immédiat (→ CRAFT)",
+    "Besoin d'exemples et de vérification immédiats (→ CONTEXTE-V)"
+  ],
+
+  "source": ["SRC-1", "AJOUT (procédure détaillée)"],
+  "methodsCitation": "Keyrus : l'ingénierie inversée consiste à définir les résultats souhaités avant de concevoir le prompt. Elle garantit que chaque prompt guide l'IA vers un objectif clair et mesurable.",
+
+  "steps": [
+    {
+      "id": "ideal",
+      "order": 1,
+      "label": "Étape 1 — Décrire le résultat idéal",
+      "description": "À quoi ressemble la bonne réponse ? Sois visuel, concret.",
+      "purpose": "Ancrer la cible avant de rédiger le prompt. Sans cible claire, le prompt dérive.",
+      "question": "À quoi ressemble ta réponse idéale ?",
+      "hint": "Décris-la comme si tu la voyais déjà. Format, contenu, ton, longueur.",
+      "placeholder": "Ex : un tableau de 5 lignes : nom de la fonction, rôle, exemple d'appel. Pas de texte autour.",
+      "type": "textarea",
+      "required": true,
+      "validation": { "minLength": 20, "maxLength": 500 },
+      "examples": [
+        "Un tableau de 5 lignes : nom de la fonction, rôle, exemple d'appel. Pas de texte autour.",
+        "Un mail de 6 lignes maximum, avec une excuse, une explication, une solution et un remerciement. Ton chaleureux mais professionnel.",
+        "Une description de 5 lignes pour un morceau : une accroche, 3 lignes sur l'ambiance, 1 appel à écouter. Ton sincère.",
+        "Une fiche produit avec un titre, 3 paragraphes courts, 5 bullet points de bénéfices, un appel à l'action.",
+        "Un plan de révision en 4 semaines : une ligne par semaine, avec un objectif mesurable par semaine."
+      ],
+      "helper": "Si tu n'arrives pas à décrire le résultat idéal, c'est que ton besoin n'est pas encore clair. Reviens à QQ pour cadrer.",
+      "commonErrors": [
+        "Résultat idéal trop vague (« une bonne réponse »)",
+        "Décrire le processus au lieu du résultat (« je veux qu'il fasse… »)",
+        "Oublier le format final"
+      ],
+      "formula": "La réponse idéale, c'est [description concrète : format, contenu, ton, longueur]."
+    },
+    {
+      "id": "measurable",
+      "order": 2,
+      "label": "Étape 2 — Rendre le résultat mesurable",
+      "description": "Transforme le résultat idéal en critères vérifiables.",
+      "purpose": "Un résultat non mesurable ne peut pas être vérifié. On le transforme en checklist.",
+      "question": "Quels critères permettront de dire que le résultat est bon ?",
+      "hint": "Nombre de lignes, éléments présents, ton, longueur, format. Un critère = un point vérifiable.",
+      "placeholder": "Ex : 5 lignes exactement ; 3 colonnes (nom, rôle, exemple) ; pas de texte autour du tableau ; exemple d'appel correct pour chaque fonction.",
+      "type": "textarea",
+      "required": true,
+      "validation": { "minLength": 20, "maxLength": 600, "mustBeListOfCriteria": true },
+      "examples": [
+        "5 lignes exactement ; 3 colonnes (nom, rôle, exemple) ; pas de texte autour du tableau ; exemple d'appel correct pour chaque fonction.",
+        "6 lignes maximum ; présence d'une excuse, d'une explication, d'une solution, d'un remerciement ; aucun jargon ; ton respectueux.",
+        "5 lignes exactement ; 1 phrase d'accroche ; 3 lignes sur l'ambiance ; 1 ligne d'appel à écouter et s'abonner ; ton sincère, pas exagéré.",
+        "Titre de 10 mots maximum ; 3 paragraphes de 3 lignes max ; 5 bullet points ; 1 phrase d'appel à l'action ; ton accessible.",
+        "4 lignes (une par semaine) ; un objectif mesurable par semaine ; pas de maths avancées ; 1 page maximum."
+      ],
+      "helper": "Chaque critère doit pouvoir être vérifié par un « oui » ou un « non ». Si tu ne peux pas vérifier, reformule.",
+      "commonErrors": [
+        "Critères flous (« bien écrit »)",
+        "Critères contradictoires (« détaillé » et « 5 lignes »)",
+        "Oublier la longueur ou le format"
+      ],
+      "formula": "Le résultat doit contenir : [critère 1], [critère 2], [critère 3]."
+    },
+    {
+      "id": "knowledge",
+      "order": 3,
+      "label": "Étape 3 — Lister ce que l'IA doit savoir",
+      "description": "Quelles informations l'IA doit-elle avoir pour produire ce résultat ?",
+      "purpose": "Identifier le contexte, les données, les contraintes, le public. Tout ce qui doit figurer dans le prompt.",
+      "question": "Que doit savoir l'IA pour réussir ?",
+      "hint": "Contexte, public, contraintes, exemples, ton, format… Liste tout ce qui est nécessaire.",
+      "placeholder": "Ex : le langage (JavaScript) ; les fonctions de tableaux (map, filter…) ; le niveau de l'audience (débutant) ; le format (tableau 3 colonnes).",
+      "type": "textarea",
+      "required": true,
+      "validation": { "minLength": 20, "maxLength": 600 },
+      "examples": [
+        "Le langage (JavaScript) ; les fonctions de tableaux (map, filter…) ; le niveau de l'audience (débutant) ; le format (tableau 3 colonnes).",
+        "La situation (client en retard de 3 jours) ; le public (client régulier) ; le ton attendu (respectueux, chaleureux) ; la longueur (6 lignes max).",
+        "Le genre musical (rap mélancolique) ; le public (16-30 ans) ; les plateformes (Audiomack, YouTube) ; le ton (sincère, sans exagération).",
+        "Le type de produit (crème hydratante bio) ; le public (urbain 25-40 ans, soucieux de l'environnement) ; le ton (accessible, inspirant) ; la structure de la fiche.",
+        "Le niveau de l'élève (terminale) ; les notions à couvrir (signaux, ondes, préamplification) ; le temps disponible (4 semaines) ; le format (1 page max)."
+      ],
+      "helper": "Tout ce que l'IA ne sait pas doit être dit. Ce que tu as en tête mais que tu n'écris pas n'existe pas pour l'IA.",
+      "commonErrors": [
+        "Oublier le public cible",
+        "Oublier le niveau d'expertise attendu",
+        "Supposer que l'IA connaît ton contexte"
+      ],
+      "formula": "L'IA doit savoir : [info 1], [info 2], [info 3]."
+    },
+    {
+      "id": "structure",
+      "order": 4,
+      "label": "Étape 4 — Choisir la structure",
+      "description": "Quelle méthode classique utiliser pour assembler le prompt ?",
+      "purpose": "Sélectionner RTF, CRAFT ou CONTEXTE-V selon la complexité détectée aux étapes précédentes.",
+      "question": "Quelle méthode choisir pour assembler le prompt ?",
+      "hint": "Regarde la complexité de ton résultat idéal et de tes critères.",
+      "placeholder": "Ex : CONTEXTE-V (9 blocs) car il y a des exemples, des contraintes et une vérification.",
+      "type": "select",
+      "required": true,
+      "options": [
+        {
+          "id": "rtf",
+          "label": "RTF",
+          "when": "Résultat simple, pas de public ni de ton précis.",
+          "blocks": 3
+        },
+        {
+          "id": "craft",
+          "label": "CRAFT",
+          "when": "Résultat avec un public, un ton et un contexte.",
+          "blocks": 5
+        },
+        {
+          "id": "contexte-v",
+          "label": "CONTEXTE-V",
+          "when": "Résultat complexe avec exemples, contraintes et vérification.",
+          "blocks": 9
+        }
+      ],
+      "validation": { "mustBeCoherentWithComplexity": true },
+      "examples": [
+        "CONTEXTE-V (9 blocs) car il y a des exemples, des contraintes et une vérification.",
+        "CRAFT (5 blocs) car il faut un contexte, un rôle, un format et un ton.",
+        "CONTEXTE-V (variante 5 blocs) car la tâche est complexe mais je maîtrise déjà la méthode.",
+        "CRAFT car il y a un public, un ton et un format précis.",
+        "CONTEXTE-V car il y a un exemple à imiter et une vérification à faire."
+      ],
+      "helper": "Règle d'or : commence petit. Monte d'un niveau seulement si la réponse n'est pas bonne.",
+      "commonErrors": [
+        "Choisir CONTEXTE-V par défaut (lourd, inutile si simple)",
+        "Choisir RTF pour une tâche complexe (résultat à côté)"
+      ],
+      "formula": "Je choisis [RTF / CRAFT / CONTEXTE-V] parce que [raison liée à la complexité]."
+    },
+    {
+      "id": "write",
+      "order": 5,
+      "label": "Étape 5 — Écrire le prompt et comparer",
+      "description": "Rédige le prompt avec la méthode choisie, puis compare la réponse au résultat idéal.",
+      "purpose": "Fermer la boucle. Vérifier que le prompt atteint la cible définie à l'étape 1.",
+      "question": "Le prompt atteint-il le résultat idéal ?",
+      "hint": "Teste le prompt, compare avec l'étape 1 et l'étape 2. Si écart, ajuste.",
+      "placeholder": "Ex : le tableau est là mais il y a du texte autour. Ajouter « pas de texte autour du tableau ».",
+      "type": "textarea",
+      "required": true,
+      "validation": { "minLength": 10, "maxLength": 500 },
+      "examples": [
+        "Le tableau est là mais il y a du texte autour. Ajouter « pas de texte autour du tableau ».",
+        "Le mail est trop long (8 lignes au lieu de 6). Ajouter « 6 lignes maximum ».",
+        "La description manque d'accroche. Ajouter « 1 phrase d'accroche percutante ».",
+        "La fiche produit n'a pas de bullet points. Ajouter « 5 bullet points de bénéfices ».",
+        "Le plan de révision ne donne pas d'objectif mesurable. Ajouter « un objectif mesurable par semaine »."
+      ],
+      "helper": "Si la réponse ne correspond pas au résultat idéal, ne recommence pas de zéro : ajuste le prompt avec les critères manquants.",
+      "commonErrors": [
+        "Ne pas comparer la réponse au résultat idéal",
+        "Tout réécrire au lieu d'ajuster",
+        "Oublier de relire soi-même (l'IA ne garantit pas la conformité)"
+      ],
+      "formula": "Écart constaté : [écart]. Correction : [ajout / reformulation]."
+    }
+  ],
+
+  "template": {
+    "pattern": "Étape 1 — Résultat idéal : {ideal}\nÉtape 2 — Critères mesurables : {measurable}\nÉtape 3 — Ce que l'IA doit savoir : {knowledge}\nÉtape 4 — Méthode choisie : {structure}\nÉtape 5 — Écrire le prompt, tester, comparer, ajuster.",
+    "example": "Étape 1 — Résultat idéal : un tableau de 5 lignes (nom, rôle, exemple).\nÉtape 2 — Critères : 5 lignes, 3 colonnes, pas de texte autour.\nÉtape 3 — L'IA doit savoir : JavaScript, fonctions de tableaux, niveau débutant.\nÉtape 4 — Méthode : CONTEXTE-V (exemples + vérification).\nÉtape 5 — Tester, comparer, ajuster.",
+    "assembly": ["ideal", "measurable", "knowledge", "structure", "write"]
+  },
+
+  "examples": [
+    {
+      "id": "reverse-1",
+      "title": "Tableau des fonctions JavaScript",
+      "source": "SRC-1",
+      "steps": {
+        "ideal": "Un tableau de 5 lignes : nom de la fonction, rôle, exemple d'appel. Pas de texte autour.",
+        "measurable": "5 lignes exactement ; 3 colonnes (nom, rôle, exemple) ; pas de texte autour du tableau ; exemple d'appel correct pour chaque fonction.",
+        "knowledge": "Le langage (JavaScript) ; les fonctions de tableaux (map, filter…) ; le niveau de l'audience (débutant) ; le format (tableau 3 colonnes).",
+        "structure": "contexte-v",
+        "write": "Tester, comparer au résultat idéal, ajuster si écart."
+      },
+      "finalPrompt": "Contexte : J'apprends JavaScript et je veux un tableau clair des fonctions de tableaux.\nObjectif : Obtenir un tableau de 5 lignes avec le nom, le rôle et un exemple d'appel pour chaque fonction.\nNiveau : Tu es un développeur JavaScript senior qui explique à un débutant.\nTâche : Liste 5 fonctions de tableaux (map, filter, reduce, find, some) sous forme de tableau.\nExemples : Colonnes : nom de la fonction, rôle, exemple d'appel. Exemple : map | transforme chaque élément | [1,2].map(x => x*2).\nX-contraintes : Tu ne dois pas écrire de texte autour du tableau. Tu ne dois pas utiliser de fonctions autres que map, filter, reduce, find, some.\nTonalité : Le ton doit être clair et pédagogique.\nEncodage : Tableau Markdown à 3 colonnes, 5 lignes.\nVérification : Vérifie que le tableau contient exactement 5 lignes et 3 colonnes, sans texte autour."
+    },
+    {
+      "id": "reverse-2",
+      "title": "Mail d'excuse à un client",
+      "source": "AJOUT",
+      "steps": {
+        "ideal": "Un mail de 6 lignes maximum : excuse, explication, solution, remerciement. Ton chaleureux mais professionnel.",
+        "measurable": "6 lignes maximum ; présence d'une excuse, d'une explication, d'une solution, d'un remerciement ; aucun jargon ; ton respectueux.",
+        "knowledge": "La situation (client en retard de 3 jours) ; le public (client régulier) ; le ton attendu (respectueux, chaleureux) ; la longueur (6 lignes max).",
+        "structure": "craft",
+        "write": "Tester, comparer au résultat idéal, ajuster si écart."
+      },
+      "finalPrompt": "Contexte : Un client attend une livraison en retard de trois jours.\nRôle : Agis en tant que responsable du service client.\nAction : Rédige un message d'excuse avec une solution.\nFormat : 6 lignes maximum : excuse, explication, solution, remerciement.\nTonalité : Adopte un ton respectueux, chaleureux, sans jargon."
+    },
+    {
+      "id": "reverse-3",
+      "title": "Description de morceau",
+      "source": "AJOUT",
+      "steps": {
+        "ideal": "Une description de 5 lignes pour un morceau : une accroche, 3 lignes sur l'ambiance, 1 appel à écouter. Ton sincère.",
+        "measurable": "5 lignes exactement ; 1 phrase d'accroche ; 3 lignes sur l'ambiance ; 1 ligne d'appel à écouter et s'abonner ; ton sincère, pas exagéré.",
+        "knowledge": "Le genre musical (rap mélancolique) ; le public (16-30 ans) ; les plateformes (Audiomack, YouTube) ; le ton (sincère, sans exagération).",
+        "structure": "craft",
+        "write": "Tester, comparer au résultat idéal, ajuster si écart."
+      },
+      "finalPrompt": "Contexte : Je sors un morceau de rap mélancolique sur Audiomack et YouTube. Mon public a entre 16 et 30 ans.\nRôle : Agis en tant que community manager musical.\nAction : Rédige une description de 5 lignes pour accompagner le titre.\nFormat : 1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel à écouter et à s'abonner.\nTonalité : Adopte un ton sincère, proche du public, sans exagération."
+    },
+    {
+      "id": "reverse-4",
+      "title": "Fiche produit cosmétique",
+      "source": "AJOUT",
+      "steps": {
+        "ideal": "Une fiche produit avec un titre, 3 paragraphes courts, 5 bullet points de bénéfices, un appel à l'action.",
+        "measurable": "Titre de 10 mots maximum ; 3 paragraphes de 3 lignes max ; 5 bullet points ; 1 phrase d'appel à l'action ; ton accessible.",
+        "knowledge": "Le type de produit (crème hydratante bio) ; le public (urbain 25-40 ans, soucieux de l'environnement) ; le ton (accessible, inspirant) ; la structure de la fiche.",
+        "structure": "craft",
+        "write": "Tester, comparer au résultat idéal, ajuster si écart."
+      },
+      "finalPrompt": "Contexte : Je vends des cosmétiques bio à une clientèle urbaine de 25-40 ans, soucieuse de l'environnement.\nRôle : Agis en tant que rédacteur spécialisé en e-commerce responsable.\nAction : Rédige la fiche produit d'une crème hydratante bio.\nFormat : Titre, 3 paragraphes courts, 5 bullet points (bénéfices), 1 phrase d'appel à l'action.\nTonalité : Adopte un ton accessible, inspirant et professionnel."
+    },
+    {
+      "id": "reverse-5",
+      "title": "Plan de révision d'examen",
+      "source": "AJOUT",
+      "steps": {
+        "ideal": "Un plan de révision en 4 semaines : une ligne par semaine, avec un objectif mesurable par semaine.",
+        "measurable": "4 lignes (une par semaine) ; un objectif mesurable par semaine ; pas de maths avancées ; 1 page maximum.",
+        "knowledge": "Le niveau de l'élève (terminale) ; les notions à couvrir (signaux, ondes, préamplification) ; le temps disponible (4 semaines) ; le format (1 page max).",
+        "structure": "contexte-v",
+        "write": "Tester, comparer au résultat idéal, ajuster si écart."
+      },
+      "finalPrompt": "Contexte : Je prépare un examen d'électronique dans 4 semaines. Je suis faible sur les signaux, les ondes et la préamplification.\nObjectif : Comprendre ces notions de base et pouvoir résoudre des exercices simples.\nNiveau : Tu es un professeur d'électronique patient qui parle à un élève de niveau terminale.\nTâche : Tu dois proposer un plan de révision de 4 semaines et expliquer la première notion avec un exemple.\nExemples : Explique avec une analogie du quotidien, par exemple l'eau dans un tuyau pour le courant.\nX-contraintes : Tu ne dois pas utiliser de maths avancées. Tu ne dois pas dépasser 1 page.\nTonalité : Le ton doit être encourageant et simple.\nEncodage : Plan en 4 lignes (une par semaine), puis l'explication en 5 étapes numérotées.\nVérification : Vérifie que chaque explication reste au niveau terminale."
+    }
+  ],
+
+  "recommendationEngine": {
+    "description": "Comment choisir la méthode à l'étape 4 selon la complexité.",
+    "rules": [
+      {
+        "condition": "Résultat idéal = 1 élément simple ET pas de public ET pas de ton",
+        "recommend": "rtf",
+        "reason": "Pas besoin de contexte ni de ton : RTF suffit."
+      },
+      {
+        "condition": "Résultat idéal = plusieurs éléments ET présence d'un public ET/OU d'un ton",
+        "recommend": "craft",
+        "reason": "Le contexte et le ton sont nécessaires : CRAFT est la bonne mesure."
+      },
+      {
+        "condition": "Résultat idéal = plusieurs éléments ET exemples à imiter ET/OU contraintes strictes ET/OU vérification",
+        "recommend": "contexte-v",
+        "reason": "La complexité demande les 9 blocs : CONTEXTE-V est nécessaire."
+      },
+      {
+        "condition": "Résultat idéal = plusieurs éléments ET tu maîtrises déjà la méthode",
+        "recommend": "contexte-v (variante 5 blocs)",
+        "reason": "Version allégée pour aller à l'essentiel."
+      }
+    ]
+  },
+
+  "limitations": [
+    "Plus long que les autres méthodes (5 étapes)",
+    "Demande de la rigueur et de l'honnêteté sur ce qu'on veut",
+    "Peut sembler lourd pour une demande simple",
+    "L'étape 4 (choix de méthode) demande de connaître les autres méthodes",
+    "Ne remplace pas la relecture humaine à l'étape 5"
+  ],
+
+  "nextStepIfFail": {
+    "method": "craft",
+    "reason": "Si l'étape 3 (ce que l'IA doit savoir) est trop floue, c'est que le besoin n'est pas clair. Repasse par QQ pour cadrer, puis reviens à l'ingénierie inversée."
+  },
+
+  "tips": [
+    "L'ingénierie inversée est la méthode des livrables récurrents : une fois qu'un prompt est calibré sur un résultat idéal, tu peux le réutiliser en changeant les données.",
+    "L'étape 2 (mesurable) est la plus puissante : un résultat non mesurable ne peut pas être vérifié.",
+    "Si tu n'arrives pas à décrire le résultat idéal, c'est que ton besoin n'est pas encore clair. Reviens à QQ.",
+    "L'étape 5 (comparer) est souvent oubliée. C'est pourtant là que se joue la qualité : sans comparaison, pas d'amélioration.",
+    "L'ingénierie inversée et CONTEXTE-V se marient bien : l'une définit la cible, l'autre produit le prompt."
+  ],
+
+  "commonErrorsOverall": [
+    "Décrire le processus au lieu du résultat (« je veux qu'il fasse… »)",
+    "Résultat idéal trop vague (« une bonne réponse »)",
+    "Critères non mesurables (« bien écrit »)",
+    "Oublier de lister ce que l'IA doit savoir",
+    "Choisir CONTEXTE-V par défaut (lourd et inutile si simple)",
+    "Ne pas comparer la réponse au résultat idéal"
+  ],
+
+  "comparisonWithOthers": {
+    "vsRTF": "RTF part du prompt. L'ingénierie inversée part du résultat. Les deux arrivent à un prompt, mais par des chemins opposés.",
+    "vsCraft": "CRAFT structure l'information. L'ingénierie inversée définit la cible AVANT de structurer.",
+    "vsContexteV": "CONTEXTE-V est la méthode de production. L'ingénierie inversée est la méthode de préparation. Idéalement, on les enchaîne : ingénierie inversée (étape 1-4) puis CONTEXTE-V (étape 5).",
+    "vsQQ": "QQ cadrage rapide en 4 questions. L'ingénierie inversée est un cadrage profond en 5 étapes. QQ pour un besoin flou, ingénierie inversée pour un livrable récurrent."
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": ["SRC-1", "AJOUT (procédure détaillée)"],
+    "validated": true
+  }
+}

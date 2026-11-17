@@ -1,0 +1,206 @@
+{
+  "id": "zero-shot",
+  "label": "Zero-shot",
+  "fullName": "Zero-shot prompting",
+  "shortDescription": "Question directe, sans exemple. La technique de base.",
+  "description": "Le zero-shot prompting consiste à poser la question directement à l'IA, sans exemple, sans structure préalable, sans technique particulière. C'est la technique la plus naturelle et la plus rapide. Elle donne une réponse immédiate, mais souvent générale. Elle est utile pour explorer un sujet ou poser des questions simples. Si le résultat est trop vague, il faut ajouter une méthode (RTF, CRAFT) ou une autre technique (few-shot, chaîne de pensée).",
+  "category": "fondamentale",
+  "difficulty": 1,
+  "estimatedTime": "0 seconde (aucun ajout)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Première exploration d'un sujet",
+    "Questions factuelles simples",
+    "Traductions directes",
+    "Définitions rapides",
+    "Quand tu ne sais pas encore ce que tu veux et que tu explores",
+    "Quand la réponse est courte et sans enjeu"
+  ],
+  "whenNotToUse": [
+    "Besoin d'un style ou d'un format précis (→ ajouter RTF ou few-shot)",
+    "Raisonnement complexe (→ chaîne de pensée)",
+    "Décision importante (→ auto-cohérence)",
+    "Besoin de sources fiables (→ RAG)",
+    "Tâche qui demande plusieurs étapes (→ chaîne de pensée ou ReAct)"
+  ],
+  "source": [
+    "SRC-1",
+    "SRC-2"
+  ],
+  "methodsCitation": "Keyrus : la question directe, sans exemple ni structure. Cavazza : le point de départ naturel du prompting.",
+  "principle": "Poser la question telle quelle, sans rien ajouter. L'IA mobilise ce qu'elle sait déjà.",
+  "triggerPhrases": [],
+  "triggerPhraseNote": "Zero-shot n'ajoute AUCUNE phrase au prompt. C'est justement le principe : la question brute.",
+  "examplePrompts": [
+    {
+      "id": "zero-1",
+      "title": "Question factuelle simple",
+      "prompt": "Qu'est-ce que l'informatique quantique ?",
+      "source": "SRC-2",
+      "note": "Exemple cité par Cavazza comme première question naturelle à poser à un chatbot."
+    },
+    {
+      "id": "zero-2",
+      "title": "Définition technique",
+      "prompt": "Donne-moi la définition d'une API.",
+      "source": "AJOUT",
+      "note": "Question directe, réponse directe. Aucune structure."
+    },
+    {
+      "id": "zero-3",
+      "title": "Traduction",
+      "prompt": "Traduis « good morning » en espagnol.",
+      "source": "AJOUT",
+      "note": "Tâche courte, réponse attendue courte."
+    },
+    {
+      "id": "zero-4",
+      "title": "Question complexe posée en zero-shot (exemple Keyrus)",
+      "prompt": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+      "source": "SRC-1",
+      "note": "C'est LA question que Keyrus utilise comme point de départ pour démontrer les 6 techniques. En zero-shot, elle donne une réponse générale. Les techniques suivantes la reformulent pour la rendre plus précise."
+    },
+    {
+      "id": "zero-5",
+      "title": "Question de compréhension",
+      "prompt": "Explique-moi ce qu'est une variable en programmation.",
+      "source": "AJOUT",
+      "note": "Question sans contexte. L'IA va donner une réponse générale, sans exemple adapté au niveau."
+    },
+    {
+      "id": "zero-6",
+      "title": "Idées de posts (Canton de Berne)",
+      "prompt": "Invente cinq idées créatives de posts pour les réseaux sociaux sur la promotion des transports publics de proximité.",
+      "source": "SRC-BERNE",
+      "note": "Aucun exemple fourni : l'IA s'appuie sur ce qu'elle sait déjà."
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison zero-shot vs méthode structurée pour la même demande.",
+    "zeroShot": "Explique-moi ce qu'est une variable.",
+    "withMethod": {
+      "method": "rtf",
+      "prompt": "Tu es un développeur JavaScript senior qui explique à un débutant.\nTu dois expliquer ce qu'est une variable.\nTa réponse devra contenir 3 exemples progressifs.",
+      "improvement": "Avec RTF, la réponse est adaptée au niveau, en JavaScript, avec des exemples. En zero-shot, elle aurait été générique."
+    }
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-method",
+      "description": "Ajouter une méthode (RTF, CRAFT, CONTEXTE-V) pour préciser rôle, tâche, format.",
+      "when": "La réponse est trop vague ou trop longue.",
+      "result": "La méthode structurée encadre la réponse."
+    },
+    {
+      "id": "add-few-shot",
+      "description": "Ajouter 2-3 exemples à imiter (technique few-shot).",
+      "when": "Le style ou le format ne correspond pas.",
+      "result": "L'IA imite la forme des exemples."
+    },
+    {
+      "id": "add-cot",
+      "description": "Ajouter un déclencheur de chaîne de pensée (« Raisonne étape par étape »).",
+      "when": "La question demande un raisonnement ou un calcul.",
+      "result": "L'IA décompose son raisonnement."
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "note": "Zero-shot est la technique PAR DÉFAUT. Toutes les méthodes commencent par un zero-shot structuré. C'est le socle. Ce qui change, c'est l'enrobage (méthode) et les modificateurs (autres techniques)."
+  },
+  "combinationExamples": [
+    {
+      "id": "zero-rtf",
+      "label": "Zero-shot + RTF",
+      "description": "Ajouter un rôle, une tâche et un format à une question brute.",
+      "before": "Explique les variables.",
+      "after": "Tu es un développeur JavaScript senior.\nTu dois expliquer ce qu'est une variable.\nTa réponse devra contenir 3 exemples progressifs."
+    },
+    {
+      "id": "zero-craft",
+      "label": "Zero-shot + CRAFT",
+      "description": "Ajouter un contexte, un rôle, une action, un format et un ton.",
+      "before": "Comment améliorer mon CV ?",
+      "after": "Contexte : Je suis développeur junior, je postule à des offres en startup.\nRôle : Agis en tant que recruteur tech expérimenté.\nAction : Analyse mon CV et propose 3 améliorations concrètes.\nFormat : 3 points numérotés, chacun avec un exemple avant/après.\nTonalité : Adopte un ton direct mais bienveillant."
+    },
+    {
+      "id": "zero-contexte-v",
+      "label": "Zero-shot + CONTEXTE-V",
+      "description": "La version complète : 9 blocs pour une tâche complexe.",
+      "before": "Comment faire une relocalisation d'entreprise ?",
+      "after": "Contexte : Je suis chargé de préparer une relocalisation d'activité en France.\nObjectif : Obtenir un plan d'action structuré, avec les étapes clés.\nNiveau : Tu es un expert en relocalisation d'entreprises, expérimenté.\nTâche : Propose un plan en 3 phases, avec les actions concrètes par phase.\nExemples : Phase 1 : audit | Phase 2 : déménagement | Phase 3 : suivi.\nX-contraintes : Tu ne dois pas dépasser 15 actions au total. Tu ne dois pas utiliser de jargon.\nTonalité : Le ton doit être clair et informatif.\nEncodage : Tableau : phase, action, durée estimée.\nVérification : Vérifie que chaque action est concrète et mesurable."
+    }
+  ],
+  "technicalNote": "Dans la littérature technique (et dans Keyrus), zero-shot désigne le fait de donner une instruction SANS exemple (par opposition à few-shot qui en donne). Dans Kameleon Prompter, on l'utilise comme la technique de base : quand on ne fait rien de spécial, on est en zero-shot.",
+  "limitations": [
+    "Réponse souvent générale",
+    "Risque de vague, d'approximation ou d'hallucination",
+    "Aucune orientation sur le style, le format, le public",
+    "L'IA choisit tout elle-même (longueur, ton, structure)",
+    "Non adaptée aux tâches complexes ou aux décisions importantes"
+  ],
+  "nextStepIfFail": {
+    "technique": "few-shot",
+    "reason": "Si le résultat est trop générique ou ne correspond pas au style attendu, ajoute 2-3 exemples à imiter (few-shot). Si tu veux juste cadrer, ajoute une méthode (RTF, CRAFT) plutôt qu'une technique."
+  },
+  "tips": [
+    "Zero-shot n'est pas « nul » : c'est le point de départ. Toute méthode et toute technique commence par une question.",
+    "Utilise zero-shot pour explorer. Ajoute une méthode quand tu sais ce que tu veux.",
+    "La question en zero-shot détermine la réponse : « la question oriente et influence toute réponse » (Keyrus).",
+    "Si tu poses une question large, l'IA a la place pour halluciner. Si tu poses une question précise, elle a moins d'espace pour inventer.",
+    "En zero-shot, le rôle, le ton et le format sont choisis par l'IA. Tu n'as aucun contrôle. C'est acceptable pour une question, pas pour un livrable."
+  ],
+  "commonErrorsOverall": [
+    "Attendre une réponse précise d'une question vague",
+    "Utiliser zero-shot pour une tâche complexe",
+    "Poser plusieurs questions à la fois en zero-shot",
+    "Ne pas relire la réponse (zero-shot hallucine plus facilement)",
+    "Confondre zero-shot et « poser la question à la va-vite »"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Explorer un sujet inconnu",
+      "example": "C'est quoi le protocole QUIC ?",
+      "why": "Zero-shot suffit pour une première approche."
+    },
+    {
+      "useCase": "Obtenir une définition standard",
+      "example": "Définis le mot « récursivité ».",
+      "why": "L'IA peut répondre directement, sans contexte."
+    },
+    {
+      "useCase": "Traduction simple",
+      "example": "Traduis « thank you » en japonais.",
+      "why": "Réponse courte, pas besoin de méthode."
+    },
+    {
+      "useCase": "Première question à un chatbot",
+      "example": "Comment fonctionne ChatGPT ?",
+      "why": "Le premier contact avec une IA est souvent du zero-shot."
+    }
+  ],
+  "keyrusReference": {
+    "originalQuestion": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+    "note": "C'est la question de référence que Keyrus utilise pour comparer les 6 techniques. En zero-shot, elle donne une réponse générale. Les techniques suivantes (CoT, self-consistency, generate-knowledge, ReAct, ToT) la reformulent pour la rendre plus précise et plus fiable.",
+    "comparisonFile": "Voir les fichiers chain-of-thought.json, self-consistency.json, etc. pour la comparaison complète."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-1",
+      "SRC-2",
+      "SRC-BERNE"
+    ],
+    "validated": true
+  },
+  "shortName": "ZS"
+}

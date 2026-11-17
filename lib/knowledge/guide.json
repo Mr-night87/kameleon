@@ -1,0 +1,152 @@
+{
+  "id": "guide",
+  "version": "1.0.0",
+  "locale": "fr-FR",
+  "title": "Trouver la bonne méthode",
+  "intro": "3 questions simples. Kameleon choisit pour toi la méthode qui va bien.",
+  "questions": [
+    {
+      "id": "goal",
+      "question": "Qu'est-ce que tu veux obtenir ?",
+      "hint": "Choisis ce qui ressemble le plus à ton besoin.",
+      "options": [
+        {
+          "id": "quick",
+          "label": "Une réponse rapide",
+          "hint": "correction, résumé, traduction, liste…",
+          "reason": "tu veux une réponse rapide",
+          "weights": {
+            "active": 3,
+            "rtf": 3
+          }
+        },
+        {
+          "id": "text",
+          "label": "Un texte à écrire",
+          "hint": "mail, post, message, annonce…",
+          "reason": "tu veux écrire un texte pour quelqu'un",
+          "weights": {
+            "craft": 3,
+            "rtf": 1
+          }
+        },
+        {
+          "id": "learn",
+          "label": "Comprendre ou apprendre quelque chose",
+          "hint": "explication, cours, fiche de révision…",
+          "reason": "tu veux comprendre ou apprendre",
+          "weights": {
+            "rtf": 2,
+            "qq": 2,
+            "craft": 1
+          }
+        },
+        {
+          "id": "big",
+          "label": "Un travail complexe",
+          "hint": "rapport, plan, code, projet…",
+          "reason": "ton travail est complexe",
+          "weights": {
+            "contexte-v": 3,
+            "craft": 1
+          }
+        },
+        {
+          "id": "unsure",
+          "label": "Je ne sais pas trop",
+          "hint": "mon besoin est encore flou",
+          "reason": "ton besoin est encore flou",
+          "weights": {
+            "qq": 3,
+            "reverse": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "clarity",
+      "question": "Tu sais déjà à quoi doit ressembler le résultat ?",
+      "hint": "Longueur, forme, style… même une idée approximative compte.",
+      "options": [
+        {
+          "id": "clear",
+          "label": "Oui, très bien",
+          "reason": "tu sais déjà ce que tu veux obtenir",
+          "weights": {
+            "active": 1,
+            "rtf": 1
+          }
+        },
+        {
+          "id": "roughly",
+          "label": "À peu près",
+          "reason": "tu as déjà une idée générale du résultat",
+          "weights": {
+            "craft": 1,
+            "qq": 1
+          }
+        },
+        {
+          "id": "vague",
+          "label": "Pas vraiment",
+          "reason": "tu ne sais pas encore à quoi doit ressembler le résultat",
+          "weights": {
+            "qq": 3,
+            "reverse": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "constraints",
+      "question": "Y a-t-il des contraintes à respecter ?",
+      "hint": "Un public, un ton, des exemples, des règles…",
+      "options": [
+        {
+          "id": "none",
+          "label": "Non, je veux faire simple",
+          "reason": "tu veux rester simple",
+          "weights": {
+            "active": 2,
+            "rtf": 2
+          }
+        },
+        {
+          "id": "audience",
+          "label": "Oui, un public ou un ton précis",
+          "hint": "ex. écrire pour des clients, ton chaleureux",
+          "reason": "il y a un public ou un ton à respecter",
+          "weights": {
+            "craft": 4
+          }
+        },
+        {
+          "id": "strict",
+          "label": "Oui, des exemples à imiter ou des règles strictes",
+          "reason": "tu as des exemples ou des règles strictes à respecter",
+          "weights": {
+            "contexte-v": 4
+          }
+        },
+        {
+          "id": "missed",
+          "label": "J'ai déjà essayé, mais l'IA répond à côté",
+          "reason": "tes essais précédents tombaient à côté",
+          "weights": {
+            "reverse": 4,
+            "qq": 1
+          }
+        }
+      ]
+    }
+  ],
+  "tieBreak": [
+    "rtf",
+    "active",
+    "qq",
+    "craft",
+    "contexte-v",
+    "reverse"
+  ],
+  "fallback": "rtf"
+}

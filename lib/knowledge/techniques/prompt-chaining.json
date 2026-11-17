@@ -1,0 +1,97 @@
+{
+  "id": "prompt-chaining",
+  "label": "Chaînage de prompts",
+  "shortName": "Chaînage",
+  "fullName": "Prompt chaining",
+  "shortDescription": "Découper une tâche en petites étapes : chaque réponse nourrit la demande suivante.",
+  "description": "On décompose une tâche complexe en petites sous-tâches. L'IA traite chaque étape de façon ciblée, et le résultat d'une étape sert à construire l'instruction de la suivante. Les prompts sont saisis au fur et à mesure.",
+  "category": "avancée",
+  "difficulty": 2,
+  "estimatedTime": "2 à 5 minutes (plusieurs messages)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Tâche complexe qui demande plusieurs étapes",
+    "Quand une seule grosse demande donne un résultat confus",
+    "Quand tu veux contrôler chaque étape avant de continuer",
+    "Quand la suite dépend de faits ou d'idées trouvés au départ"
+  ],
+  "whenNotToUse": [
+    "Question simple qui tient en une phrase",
+    "Quand tu as besoin d'une réponse immédiate en un seul message"
+  ],
+  "source": [
+    "SRC-BERNE"
+  ],
+  "methodsCitation": "Canton de Berne : le chaînage de prompts décompose une tâche complexe en sous-tâches, le résultat de l'une consolidant l'instruction de la suivante.",
+  "principle": "Une grosse tâche = plusieurs petits messages. Chaque réponse sert de base au message suivant.",
+  "triggerPhrases": [
+    "Nous allons procéder par étapes. Commence uniquement par l'étape 1 : [étape 1]. J'enverrai la suite après ta réponse.",
+    "À partir des éléments que tu viens de donner, passe à l'étape suivante : [étape 2].",
+    "Sur la base de ta réponse précédente, [nouvelle demande]."
+  ],
+  "triggerPhraseNote": "Le chaînage ne se fait pas en une seule phrase : ce sont plusieurs messages successifs. Les phrases ci-dessus servent à enchaîner.",
+  "examplePrompts": [
+    {
+      "id": "chain-1",
+      "title": "Étape 1 : trouver les faits (Canton de Berne)",
+      "prompt": "Nomme trois faits essentiels qui prouvent les avantages des transports publics de proximité.",
+      "source": "SRC-BERNE",
+      "note": "Premier message : on commence par les faits. Relis la réponse avant de continuer."
+    },
+    {
+      "id": "chain-2",
+      "title": "Étape 2 : écrire à partir des faits (Canton de Berne)",
+      "prompt": "Crée cinq posts attrayants pour les réseaux sociaux, d'environ 30 mots chacun, sur la base des faits énoncés.",
+      "source": "SRC-BERNE",
+      "note": "Deuxième message : il s'appuie sur la réponse de l'étape 1."
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "active"
+    ],
+    "techniques": [
+      "few-shot",
+      "chain-of-thought",
+      "metaprompting"
+    ],
+    "note": "Chaque message de la chaîne peut utiliser une méthode (RTF, CRAFT) et une autre technique."
+  },
+  "limitations": [
+    "Demande plusieurs échanges",
+    "Une erreur à l'étape 1 se retrouve dans les étapes suivantes : relis chaque réponse"
+  ],
+  "tips": [
+    "Une seule sous-tâche par message.",
+    "Vérifie chaque résultat avant d'envoyer l'étape suivante.",
+    "Écris le plan des étapes avant de commencer."
+  ],
+  "commonErrorsOverall": [
+    "Tout demander dans un seul message",
+    "Passer à l'étape suivante sans relire",
+    "Étapes qui ne dépendent pas les unes des autres (alors, pas besoin de chaîner)"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Créer des posts à partir de faits fiables",
+      "example": "Étape 1 : trouver 3 faits. Étape 2 : écrire 5 posts à partir de ces faits.",
+      "why": "Les posts reposent sur des faits relus à l'étape 1."
+    }
+  ],
+  "nextStepIfFail": {
+    "technique": "chain-of-thought",
+    "reason": "Si une étape reste confuse, demande à l'IA de raisonner étape par étape sur cette seule étape."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-11-03",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-BERNE",
+      "AJOUT (phrases d'enchaînement, conseils)"
+    ],
+    "validated": true
+  }
+}

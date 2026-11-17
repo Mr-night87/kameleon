@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "description": "Les 4 principes d'un bon prompt selon Keyrus.",
+  "source": "SRC-1 (Keyrus)",
+  "principles": [
+    {
+      "id": "clarity",
+      "label": "Clarté",
+      "description": "Chaque mot choisi avec soin. Langage direct et simple. Éviter toute confusion.",
+      "why": "Un prompt clair donne une réponse claire. Un prompt flou laisse l'IA deviner.",
+      "howToCheck": [
+        "Un inconnu comprendrait-il le prompt ?",
+        "Y a-t-il des mots vagues ?",
+        "Y a-t-il des informations manquantes ?"
+      ],
+      "scoreKey": "clarity",
+      "weight": 0.25
+    },
+    {
+      "id": "structure",
+      "label": "Structure",
+      "description": "Blocs : contexte, rôle, tâche, format, ton, contraintes, vérification.",
+      "why": "Un prompt structuré est plus facile à lire pour l'IA, et plus facile à corriger pour l'humain.",
+      "howToCheck": [
+        "Y a-t-il un rôle ?",
+        "Y a-t-il un contexte ?",
+        "Y a-t-il un format ?",
+        "Y a-t-il un ton ?"
+      ],
+      "scoreKey": "structure",
+      "weight": 0.25
+    },
+    {
+      "id": "adaptability",
+      "label": "Adaptabilité",
+      "description": "Itération : affiner, reformuler, ajouter des directives.",
+      "why": "Le prompt engineering est un dialogue, pas un monologue. Chaque réponse de l'IA informe sur la façon dont le prompt a été interprété.",
+      "howToCheck": [
+        "Le prompt peut-il être affiné ?",
+        "Y a-t-il une boucle d'amélioration prévue ?",
+        "Les contraintes sont-elles ajustables ?"
+      ],
+      "scoreKey": "adaptability",
+      "weight": 0.25
+    },
+    {
+      "id": "ethics",
+      "label": "Éthique",
+      "description": "Responsabilité, transparence, surveillance des biais.",
+      "why": "Un prompt qui demande quelque chose de risqué (données personnelles, désinformation) pose un problème éthique.",
+      "howToCheck": [
+        "Le prompt demande-t-il quelque chose de risqué ?",
+        "Y a-t-il des données sensibles ?",
+        "Y a-t-il un risque de biais ?"
+      ],
+      "scoreKey": "ethics",
+      "weight": 0.25
+    }
+  ],
+  "scoring": {
+    "method": "weighted-sum",
+    "formula": "score = 0.25*clarity + 0.25*structure + 0.25*adaptability + 0.25*ethics",
+    "levels": [
+      { "min": 0, "max": 40, "label": "Faible", "action": "Reprendre le prompt" },
+      { "min": 41, "max": 70, "label": "Moyen", "action": "Améliorer les points faibles" },
+      { "min": 71, "max": 90, "label": "Bon", "action": "Peut être utilisé" },
+      { "min": 91, "max": 100, "label": "Excellent", "action": "Prêt à l'emploi" }
+    ]
+  },
+  "example": {
+    "prompt": "Explique-moi ce qu'est une API.",
+    "scores": {
+      "clarity": 60,
+      "structure": 20,
+      "adaptability": 40,
+      "ethics": 100
+    },
+    "total": 55,
+    "diagnosis": "Moyen : prompt trop vague, pas de rôle, pas de format. Ajouter RTF ou CRAFT."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "version": "1.0.0",
+  "description": "Échelle d'expertise de 0 (enfant) à 5 (expert).",
+  "scale": [
+    {
+      "id": 0,
+      "label": "Enfant de 12 ans",
+      "description": "Vocabulaire ultra-simple, analogies du quotidien, phrases courtes.",
+      "vocabulary": "très simple",
+      "examples": "beaucoup",
+      "jargon": "aucun",
+      "sentenceLength": "courtes (10 mots max)"
+    },
+    {
+      "id": 1,
+      "label": "Débutant complet",
+      "description": "Aucune connaissance préalable du sujet. Explications pas à pas.",
+      "vocabulary": "simple",
+      "examples": "beaucoup",
+      "jargon": "évité",
+      "sentenceLength": "courtes"
+    },
+    {
+      "id": 2,
+      "label": "Débutant avec bases",
+      "description": "Connaît les concepts de base. Peut suivre une explication structurée.",
+      "vocabulary": "accessible",
+      "examples": "quelques-uns",
+      "jargon": "défini si utilisé",
+      "sentenceLength": "moyennes"
+    },
+    {
+      "id": 3,
+      "label": "Intermédiaire",
+      "description": "Pratique régulière, comprend les nuances. Peut suivre un raisonnement complexe.",
+      "vocabulary": "standard",
+      "examples": "quelques-uns",
+      "jargon": "utilisé",
+      "sentenceLength": "moyennes à longues"
+    },
+    {
+      "id": 4,
+      "label": "Avancé",
+      "description": "Maîtrise le sujet, cherche des détails fins, des optimisations.",
+      "vocabulary": "technique",
+      "examples": "rares",
+      "jargon": "utilisé sans définition",
+      "sentenceLength": "longues"
+    },
+    {
+      "id": 5,
+      "label": "Expert",
+      "description": "Professionnel du domaine. Attend de la précision, des références, des nuances.",
+      "vocabulary": "spécialisé",
+      "examples": "très rares",
+      "jargon": "utilisé abondamment",
+      "sentenceLength": "longues et complexes"
+    }
+  ],
+  "template": "Explique comme à un [niveau], avec [nombre] exemples.",
+  "mapping": {
+    "audience": {
+      "enfant": 0,
+      "débutant": 1,
+      "étudiant": 2,
+      "professionnel": 3,
+      "expert": 5
+    },
+    "context": {
+      "vulgarisation": 1,
+      "tutoriel": 2,
+      "documentation": 3,
+      "recherche": 5
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "id": "metaprompting",
+  "label": "Métaprompting",
+  "shortName": "Méta",
+  "fullName": "Metaprompting",
+  "shortDescription": "Demander à l'IA d'analyser un prompt ou un résultat et de proposer des améliorations.",
+  "description": "Le prompt demande à l'IA d'analyser des requêtes ou des résultats pour y repérer les faiblesses ou les possibilités d'amélioration, et de faire des propositions concrètes.",
+  "category": "avancée",
+  "difficulty": 2,
+  "estimatedTime": "1 minute",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Quand un résultat est correct mais pas encore convaincant",
+    "Pour améliorer un texte : vigueur, clarté, effet émotionnel",
+    "Pour faire relire et améliorer ton propre prompt",
+    "Quand tu ne sais pas pourquoi le résultat te déçoit"
+  ],
+  "whenNotToUse": [
+    "Pour une toute première question (il n'y a encore rien à analyser)",
+    "Quand le résultat te convient déjà"
+  ],
+  "source": [
+    "SRC-BERNE"
+  ],
+  "methodsCitation": "Canton de Berne : le métaprompting demande à l'IA d'analyser des requêtes ou des résultats afin d'y déceler les faiblesses et de proposer des améliorations concrètes.",
+  "principle": "On donne un texte (ou un prompt) à l'IA, on lui demande de l'analyser selon des critères précis, puis de proposer des améliorations concrètes.",
+  "triggerPhrases": [
+    "Analyse la clarté, la vigueur et l'effet émotionnel de ce texte. Propose des améliorations concrètes.",
+    "Voici le prompt que j'ai écrit : [ton prompt]. Dis-moi ce qui manque et propose une version améliorée.",
+    "Quels sont les points faibles de ta réponse précédente ? Propose une version améliorée."
+  ],
+  "triggerPhraseNote": "Choisis les critères d'analyse (clarté, vigueur, ton…) : plus ils sont précis, plus les propositions sont utiles.",
+  "examplePrompts": [
+    {
+      "id": "meta-1",
+      "title": "Analyser un post (Canton de Berne)",
+      "prompt": "Voici un exemple de post pour les réseaux sociaux : « Saviez-vous que chaque fois que vous prenez le bus, vous économisez 2 kg de CO2 par jour ? Montez à bord et protégez le climat ! »\n\nAnalyse la vigueur, la clarté et l'effet émotionnel de ce post pour les réseaux sociaux. Propose des améliorations concrètes.",
+      "source": "SRC-BERNE",
+      "note": "On donne le texte, des critères précis, puis on demande des améliorations concrètes."
+    },
+    {
+      "id": "meta-2",
+      "title": "Faire relire son propre prompt",
+      "prompt": "Voici le prompt que j'ai écrit : [ton prompt]\n\nAnalyse-le : est-il clair, précis et complet ? Dis-moi ce qui manque (rôle, contexte, format, ton) et propose une version améliorée.",
+      "source": "AJOUT",
+      "note": "Utile pour apprendre : l'IA t'explique ce qui manque à ton prompt."
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v"
+    ],
+    "techniques": [
+      "prompt-chaining",
+      "chain-of-thought"
+    ],
+    "note": "Se place après un premier résultat : d'abord on produit, ensuite on fait analyser et améliorer."
+  },
+  "limitations": [
+    "Les améliorations proposées restent des suggestions : relis et décide",
+    "Il faut déjà avoir un texte ou un prompt à analyser"
+  ],
+  "tips": [
+    "Donne des critères d'analyse précis.",
+    "Demande des améliorations concrètes, pas seulement un avis.",
+    "Combine avec le chaînage : produire, analyser, améliorer."
+  ],
+  "commonErrorsOverall": [
+    "Demander juste « C'est bien ? » sans critères",
+    "Appliquer toutes les propositions sans relire"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Améliorer un post pour les réseaux sociaux",
+      "example": "Faire analyser la vigueur, la clarté et l'effet émotionnel, puis demander des améliorations.",
+      "why": "On corrige des points précis au lieu de tout réécrire."
+    }
+  ],
+  "nextStepIfFail": {
+    "technique": "prompt-chaining",
+    "reason": "Si les améliorations restent floues, découpe : un message par critère (clarté, puis vigueur, puis effet émotionnel)."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-11-03",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-BERNE",
+      "AJOUT (phrases, conseils)"
+    ],
+    "validated": true
+  }
+}

@@ -1,0 +1,324 @@
+{
+  "id": "self-consistency",
+  "label": "Auto-cohérence",
+  "shortName": "SC",
+  "fullName": "Self-Consistency prompting",
+  "shortDescription": "Demander plusieurs raisonnements, puis comparer. Pour les décisions importantes.",
+  "description": "L'auto-cohérence consiste à demander plusieurs options ou plusieurs raisonnements à l'IA, puis à évaluer lequel est le plus cohérent et le plus efficace selon différents scénarios. L'idée : une seule réponse peut être fausse ; plusieurs pistes comparées donnent un résultat plus fiable. On cherche l'option qui revient le plus souvent, ou qui tient le mieux face aux scénarios. C'est la technique des décisions importantes et des calculs critiques.",
+  "category": "raisonnement",
+  "difficulty": 3,
+  "estimatedTime": "2 à 4 minutes (ajout de structure + comparaison)",
+  "techniqueType": "reasoning-modifier",
+
+  "whenToUse": [
+    "Décision importante (choisir entre plusieurs options)",
+    "Calcul critique (finances, santé, juridique)",
+    "Stratégie à long terme (plan de carrière, lancement produit)",
+    "Choix d'architecture technique",
+    "Diagnostic difficile (plusieurs causes possibles)",
+    "Quand tu doutes du résultat d'une CoT simple",
+    "Quand tu veux voir plusieurs angles avant de trancher"
+  ],
+  "whenNotToUse": [
+    "Question factuelle simple (→ zero-shot)",
+    "Calcul court et vérifiable (→ CoT simple suffit)",
+    "Quand tu veux une réponse rapide (→ active ou RTF)",
+    "Tâche créative (l'auto-cohérence bride l'imagination)",
+    "Quand tu n'as pas de critère pour comparer les options"
+  ],
+
+  "source": ["SRC-1"],
+  "methodsCitation": "Keyrus : « Quelles sont les différentes façons d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de proposer plusieurs options et d'évaluer laquelle est la plus cohérente et efficace selon différents scénarios. »",
+
+  "principle": "Demander N (3 à 5) réponses ou raisonnements différents, puis demander à l'IA d'évaluer chaque option selon des critères ou des scénarios, et de conclure.",
+
+  "triggerPhrases": [
+    "Propose 3 solutions différentes, puis compare-les.",
+    "Résous le problème de 3 manières, puis dis quelle réponse revient le plus.",
+    "Évalue chaque option selon ces scénarios : [A], [B], [C].",
+    "Donne-moi 3 réponses possibles, avec les avantages et inconvénients de chacune.",
+    "Propose plusieurs options, puis évalue laquelle est la plus cohérente et efficace selon différents scénarios.",
+    "Fais l'exercice 3 fois avec des angles différents, puis compare les résultats.",
+    "Analyse ce choix sous 3 scénarios : optimiste, réaliste, pessimiste."
+  ],
+
+  "triggerPhraseNote": "La phrase la plus puissante est « Propose 3 solutions, puis évalue laquelle est la plus cohérente ». Elle force l'IA à générer plusieurs pistes ET à les comparer au lieu de donner une seule réponse.",
+
+  "examplePrompts": [
+    {
+      "id": "sc-1",
+      "title": "Question de référence Keyrus (relocalisation)",
+      "prompt": "Quelles sont les différentes façons d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de proposer plusieurs options et d'évaluer laquelle est la plus cohérente et efficace selon différents scénarios.",
+      "source": "SRC-1",
+      "note": "C'est LA question que Keyrus utilise pour illustrer la self-consistency. Elle demande explicitement plusieurs options + évaluation comparative."
+    },
+    {
+      "id": "sc-2",
+      "title": "Décision de carrière",
+      "prompt": "Je veux gagner mes premiers revenus en 4 mois avec mes compétences en JavaScript. Propose 4 pistes différentes. Pour chacune, évalue : temps d'apprentissage, risque, premier revenu réaliste. Dis laquelle tient le mieux si je n'ai que 1 h par jour.",
+      "source": "AJOUT",
+      "note": "L'utilisateur impose 4 pistes + 3 critères + un scénario contraignant (1h/jour). L'IA doit comparer, pas juste lister."
+    },
+    {
+      "id": "sc-3",
+      "title": "Calcul critique avec vérification croisée",
+      "prompt": "Calcule le prix final d'un article à 40 $ soldé de 25 % puis de 10 %. Résous ce problème de 3 manières différentes (calcul séquentiel, calcul par coefficient, calcul par pourcentage global). Si les 3 résultats concordent, donne la réponse. Sinon, indique où est l'erreur.",
+      "source": "AJOUT",
+      "note": "La concordance de 3 méthodes est un signe de fiabilité. La divergence signale une erreur."
+    },
+    {
+      "id": "sc-4",
+      "title": "Choix d'architecture technique",
+      "prompt": "Je dois choisir entre Firebase, Supabase et un serveur Python pour mon projet (jeu web avec comptes utilisateurs). Propose 3 solutions différentes, une par techno. Pour chacune : coût, difficulté, évolutivité, temps de mise en place. Évalue chaque solution sous 2 scénarios : projet solo vs projet en équipe. Conclus par une recommandation.",
+      "source": "AJOUT",
+      "note": "L'utilisateur compare 3 options sous 2 scénarios. L'IA doit argumenter, pas juste donner un avis."
+    },
+    {
+      "id": "sc-5",
+      "title": "Diagnostic à causes multiples",
+      "prompt": "Mon jeu ne retire pas de PV quand le joueur touche un ennemi. Propose 3 causes possibles différentes. Pour chaque cause : comment la vérifier, et quel serait le correctif. Dis laquelle est la plus probable.",
+      "source": "AJOUT",
+      "note": "L'auto-cohérence est aussi utile en diagnostic : plusieurs hypothèses, vérification, probabilité."
+    },
+    {
+      "id": "sc-6",
+      "title": "Stratégie avec scénarios",
+      "prompt": "Je lance un single de rap dans 3 semaines. Propose 3 stratégies de promotion sans budget. Évalue chaque stratégie selon 3 scénarios : aucun follower, 100 followers, 1000 followers. Dis laquelle est la plus robuste.",
+      "source": "AJOUT",
+      "note": "L'auto-cohérence est puissante pour tester la robustesse d'une stratégie face à l'incertitude."
+    }
+  ],
+
+  "keyrusExampleAnalysis": {
+    "originalPrompt": "Quelles sont les différentes façons d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de proposer plusieurs options et d'évaluer laquelle est la plus cohérente et efficace selon différents scénarios.",
+    "structure": [
+      { "step": 1, "action": "Demander plusieurs options", "extrait": "Quelles sont les différentes façons…" },
+      { "step": 2, "action": "Demander plusieurs pistes", "extrait": "proposer plusieurs options" },
+      { "step": 3, "action": "Demander une comparaison", "extrait": "évaluer laquelle est la plus cohérente et efficace" },
+      { "step": 4, "action": "Introduire des scénarios", "extrait": "selon différents scénarios" }
+    ],
+    "insight": "La self-consistency n'est pas juste « donne 3 réponses ». C'est : (1) plusieurs options, (2) plusieurs scénarios, (3) comparaison, (4) conclusion. Le mot « scénarios » est la clé : il force l'IA à imaginer plusieurs futurs possibles."
+  },
+
+  "variants": [
+    {
+      "id": "multi-reasoning",
+      "label": "Multi-raisonnements",
+      "description": "Résoudre le même problème de 3 manières différentes.",
+      "when": "Calcul critique, vérification croisée",
+      "example": "Résous ce problème de 3 manières différentes. Si les résultats concordent, donne la réponse. Sinon, indique l'erreur."
+    },
+    {
+      "id": "multi-options",
+      "label": "Multi-options",
+      "description": "Proposer 3 à 5 solutions différentes, puis comparer.",
+      "when": "Décision, choix stratégique",
+      "example": "Propose 3 solutions différentes, puis compare-les selon coût, difficulté, risque."
+    },
+    {
+      "id": "multi-scenarios",
+      "label": "Multi-scénarios",
+      "description": "Évaluer la même option sous plusieurs scénarios.",
+      "when": "Robustesse d'une stratégie",
+      "example": "Évalue cette stratégie sous 3 scénarios : optimiste, réaliste, pessimiste."
+    },
+    {
+      "id": "multi-criteria",
+      "label": "Multi-critères",
+      "description": "Évaluer chaque option selon plusieurs critères.",
+      "when": "Décision structurée",
+      "example": "Pour chaque option, évalue selon 4 critères : coût, temps, risque, impact."
+    },
+    {
+      "id": "full",
+      "label": "Auto-cohérence complète",
+      "description": "Multi-options + multi-scénarios + multi-critères.",
+      "when": "Décision majeure",
+      "example": "Propose 4 options. Pour chacune, évalue selon 3 critères et 3 scénarios. Conclus par une recommandation."
+    }
+  ],
+
+  "comparisonExample": {
+    "description": "Comparaison CoT vs Self-consistency pour la même décision.",
+    "question": "Je veux gagner mes premiers revenus en 4 mois avec mes compétences en JavaScript.",
+    "withCoT": "Raisonne étape par étape pour savoir comment gagner mes premiers revenus en 4 mois avec JavaScript.",
+    "cotRisk": "L'IA donne UNE seule piste. Si elle est mauvaise, l'utilisateur passe à côté des autres.",
+    "withSelfConsistency": "Propose 4 pistes différentes pour gagner mes premiers revenus en 4 mois avec JavaScript. Pour chacune, évalue : temps d'apprentissage, risque, premier revenu réaliste. Dis laquelle tient le mieux si je n'ai que 1 h par jour.",
+    "scResult": "L'IA donne 4 pistes, les compare, puis recommande la plus réaliste selon le scénario. L'utilisateur voit plusieurs angles avant de choisir.",
+    "improvement": "La self-consistency ne donne pas UNE réponse, mais un PAYSAGE de réponses. Elle force l'IA à explorer, puis à trancher."
+  },
+
+  "transformationPatterns": [
+    {
+      "id": "add-multi-options",
+      "description": "Demander 3 à 5 options au lieu d'une seule.",
+      "when": "Décision, choix",
+      "result": "L'IA explore plusieurs pistes"
+    },
+    {
+      "id": "add-comparison",
+      "description": "Ajouter une demande de comparaison (avantages/inconvénients, critères).",
+      "when": "Options générées mais pas comparées",
+      "result": "L'IA tranche"
+    },
+    {
+      "id": "add-scenarios",
+      "description": "Ajouter des scénarios (optimiste, réaliste, pessimiste).",
+      "when": "Incertitude sur le contexte",
+      "result": "L'IA évalue la robustesse"
+    },
+    {
+      "id": "add-criteria",
+      "description": "Ajouter des critères d'évaluation (coût, temps, risque…).",
+      "when": "Décision structurée",
+      "result": "L'IA évalue systématiquement"
+    },
+    {
+      "id": "add-multi-methods",
+      "description": "Demander de résoudre le même problème de plusieurs manières.",
+      "when": "Calcul critique",
+      "result": "L'IA vérifie par concordance"
+    },
+    {
+      "id": "add-final-recommendation",
+      "description": "Demander une recommandation finale après la comparaison.",
+      "when": "Toujours",
+      "result": "L'IA tranche explicitement"
+    }
+  ],
+
+  "combinableWith": {
+    "methods": ["rtf", "craft", "contexte-v", "qq", "active", "reverse"],
+    "techniques": ["chain-of-thought", "few-shot", "generate-knowledge", "react", "tree-of-thoughts", "rag"],
+    "note": "L'auto-cohérence se combine avec toutes les méthodes et la plupart des techniques. Elle est naturelle avec CoT (chaque option a son raisonnement)."
+  },
+
+  "combinationExamples": [
+    {
+      "id": "sc-cot",
+      "label": "Self-consistency + CoT",
+      "description": "Combinaison la plus puissante : plusieurs raisonnements comparés.",
+      "before": "Raisonne étape par étape pour calculer le prix final.",
+      "after": "Résous ce problème de 3 manières différentes, avec un raisonnement étape par étape pour chacune : (1) calcul séquentiel, (2) calcul par coefficient, (3) calcul par pourcentage global. Si les 3 résultats concordent, donne la réponse. Sinon, indique où est l'erreur."
+    },
+    {
+      "id": "sc-craft",
+      "label": "Self-consistency + CRAFT",
+      "description": "Décision structurée avec contexte.",
+      "before": "Contexte : Je dois choisir une techno pour mon jeu.\nRôle : Architecte logiciel.\nAction : Compare Firebase et Supabase.\nFormat : Tableau.\nTonalité : Neutre.",
+      "after": "Contexte : Je dois choisir une techno pour mon jeu (comptes utilisateurs, multijoueur).\nRôle : Architecte logiciel.\nAction : Propose 3 solutions (Firebase, Supabase, serveur Python). Pour chacune, évalue selon 4 critères (coût, difficulté, évolutivité, temps de mise en place). Puis évalue chaque solution sous 2 scénarios (projet solo, projet en équipe). Conclus par une recommandation.\nFormat : Tableau récapitulatif + paragraphe de recommandation.\nTonalité : Neutre, factuel."
+    },
+    {
+      "id": "sc-few-shot",
+      "label": "Self-consistency + Few-shot",
+      "description": "Imposer le format de comparaison avec un exemple.",
+      "before": "Propose 3 stratégies et compare-les.",
+      "after": "Propose 3 stratégies de promotion pour un single. Compare-les selon le format suivant :\n\n| Stratégie | Coût | Temps | Risque | Efficacité |\n| Exemple | 0 € | 2h/sem | Faible | Moyenne |\n\nInspire-toi de ce format, applique-le à tes 3 stratégies. Puis conclus par la plus robuste."
+    },
+    {
+      "id": "sc-contexte-v",
+      "label": "Self-consistency + CONTEXTE-V",
+      "description": "Version complète pour décision majeure.",
+      "before": "Contexte : Je prépare une relocalisation.\nObjectif : Choisir la meilleure approche.\nNiveau : Expert.\nTâche : Propose un plan.\nExemples : —\nX-contraintes : 15 actions max.\nTonalité : Clair.\nEncodage : Tableau.\nVérification : —",
+      "after": "Contexte : Je prépare une relocalisation d'activité en France.\nObjectif : Choisir la meilleure approche parmi plusieurs.\nNiveau : Expert en relocalisation.\nTâche : Propose 3 approches différentes (approche A, B, C). Pour chacune, évalue selon 3 critères (coût, risque, délai) et 2 scénarios (budget serré, budget confortable). Conclus par une recommandation.\nExemples : —\nX-contraintes : 15 actions max par approche. Pas de jargon.\nTonalité : Clair, informatif.\nEncodage : Tableau comparatif + recommandation.\nVérification : Vérifie que chaque approche est évaluée selon les 3 critères et 2 scénarios."
+    }
+  ],
+
+  "technicalNote": "La self-consistency a été popularisée par la recherche en IA (Wang et al., 2022) sous le nom « Self-Consistency Improves Chain of Thought Reasoning in Language Models ». L'idée originale : générer N raisonnements (avec température > 0), puis voter pour la réponse majoritaire. Dans le contexte de Kameleon Prompter, on adapte : on demande explicitement à l'IA plusieurs options et une comparaison, sans générer N fois.",
+
+  "scientificContext": {
+    "origin": "Article de recherche Google (Wang et al., 2022) : « Self-Consistency Improves Chain of Thought Reasoning in Language Models ».",
+    "finding": "Générer plusieurs raisonnements et voter pour la réponse majoritaire améliore significativement les performances sur les tâches de raisonnement.",
+    "adaptation": "Dans un chatbot standard, on ne peut pas générer N fois avec température. On demande donc explicitement à l'IA de produire plusieurs options et de les comparer elle-même.",
+    "caveat": "L'IA peut produire 3 options similaires (faux consensus). Précise « 3 options vraiment différentes »."
+  },
+
+  "limitations": [
+    "Réponses plus longues (3 à 5 fois plus de contenu)",
+    "L'IA peut produire 3 options similaires (faux consensus)",
+    "L'IA peut être biaisée vers la première option qu'elle a générée",
+    "Plus coûteux en tokens",
+    "Ne remplace pas la vérification des faits",
+    "Peut créer de la confusion si l'utilisateur ne veut qu'une réponse",
+    "Pas adaptée aux tâches créatives (l'IA pondère trop)"
+  ],
+
+  "nextStepIfFail": {
+    "technique": "tree-of-thoughts",
+    "reason": "Si l'auto-cohérence donne 3 options trop similaires, passe à l'arbre de pensées : plusieurs experts avec des angles RADICALEMENT différents. Si l'IA n'arrive pas à comparer, ajoute few-shot pour imposer un format de tableau comparatif."
+  },
+
+  "tips": [
+    "Le mot le plus puissant de cette technique est « scénarios » : il force l'IA à imaginer plusieurs futurs.",
+    "Précise « vraiment différentes » pour éviter que l'IA propose 3 variantes de la même idée.",
+    "Demande toujours une recommandation finale : sinon l'IA liste sans trancher.",
+    "3 options suffisent. 5 est le maximum utile. Au-delà, l'IA dilue.",
+    "Combine avec CoT : chaque option doit avoir son raisonnement étape par étape.",
+    "Pour les calculs, la concordance de 3 méthodes est un signe de fiabilité.",
+    "Pour les décisions, la robustesse sous plusieurs scénarios est plus importante que l'option « optimale »."
+  ],
+
+  "commonErrorsOverall": [
+    "Demander 3 options sans demander de comparaison (l'IA liste)",
+    "Ne pas demander de recommandation finale (l'IA ne tranche pas)",
+    "3 options trop similaires (faux consensus)",
+    "Pas de scénarios (l'IA évalue dans l'absolu)",
+    "Trop d'options (5+) : l'IA dilue",
+    "Oublier de vérifier que les 3 méthodes de calcul donnent le même résultat"
+  ],
+
+  "realWorldUseCases": [
+    {
+      "useCase": "Choix d'outil ou de techno",
+      "example": "Firebase vs Supabase vs serveur Python",
+      "why": "Comparaison structurée, pas d'avis vague."
+    },
+    {
+      "useCase": "Décision de carrière",
+      "example": "Freelance vs CDI vs création d'entreprise",
+      "why": "Plusieurs pistes + scénarios = décision informée."
+    },
+    {
+      "useCase": "Calcul financier critique",
+      "example": "Calcul de marge nette, de retour sur investissement",
+      "why": "Concordance de 3 méthodes = fiabilité."
+    },
+    {
+      "useCase": "Diagnostic technique",
+      "example": "3 causes possibles d'un bug",
+      "why": "L'IA explore plusieurs hypothèses au lieu de deviner."
+    },
+    {
+      "useCase": "Stratégie marketing",
+      "example": "3 stratégies de lancement testées sous 3 scénarios",
+      "why": "Robustesse face à l'incertitude."
+    },
+    {
+      "useCase": "Décision médicale (avec prudence)",
+      "example": "3 pistes de diagnostic à explorer avec un médecin",
+      "why": "L'IA propose des angles, le médecin tranche (voir SEC-09)."
+    }
+  ],
+
+  "keyrusReference": {
+    "originalQuestion": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+    "scReformulation": "Quelles sont les différentes façons d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de proposer plusieurs options et d'évaluer laquelle est la plus cohérente et efficace selon différents scénarios.",
+    "transformationObserved": "Passage d'une question unique à une question à 4 dimensions : plusieurs options, comparaison, scénarios, conclusion.",
+    "note": "Keyrus utilise cette technique comme une étape après la CoT : d'abord décomposer (CoT), puis comparer plusieurs décompositions (self-consistency)."
+  },
+
+  "metrics": {
+    "tokenOverhead": "élevé (+ 200 à 500 % de tokens en sortie)",
+    "accuracyGain": "significatif sur les décisions et les calculs critiques",
+    "bestFor": "décisions, calculs, stratégie, diagnostic",
+    "worstFor": "créativité, questions factuelles, réponses ultra-courtes"
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": ["SRC-1", "AJOUT (variantes, scénarios)"],
+    "validated": true
+  }
+}

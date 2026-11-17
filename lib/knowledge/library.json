@@ -1,0 +1,1003 @@
+{
+  "id": "library",
+  "version": "1.0.0",
+  "locale": "fr-FR",
+  "title": "Bibliothèque de prompts prêts à l'emploi",
+  "intro": "Des prompts réels, classés par domaine. Choisis-en un, adapte les [crochets], ou améliore-le avec une méthode.",
+  "sources": {
+    "SRC-BERNE": "Prompting (Canton de Berne) — Prompting_fr.pdf",
+    "SRC-ADOBE": "Prompts pour l'Assistant IA (Adobe) — Prompt_adobe.pdf",
+    "SRC-GUIDE": "Guide complet du prompting — bibliothèque étendue (prompts 1 à 7 repris)"
+  },
+  "elementsLegend": {
+    "rôle": "Qui doit être l'IA",
+    "tâche": "Ce qu'elle doit faire",
+    "contexte": "Les informations utiles",
+    "format": "La forme de la réponse",
+    "ton": "Le style du texte",
+    "limite": "Une limite : mots, nombre, durée…"
+  },
+  "categories": [
+    {
+      "id": "productivite",
+      "label": "Productivité",
+      "icon": "🗂️",
+      "source": "SRC-GUIDE",
+      "description": "Réunions, e-mails, synthèses, traductions, checklists."
+    },
+    {
+      "id": "administration",
+      "label": "Administration",
+      "icon": "🏛️",
+      "source": "SRC-BERNE",
+      "description": "Résumer, reformuler, communiquer, analyser, trouver des idées."
+    },
+    {
+      "id": "ventes",
+      "label": "Ventes",
+      "icon": "💼",
+      "source": "SRC-ADOBE",
+      "description": "Priorités, comparaison de produits, propositions commerciales."
+    },
+    {
+      "id": "juridique",
+      "label": "Juridique",
+      "icon": "⚖️",
+      "source": "SRC-ADOBE",
+      "description": "Comparer des contrats, repérer les incohérences, tableaux de conditions."
+    },
+    {
+      "id": "finance",
+      "label": "Finance",
+      "icon": "📊",
+      "source": "SRC-ADOBE",
+      "description": "Questions de réunion, tendances, synthèses de rapports financiers."
+    },
+    {
+      "id": "rh",
+      "label": "Ressources humaines",
+      "icon": "👥",
+      "source": "SRC-ADOBE",
+      "description": "Politiques d'emploi, diversité, fiches de poste, entretiens."
+    }
+  ],
+  "prompts": [
+    {
+      "id": "prod-1",
+      "category": "productivite",
+      "kind": "",
+      "title": "Résumé de réunion",
+      "prompt": "Agis comme un assistant de direction. Voici la transcription brute de la réunion de ce matin. Extrais les 5 décisions principales, les actions à mener avec les responsables assignés, et les prochaines étapes. Présente le tout sous forme de tableau.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "rôle",
+        "tâche",
+        "contexte",
+        "format"
+      ],
+      "missing": [],
+      "improve": [],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    },
+    {
+      "id": "prod-2",
+      "category": "productivite",
+      "kind": "",
+      "title": "E-mail difficile",
+      "prompt": "Tu es un manager bienveillant. Rédige un e-mail pour refuser poliment une demande de congé à un employé en raison d'une période de forte activité, tout en proposant une alternative pour le mois suivant. Ton professionnel et empathique.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "rôle",
+        "tâche",
+        "contexte",
+        "ton"
+      ],
+      "missing": [
+        "format"
+      ],
+      "improve": [
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    },
+    {
+      "id": "prod-3",
+      "category": "productivite",
+      "kind": "",
+      "title": "Synthèse d'un document long",
+      "prompt": "Tu es un expert en analyse documentaire. Voici un rapport de 50 pages. Fais-en un résumé exécutif de 300 mots maximum, en te concentrant uniquement sur les aspects financiers et les risques identifiés.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "rôle",
+        "tâche",
+        "contexte",
+        "format",
+        "limite"
+      ],
+      "missing": [],
+      "improve": [],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    },
+    {
+      "id": "prod-4",
+      "category": "productivite",
+      "kind": "",
+      "title": "Traduction et adaptation culturelle",
+      "prompt": "Traduis ce communiqué de presse de l'anglais vers le français, mais adapte les expressions idiomatiques pour qu'elles sonnent naturellement pour un public québécois.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    },
+    {
+      "id": "prod-5",
+      "category": "productivite",
+      "kind": "",
+      "title": "Checklist d'événement",
+      "prompt": "Je dois organiser un événement d'entreprise pour 100 personnes. Génère une checklist exhaustive des tâches à accomplir, classées par ordre chronologique (3 mois avant, 1 mois avant, J-1, Jour J, Post-événement).",
+      "method": "qq",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "format"
+      ],
+      "missing": [
+        "rôle"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise."
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    },
+    {
+      "id": "adm-1",
+      "category": "administration",
+      "kind": "Résumer",
+      "title": "Résumer un rapport",
+      "prompt": "Rédige un résumé de ce rapport sur une page DIN A4.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "contexte",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-2",
+      "category": "administration",
+      "kind": "Reformuler",
+      "title": "Reformuler dans un style",
+      "prompt": "Reformule mon texte dans le style suivant : [formel, compréhensible, humoristique, etc.]",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "ton"
+      ],
+      "missing": [
+        "rôle",
+        "contexte",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [
+        "[formel, compréhensible, humoristique, etc.]"
+      ],
+      "tip": "",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-3",
+      "category": "administration",
+      "kind": "Raccourcir",
+      "title": "Raccourcir un texte",
+      "prompt": "Raccourcis le texte à xx caractères au maximum, sans perte de contenus essentiels.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "contexte",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [
+        "xx"
+      ],
+      "tip": "Remplace « xx » par un nombre. Une IA ne sait pas écrire un nombre exact de caractères, mais elle sait compter ceux d'une réponse déjà donnée.",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-4",
+      "category": "administration",
+      "kind": "Communication",
+      "title": "Communiqué à la population",
+      "prompt": "Crée un communiqué à la population pour annoncer l'introduction du nouveau programme de transport, dans une langue facile, compréhensible. Observe les lignes directrices sur la communication du gouvernement et des autorités du canton de Berne.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "ton"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "Télécharge le PDF des lignes directrices ou ajoute le lien web : l'IA pourra intégrer directement les consignes.",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-5",
+      "category": "administration",
+      "kind": "Analyse de données",
+      "title": "Analyser un tableau",
+      "prompt": "Analyse ce tableau Excel sur le développement démographique et liste les trois principales tendances.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-6",
+      "category": "administration",
+      "kind": "Réseaux sociaux",
+      "title": "Post LinkedIn",
+      "prompt": "Formule un post LinkedIn qui résume les principaux éléments de la nouvelle stratégie du personnel de manière informative et attrayante.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format",
+        "ton"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-7",
+      "category": "administration",
+      "kind": "Comparer",
+      "title": "Résumer et comparer des articles",
+      "prompt": "Résume sur une page au maximum les principales conclusions de cet article spécialisé sur l'évolution actuelle de la planification des transports. Prends en compte les principales tendances et leurs implications. Représente ensuite les principales différences entre les articles spécialisés sous forme de tableau.",
+      "method": "contexte-v",
+      "technique": "prompt-chaining",
+      "elements": [
+        "tâche",
+        "contexte",
+        "format",
+        "limite"
+      ],
+      "missing": [
+        "rôle"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise."
+      ],
+      "placeholders": [],
+      "tip": "Deux demandes dans un seul message : si le résultat est confus, sépare-les (résumé d'abord, tableau ensuite).",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "adm-8",
+      "category": "administration",
+      "kind": "Idées",
+      "title": "Générer de nouvelles idées",
+      "prompt": "Tu es un spécialiste en YX. Nomme-moi cinq idées pour développer le thème XY. Base-toi pour ce faire sur le contexte des administrations publiques.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "rôle",
+        "tâche",
+        "contexte",
+        "limite"
+      ],
+      "missing": [
+        "format"
+      ],
+      "improve": [
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [
+        "YX",
+        "XY"
+      ],
+      "tip": "Remplace YX par ton domaine et XY par ton thème.",
+      "source": "SRC-BERNE"
+    },
+    {
+      "id": "ven-1",
+      "category": "ventes",
+      "kind": "Demander",
+      "title": "Priorités et difficultés",
+      "prompt": "En moins de 50 mots, résumer les trois priorités et les trois principales difficultés pour cette entreprise d'après ses rapports 10-Q et la transcription de la conférence sur les résultats financiers.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "ven-2",
+      "category": "ventes",
+      "kind": "Analyser",
+      "title": "Caractéristiques des produits",
+      "prompt": "Comparer les caractéristiques de ces deux produits pour en identifier les points forts et les points faibles. Repérer les domaines dans lesquels le produit de l'entreprise A excelle ou doit être amélioré par rapport à celui de l'entreprise B.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "ven-3",
+      "category": "ventes",
+      "kind": "Modifier",
+      "title": "Reformulation du contenu",
+      "prompt": "Modifier l'introduction de cette proposition commerciale pour qu'elle soit plus percutante pour les équipes de direction du secteur high-tech.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "ven-4",
+      "category": "ventes",
+      "kind": "Générer",
+      "title": "E-mail à mon responsable",
+      "prompt": "Rédiger un e-mail à l'intention de ma ou de mon responsable contenant les points importants à retenir dans ces documents.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "ven-5",
+      "category": "ventes",
+      "kind": "Générer",
+      "title": "Rapport de stratégie commerciale",
+      "prompt": "Compiler ces modifications et ces insights pour créer un rapport offrant un exposé global des implications des stratégies commerciales.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "jur-1",
+      "category": "juridique",
+      "kind": "Comparer",
+      "title": "Comparer des contrats",
+      "prompt": "Comparer et confirmer les différences entre le contrat A et le contrat B, en dressant la liste des clauses qui diffèrent.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "jur-2",
+      "category": "juridique",
+      "kind": "Tableau",
+      "title": "Tableau des conditions d'utilisation",
+      "prompt": "Faire la liste, sous forme de tableau, des conditions d'utilisation du service en indiquant la durée, en jours, en mois ou en années.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "jur-3",
+      "category": "juridique",
+      "kind": "Incohérences",
+      "title": "Incohérences et responsabilités",
+      "prompt": "Analyser ce contrat comme le ferait un ou une spécialiste du droit des contrats. Résumer les incohérences et les responsabilités potentielles.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "rôle",
+        "tâche"
+      ],
+      "missing": [
+        "contexte",
+        "format"
+      ],
+      "improve": [
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "Relis toujours le résultat : l'IA peut se tromper sur un contrat.",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "jur-4",
+      "category": "juridique",
+      "kind": "Générer",
+      "title": "E-mail : points clés d'un contrat",
+      "prompt": "Rédiger à l'intention d'un ou d'une membre de l'équipe de direction un e-mail détaillant les échéances, les dates de début et de fin, et les modifications apportées aux dispositions principales du contrat.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-1",
+      "category": "finance",
+      "kind": "Trouver des idées",
+      "title": "Questions pour la réunion",
+      "prompt": "Suggérer 5 questions à préparer pour notre réunion sur la planification financière, fondées sur le business plan et les rapports financiers.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-2",
+      "category": "finance",
+      "kind": "Données financières",
+      "title": "Tendances du chiffre d'affaires",
+      "prompt": "Quelles sont les principales tendances en termes de chiffre d'affaires observées dans le dernier rapport financier et comment sont-elles corrélées au plan de croissance future et de rentabilité ?",
+      "method": "qq",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-3",
+      "category": "finance",
+      "kind": "Données financières",
+      "title": "Gestion des dépenses",
+      "prompt": "Comment l'entreprise a-t-elle géré ses dépenses et quelles stratégies de gestion des coûts ont été mises en œuvre pour optimiser les performances financières ?",
+      "method": "qq",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-4",
+      "category": "finance",
+      "kind": "Vue d'ensemble",
+      "title": "Revenus d'exploitation",
+      "prompt": "Pouvez-vous fournir des informations sur les revenus d'exploitation et leur évolution au cours de l'année dernière par rapport aux objectifs du business plan ?",
+      "method": "qq",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-5",
+      "category": "finance",
+      "kind": "Vue d'ensemble",
+      "title": "Mesures fiscales",
+      "prompt": "Quel est l'impact des mesures fiscales sur la situation financière de l'entreprise et comment gère-t-elle ses obligations fiscales pour garantir la conformité et l'efficacité ?",
+      "method": "qq",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-6",
+      "category": "finance",
+      "kind": "Vue d'ensemble",
+      "title": "Questions juridiques",
+      "prompt": "Les rapports financiers mentionnent-ils des questions juridiques importantes qui pourraient avoir un impact sur la situation financière de l'entreprise et quelles stratégies d'atténuation des risques ont été mises en place ?",
+      "method": "qq",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-7",
+      "category": "finance",
+      "kind": "Tableau",
+      "title": "Tableau de commentaires d'analystes",
+      "prompt": "Créer un tableau présentant les commentaires positifs et négatifs des analystes de ces 10 entreprises sur [sujet].",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [
+        "[sujet]"
+      ],
+      "tip": "Remplace [sujet] par ce qui t'intéresse.",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-8",
+      "category": "finance",
+      "kind": "Tableau",
+      "title": "Synthétiser des documents",
+      "prompt": "Synthétiser rapidement les thèmes ou arguments clés présentés dans ces documents.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-9",
+      "category": "finance",
+      "kind": "Tableau",
+      "title": "Bref e-mail de résumé",
+      "prompt": "Rédiger un bref e-mail résumant le contenu de ces documents.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "fin-10",
+      "category": "finance",
+      "kind": "Tableau",
+      "title": "Réunion budgétaire",
+      "prompt": "Résumer la transcription de la réunion d'examen du budget en dressant la liste des points à retenir et des mesures à prendre.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "rh-1",
+      "category": "rh",
+      "kind": "Analyser",
+      "title": "Politiques d'emploi",
+      "prompt": "Comparer les sections relatives aux politiques d'emploi dans les manuels de 2025 et 2026. Mettre en évidence les changements et décrire leurs implications.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "rh-2",
+      "category": "rh",
+      "kind": "Générer",
+      "title": "Présentation et e-mail",
+      "prompt": "Rédiger un exposé global des changements et écrire un e-mail pour informer le personnel de ces changements. Utiliser un ton professionnel, mais chaleureux.",
+      "method": "craft",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "ton"
+      ],
+      "missing": [
+        "rôle",
+        "contexte",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "rh-3",
+      "category": "rh",
+      "kind": "Demander",
+      "title": "Diversité et inclusion",
+      "prompt": "Résumer les politiques en matière de diversité et d'inclusion figurant dans le manuel 2026.",
+      "method": "active",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "rh-4",
+      "category": "rh",
+      "kind": "Trouver des idées",
+      "title": "Culture d'entreprise",
+      "prompt": "Suggérer 5 façons d'encourager et de cultiver la diversité et l'inclusion dans la culture d'entreprise. Les présenter sous forme de liste à puces.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "format",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "contexte"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Ajoute du contexte : pour qui, pourquoi, avec quels documents ?"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-ADOBE"
+    },
+    {
+      "id": "rh-5",
+      "category": "rh",
+      "kind": "Générer",
+      "title": "Fiche de poste",
+      "prompt": "Rédige une fiche de poste pour un Chef de Projet Digital. Inclus : mission principale, 5 responsabilités clés, compétences techniques requises, soft skills, et profil recherché. Utilise un format clair avec des puces.",
+      "method": "contexte-v",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "format"
+      ],
+      "missing": [
+        "rôle"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise."
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    },
+    {
+      "id": "rh-6",
+      "category": "rh",
+      "kind": "Générer",
+      "title": "Questions d'entretien",
+      "prompt": "Génère 10 questions d'entretien comportemental (méthode STAR) pour évaluer la résilience et la gestion du stress d'un candidat pour un poste de commercial.",
+      "method": "rtf",
+      "technique": "zero-shot",
+      "elements": [
+        "tâche",
+        "contexte",
+        "limite"
+      ],
+      "missing": [
+        "rôle",
+        "format"
+      ],
+      "improve": [
+        "Ajoute un rôle : « Tu es … » pour cadrer le niveau d'expertise.",
+        "Précise le format : tableau, liste, nombre de mots…"
+      ],
+      "placeholders": [],
+      "tip": "",
+      "source": "SRC-GUIDE"
+    }
+  ],
+  "notes": [
+    "Le 8e prompt de la bibliothèque étendue (feedback 360) était coupé dans le document : il n'est pas repris."
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-11-03",
+    "updatedAt": "2026-11-03",
+    "total": 38,
+    "validated": true
+  }
+}

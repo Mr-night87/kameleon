@@ -1,0 +1,260 @@
+{
+  "id": "few-shot",
+  "label": "Few-shot",
+  "fullName": "Few-shot prompting",
+  "shortDescription": "Donner 2-3 exemples à imiter. Impose un style ou un format.",
+  "description": "Le few-shot prompting consiste à donner à l'IA un ou plusieurs exemples de la réponse attendue AVANT de poser la vraie demande. L'IA imite la forme des exemples : le style, la structure, le format, le ton. C'est la technique la plus puissante pour imposer un rendu précis. Deux ou trois exemples bien choisis suffisent. Attention : l'IA peut recopier trop fidèlement — il faut lui dire de s'inspirer du style, pas de copier.",
+  "category": "fondamentale",
+  "difficulty": 2,
+  "estimatedTime": "1 à 2 minutes (ajout d'exemples)",
+  "techniqueType": "reasoning-modifier",
+  "whenToUse": [
+    "Tu veux imposer un style précis (ton, registre, vocabulaire)",
+    "Tu veux imposer un format de sortie (tableau, liste, JSON, slogan)",
+    "La réponse doit ressembler à un modèle que tu connais",
+    "Tu veux éviter les variations de style entre plusieurs réponses",
+    "Tu as du mal à décrire le style en mots — montre-le",
+    "La réponse de l'IA est correcte sur le fond mais pas sur la forme"
+  ],
+  "whenNotToUse": [
+    "Le sujet est nouveau et tu n'as pas d'exemple à donner",
+    "Tu veux juste une réponse rapide (→ zero-shot)",
+    "Le raisonnement compte plus que le style (→ chaîne de pensée)",
+    "Tes exemples sont ambigus ou contradictoires (l'IA va imiter le flou)"
+  ],
+  "source": [
+    "SRC-2 (bloc E de CONTEXTE-V)",
+    "AJOUT (technique autonome)"
+  ],
+  "methodsCitation": "Cavazza : le bloc « Exemples » de CONTEXTE-V. « Voici un exemple de ce que j'attends : [exemple]. » L'IA imite la forme. Keyrus : les exemples sont un levier pour clarifier les attentes.",
+  "principle": "Montrer 2 ou 3 exemples de la forme attendue, puis demander la vraie réponse. L'IA imite le patron.",
+  "triggerPhrases": [
+    "Voici 2 exemples de ce que j'attends. Inspire-toi du style, ne les recopie pas.",
+    "Voici 3 exemples de réponses correctes. Applique le même format à ma demande.",
+    "Fais comme ceci : [exemple]. Ne copie pas le contenu, seulement la forme.",
+    "Voici un exemple de ce que j'attends : [exemple]. Voici un contre-exemple : [contre-exemple]. Fais comme le premier, pas comme le second.",
+    "Inspire-toi du style de cet exemple, pas de son contenu : [exemple].",
+    "Voici un exemple de ce que j'attends. Crée une version similaire pour [sujet]."
+  ],
+  "triggerPhraseNote": "Le déclencheur le plus important est « inspire-toi du style, ne recopie pas ». Sans lui, l'IA peut reprendre l'exemple mot pour mot.",
+  "examplePrompts": [
+    {
+      "id": "few-1",
+      "title": "Slogans (exemple simple)",
+      "prompt": "Transforme chaque phrase en slogan court.\n\nPhrase : « Notre café est torréfié à la main. » → Slogan : « Torréfié main, goût franc. »\nPhrase : « Nous livrons en moins d'une heure. » → Slogan : « Livré avant que tu aies faim. »\nPhrase : « Notre appli apprend à écrire des prompts. » → Slogan :",
+      "source": "AJOUT",
+      "note": "Deux exemples suffisent à imposer le style court et rythmé. Le troisième est la demande réelle."
+    },
+    {
+      "id": "few-2",
+      "title": "Format JSON (exemple formel)",
+      "prompt": "Extrais les informations de chaque phrase au format JSON.\n\nPhrase : « Marie a acheté 3 pommes pour 5 €. » → { \"nom\": \"Marie\", \"article\": \"pommes\", \"quantite\": 3, \"prix\": 5 }\nPhrase : « Paul a vendu 2 voitures pour 4000 €. » → { \"nom\": \"Paul\", \"article\": \"voitures\", \"quantite\": 2, \"prix\": 4000 }\nPhrase : « Léa a réservé 1 table pour 20 €. » →",
+      "source": "AJOUT",
+      "note": "Le few-shot impose la structure JSON exacte avec les mêmes clés."
+    },
+    {
+      "id": "few-3",
+      "title": "Style d'écriture (Cavazza / CONTEXTE-V)",
+      "prompt": "Rédige la description d'un morceau de rap en 5 lignes.\n\nExemple : « Ce morceau raconte une nuit blanche à Kinshasa. Entre mélancolie et espoir, le beat porte une voix qui cherche la lumière. Les paroles parlent de famille, de choix, de recommencement. Un titre à écouter seul, un soir de pluie. Dispo sur toutes les plateformes. »\n\nInspire-toi de ce style, ne le recopie pas. Sujet : mon morceau sur l'exil.",
+      "source": "SRC-2 (inspiré du bloc E) + AJOUT",
+      "note": "L'exemple fixe la longueur (5 lignes), le ton (sincère, poétique), la structure (ambiance → message → appel)."
+    },
+    {
+      "id": "few-4",
+      "title": "Format tableau (CONTEXTE-V)",
+      "prompt": "Liste 5 fonctions de tableaux JavaScript.\n\nExemple de ce que j'attends :\n| Nom | Rôle | Exemple |\n| map | transforme chaque élément | [1,2].map(x => x*2) |\n| filter | garde les éléments qui passent un test | [1,2,3].filter(x => x>1) |\n\nApplique exactement ce format à 5 fonctions au choix.",
+      "source": "SRC-2 (CV-1) + AJOUT",
+      "note": "L'exemple fixe le format tableau (3 colonnes) et l'usage (nom, rôle, exemple de code)."
+    },
+    {
+      "id": "few-5",
+      "title": "Contre-exemple (montrer ce qu'il NE faut PAS faire)",
+      "prompt": "Rédige un mail de relance pour un client.\n\nMauvais exemple (trop direct) : « Il faut payer maintenant. »\nBon exemple (poli, ferme, clair) : « Bonjour, je me permets de revenir vers vous concernant la facture du 15 mars. Pourriez-vous me confirmer la date de règlement prévue ? Merci d'avance. »\n\nFais comme le bon exemple, pas comme le mauvais.",
+      "source": "AJOUT",
+      "note": "Le contre-exemple aide l'IA à comprendre la limite à ne pas franchir."
+    },
+    {
+      "id": "few-6",
+      "title": "Un seul exemple : one-shot (Canton de Berne)",
+      "prompt": "Voici un exemple de post pour les réseaux sociaux : « Saviez-vous que les transports publics de proximité permettent d'économiser chaque année 1000 tonnes de CO2 ? Vous aussi, empruntez les transports publics et apportez votre pierre à l'édifice ! »\n\nCrée un post similaire qui mette en lumière les avantages d'un abonnement annuel à prix réduit.",
+      "source": "SRC-BERNE",
+      "note": "Un seul exemple suffit à montrer le style et la structure attendus."
+    },
+    {
+      "id": "few-7",
+      "title": "Trois exemples : few-shot (Canton de Berne)",
+      "prompt": "Voici trois exemples de posts pour les réseaux sociaux :\n1. « Un pendulaire sur deux économise du temps et de l'énergie en prenant le train. Et vous, quand allez-vous préférer le train ? »\n2. « Un billet pour l'environnement : votre réseau de transports publics - économique, rapide et durable. »\n3. « Avez-vous, aujourd'hui, déjà pensé à demain ? En bus et en train, pour un avenir plus vert ! »\n\nCrée deux autres posts qui mettent en avant les avantages de la durabilité.",
+      "source": "SRC-BERNE",
+      "note": "Plusieurs exemples donnent plus de contexte et une direction à suivre : le résultat est plus précis et plus cohérent qu'avec un seul."
+    }
+  ],
+  "types": [
+    {
+      "id": "one-shot",
+      "label": "One-shot (1 exemple)",
+      "description": "Un seul exemple pour montrer le style ou la structure.",
+      "bestFor": "Style simple, structure courte",
+      "example": "Voir few-6"
+    },
+    {
+      "id": "positive",
+      "label": "Positive",
+      "description": "Montrer 2-3 bons exemples. L'IA imite.",
+      "bestFor": "Style, format, structure, ton",
+      "example": "Voir few-1, few-2, few-3"
+    },
+    {
+      "id": "negative",
+      "label": "Négative (contre-exemple)",
+      "description": "Montrer ce qu'il ne faut PAS faire. L'IA évite.",
+      "bestFor": "Éviter les erreurs connues, clarifier une limite",
+      "example": "Voir few-5"
+    },
+    {
+      "id": "mixed",
+      "label": "Mixte (bon + mauvais)",
+      "description": "Montrer les deux. L'IA voit la frontière.",
+      "bestFor": "Situations nuancées, choix de ton",
+      "example": "Voir few-5"
+    }
+  ],
+  "comparisonExample": {
+    "description": "Comparaison zero-shot vs few-shot pour la même demande.",
+    "zeroShot": "Transforme cette phrase en slogan : « Notre appli apprend à écrire des prompts. »",
+    "withFewShot": "Transforme chaque phrase en slogan court.\n\nPhrase : « Notre café est torréfié à la main. » → Slogan : « Torréfié main, goût franc. »\nPhrase : « Nous livrons en moins d'une heure. » → Slogan : « Livré avant que tu aies faim. »\nPhrase : « Notre appli apprend à écrire des prompts. » → Slogan :",
+    "improvement": "En zero-shot, l'IA aurait proposé un slogan long et descriptif. En few-shot, elle comprend que le style attendu est court, rimé, avec un jeu sur les mots."
+  },
+  "transformationPatterns": [
+    {
+      "id": "add-examples",
+      "description": "Ajouter 2-3 exemples avant la demande réelle.",
+      "when": "Le style ou le format ne correspond pas.",
+      "result": "L'IA imite la forme."
+    },
+    {
+      "id": "add-counter-example",
+      "description": "Ajouter un contre-exemple (ce qu'il ne faut pas faire).",
+      "when": "L'IA fait toujours la même erreur.",
+      "result": "L'IA évite la limite."
+    },
+    {
+      "id": "reduce-examples",
+      "description": "Réduire à 2 exemples si la réponse est trop rigide ou trop copiée.",
+      "when": "L'IA recopie mot pour mot.",
+      "result": "L'IA s'inspire sans copier."
+    },
+    {
+      "id": "add-style-instruction",
+      "description": "Ajouter « inspire-toi du style, ne recopie pas ».",
+      "when": "L'IA copie les exemples.",
+      "result": "L'IA imite la forme, pas le contenu."
+    }
+  ],
+  "combinableWith": {
+    "methods": [
+      "rtf",
+      "craft",
+      "contexte-v",
+      "qq",
+      "active",
+      "reverse"
+    ],
+    "note": "Few-shot se combine avec TOUTES les méthodes. Dans CONTEXTE-V, c'est déjà le bloc « Exemples ». Dans les autres méthodes, c'est un ajout."
+  },
+  "combinationExamples": [
+    {
+      "id": "few-rtf",
+      "label": "Few-shot + RTF",
+      "description": "Ajouter un exemple dans le format RTF.",
+      "before": "Tu es un rédacteur SEO.\nTu dois proposer un titre pour un article sur le café bio.\nTa réponse devra limiter le titre à 10 mots maximum.",
+      "after": "Tu es un rédacteur SEO.\nTu dois proposer un titre pour un article sur le café bio.\nTa réponse devra limiter le titre à 10 mots maximum.\n\nExemple de titre attendu : « Café bio : 5 raisons de passer au vert dès demain ».\nInspire-toi du style, ne recopie pas."
+    },
+    {
+      "id": "few-craft",
+      "label": "Few-shot + CRAFT",
+      "description": "Ajouter un exemple dans le format CRAFT.",
+      "before": "Contexte : Je prépare un single de rap mélancolique.\nRôle : Agis en tant que community manager musical.\nAction : Rédige une description de 5 lignes.\nFormat : 1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel.\nTonalité : Sincère, proche du public.",
+      "after": "Contexte : Je prépare un single de rap mélancolique.\nRôle : Agis en tant que community manager musical.\nAction : Rédige une description de 5 lignes.\nFormat : 1 phrase d'accroche, 3 lignes sur l'ambiance, 1 ligne d'appel.\nTonalité : Sincère, proche du public.\n\nExemple : « Ce morceau raconte une nuit blanche à Kinshasa. Entre mélancolie et espoir, le beat porte une voix qui cherche la lumière. Les paroles parlent de famille, de choix, de recommencement. Un titre à écouter seul, un soir de pluie. Dispo sur toutes les plateformes. »\nInspire-toi du style, ne recopie pas."
+    },
+    {
+      "id": "few-active",
+      "label": "Few-shot + Active",
+      "description": "Ajouter un exemple à un prompt actif.",
+      "before": "Résume ce texte en 2 phrases : [texte].",
+      "after": "Résume ce texte en 2 phrases : [texte].\n\nExemple de résumé attendu (style télégraphique, sans fioritures) : « L'auteur défend l'idée que l'IA doit être régulée. Il propose trois pistes concrètes. »\nInspire-toi du style, ne recopie pas."
+    }
+  ],
+  "technicalNote": "Dans CONTEXTE-V, le bloc « Exemples » (E) EST un few-shot intégré. Ce fichier sert à rendre few-shot disponible pour les méthodes qui n'ont pas de bloc Exemples (RTF, CRAFT, Active, QQ). C'est donc un ajout de Kameleon Prompter pour rendre la bibliothèque complète.",
+  "limitations": [
+    "L'IA peut recopier les exemples mot pour mot",
+    "Les exemples doivent être cohérents entre eux (sinon l'IA imite le flou)",
+    "Demande de trouver de bons exemples (parfois long)",
+    "Trop d'exemples (5+) dilue le signal et alourdit le prompt",
+    "Les exemples biaisés produisent des réponses biaisées",
+    "Ne fonctionne pas bien si le sujet est complètement nouveau"
+  ],
+  "nextStepIfFail": {
+    "technique": "chain-of-thought",
+    "reason": "Si le style est bon mais que le raisonnement est faux, ajoute une chaîne de pensée. Si l'IA recopie encore les exemples, réduis à 2 exemples et ajoute « inspire-toi du style, ne recopie pas »."
+  },
+  "tips": [
+    "2 à 3 exemples bien choisis suffisent. Au-delà, tu alourdis le prompt pour rien.",
+    "Varie légèrement les exemples pour que l'IA comprenne le patron, pas le contenu exact.",
+    "Toujours ajouter « inspire-toi du style, ne recopie pas ».",
+    "Un contre-exemple est aussi puissant qu'un bon exemple : il montre la limite.",
+    "Si l'IA recopie quand même, réduis à 2 exemples et varie-les davantage.",
+    "Choisis des exemples représentatifs : les cas typiques, pas les cas extrêmes."
+  ],
+  "commonErrorsOverall": [
+    "Donner 5+ exemples (dilue le signal)",
+    "Exemples contradictoires entre eux",
+    "Oublier « inspire-toi du style, ne recopie pas »",
+    "Exemples trop longs (le prompt devient illisible)",
+    "Exemples biaisés ou de mauvaise qualité",
+    "Exemples qui ne couvrent pas la diversité des cas"
+  ],
+  "realWorldUseCases": [
+    {
+      "useCase": "Imposer un style de rédaction",
+      "example": "Rédiger 3 descriptions de produits dans le style d'une marque précise",
+      "why": "L'IA imite le ton, le rythme, le vocabulaire."
+    },
+    {
+      "useCase": "Imposer un format de sortie",
+      "example": "Extraire des données en JSON avec des clés précises",
+      "why": "L'IA reproduit exactement la structure attendue."
+    },
+    {
+      "useCase": "Imposer une structure de contenu",
+      "example": "Rédiger des fiches produits avec titre, 3 paragraphes, 5 bullets, CTA",
+      "why": "L'IA respecte la structure exacte."
+    },
+    {
+      "useCase": "Aligner plusieurs réponses",
+      "example": "Générer 20 descriptions de produits cohérentes entre elles",
+      "why": "Le few-shot garantit la cohérence de style entre les réponses."
+    },
+    {
+      "useCase": "Corriger une erreur récurrente",
+      "example": "L'IA écrit toujours « veuillez » au lieu de « merci de ». Montrer un contre-exemple.",
+      "why": "Le contre-exemple verrouille la correction."
+    }
+  ],
+  "keyrusReference": {
+    "originalContext": "Dans CONTEXTE-V, le bloc E « Exemples » demande de fournir des illustrations ou des modèles de réponse attendue.",
+    "cavazzaExample": "« Voici un exemple d'accroche : 'Vous êtes entrepreneur et vous vous sentez débordé ? Vous rêvez de développer votre activité sans sacrifier votre vie personnelle ?' Voici un exemple d'appel à l'action : 'Inscrivez-vous dès maintenant pour une session d'essai gratuite...' »",
+    "note": "Cavazza utilise le few-shot dans son exemple d'argumentaire de vente. Deux exemples (accroche + appel à l'action) suffisent à cadrer la forme attendue."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-2",
+      "AJOUT (technique autonome)",
+      "SRC-BERNE"
+    ],
+    "validated": true
+  },
+  "shortName": "FS"
+}

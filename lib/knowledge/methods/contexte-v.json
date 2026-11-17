@@ -1,0 +1,533 @@
+{
+  "id": "contexte-v",
+  "label": "CONTEXTE-V",
+  "fullName": "Contexte – Objectif – Niveau – Tâche – Exemples – X-contraintes – Tonalité – Encodage – Vérification",
+  "shortDescription": "Le méga-prompt. 9 blocs. Pour les tâches complexes. 3 à 5 minutes.",
+  "description": "CONTEXTE-V est la méthode la plus complète. Elle se compose de neuf blocs, du contexte initial à la vérification finale. Elle sert pour des situations complexes, quand tu as besoin d'exemples à imiter, de contraintes strictes et d'un contrôle qualité. Cavazza admet qu'elle peut intimider : c'est pour cela qu'un prompt assistant (Kameleon Prompter) aide à la remplir.",
+  "difficulty": 3,
+  "estimatedTime": "3 à 5 minutes",
+  "level": "avancé",
+  "whenToUse": [
+    "Tâche complexe ou projet structuré",
+    "Besoin d'exemples à imiter (few-shot)",
+    "Besoin de contraintes strictes (X-contraintes)",
+    "Besoin d'un contrôle qualité (Vérification)",
+    "Production récurrente de livrables (rapports, fiches, argumentaires)"
+  ],
+  "whenNotToUse": [
+    "Demande rapide sans enjeu (→ RTF)",
+    "Besoin d'un ton simple avec public (→ CRAFT)",
+    "Quand tu n'as pas encore défini ce que tu veux (→ Ingénierie inversée)"
+  ],
+  "source": [
+    "SRC-2"
+  ],
+  "methodsCitation": "Cavazza : la méthode la plus complète, neuf blocs, pour des questions spécifiques avec des réponses plus complètes. Les spécialistes appellent ça un « méga-prompt ».",
+  "blocks": [
+    {
+      "id": "context",
+      "order": 1,
+      "letter": "C",
+      "label": "Contexte",
+      "amorce": "Je suis chargé de…",
+      "description": "Explique le cadre ou la situation générale.",
+      "purpose": "Aide l'IA à comprendre l'environnement et les enjeux.",
+      "question": "Quel est le cadre général de ta demande ?",
+      "hint": "Situation, projet, public cible, enjeu global.",
+      "placeholder": "Ex : je suis chargé de créer un tableau Excel pour calculer les heures supplémentaires.",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 15,
+        "maxLength": 500
+      },
+      "examples": [
+        "Je suis chargé de créer un tableau Excel pour calculer automatiquement les heures supplémentaires des employés.",
+        "Je suis chargé de préparer un argumentaire de vente pour un nouveau service de coaching en ligne pour les entrepreneurs. Le service propose un accompagnement personnalisé.",
+        "Je développe un jeu 2D en JavaScript avec Phaser 3, dans un seul fichier index.html, sur téléphone Android.",
+        "Je suis artiste indépendant. Je distribue seul mes titres. Je prépare la sortie d'un single dans 3 semaines.",
+        "Je prépare un examen d'électronique dans 4 semaines. Je suis faible sur les signaux, les ondes et la préamplification.",
+        "Je prépare la réunion de l'équipe marketing et je dispose des avis client récents sur un produit."
+      ],
+      "helper": "Le contexte dit QUI, POUR QUI et DANS QUEL CADRE. C'est la base de tout le reste.",
+      "commonErrors": [
+        "Contexte trop vague",
+        "Oublier l'enjeu global"
+      ],
+      "formula": "Je suis [qui] et je [fais quoi] pour [public] dans le but de [objectif]."
+    },
+    {
+      "id": "objective",
+      "order": 2,
+      "letter": "O",
+      "label": "Objectif",
+      "amorce": "L'objectif est de…",
+      "description": "Indique le résultat final attendu.",
+      "purpose": "Oriente la finalité de la réponse (informer, convaincre, divertir…).",
+      "question": "Quel est le résultat final que tu attends ?",
+      "hint": "Informer, convaincre, divertir, vendre, expliquer…",
+      "placeholder": "Ex : l'objectif est de créer un tableau qui calcule le nombre d'heures supplémentaires.",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 300,
+        "mustBeResultOriented": true
+      },
+      "examples": [
+        "L'objectif est de créer un tableau qui calcule le nombre d'heures supplémentaires pour chaque employé en fonction de leurs heures d'arrivée et de départ.",
+        "Créer un argumentaire de vente convaincant qui met en avant les bénéfices du service et incite les prospects à s'inscrire.",
+        "Ajouter un système de points de vie et de fin de partie.",
+        "Obtenir un plan d'actions semaine par semaine pour maximiser les premières écoutes sans budget publicitaire.",
+        "Comprendre ces notions de base et pouvoir résoudre des exercices simples.",
+        "Le résumé doit identifier les thèmes clés et le sentiment général."
+      ],
+      "helper": "L'objectif dit À QUOI ça sert. C'est le « pourquoi » de ta demande.",
+      "commonErrors": [
+        "Confondre objectif et tâche",
+        "Objectif trop vague (« faire un truc »)"
+      ],
+      "formula": "L'objectif est de [verbe] [résultat mesurable]."
+    },
+    {
+      "id": "level",
+      "order": 3,
+      "letter": "N",
+      "label": "Niveau",
+      "amorce": "Agis en tant que…",
+      "description": "Précise le niveau d'expertise ou de détail attendu.",
+      "purpose": "Ajuste la complexité du contenu et le vocabulaire.",
+      "question": "Quel est le niveau d'expertise attendu ?",
+      "hint": "Débutant, intermédiaire, expert…",
+      "placeholder": "Ex : tu es un assistant administratif expérimenté, à l'aise avec les fonctions Excel.",
+      "type": "select",
+      "required": true,
+      "source": "levels.json",
+      "validation": {
+        "mustBeValidLevel": true
+      },
+      "examples": [
+        "Tu es un assistant administratif expérimenté, à l'aise avec les fonctions Excel.",
+        "Tu es un expert en marketing, spécialisé dans la vente de services aux entrepreneurs.",
+        "Tu es un développeur de jeux JavaScript senior, pédagogue.",
+        "Tu es un manager de musique indépendant, expérimenté.",
+        "Tu es un professeur d'électronique patient qui parle à un élève de niveau terminale."
+      ],
+      "helper": "Un niveau précis adapte le vocabulaire. « Expert » ou « débutant » change tout.",
+      "commonErrors": [
+        "Niveau flou (« normal »)",
+        "Niveau contradictoire avec le public"
+      ],
+      "formula": "Tu es un [métier] [niveau] [spécialité]."
+    },
+    {
+      "id": "task",
+      "order": 4,
+      "letter": "T",
+      "label": "Tâche",
+      "amorce": "Tu dois…",
+      "description": "Indique clairement l'action ou le travail attendu.",
+      "purpose": "Définit précisément ce que l'IA doit produire.",
+      "question": "Quelle tâche précise l'IA doit-elle accomplir ?",
+      "hint": "Sois exhaustif : liste les éléments à inclure, les étapes à suivre.",
+      "placeholder": "Ex : tu dois proposer un tableau Excel avec les colonnes : Nom, Heure d'arrivée, Heure de départ…",
+      "type": "textarea",
+      "required": true,
+      "validation": {
+        "minLength": 30,
+        "maxLength": 800,
+        "mustStartWithActionVerb": true
+      },
+      "actionVerbs": [
+        "propose",
+        "rédige",
+        "fournis",
+        "explique",
+        "liste",
+        "analyse",
+        "compare",
+        "prépare",
+        "construis",
+        "génère"
+      ],
+      "examples": [
+        "Tu dois proposer un tableau Excel avec les colonnes : Nom de l'employé, Heure d'arrivée, Heure de départ, Heures travaillées, Heures supplémentaires. Tu dois proposer la formule pour les heures travaillées (départ - arrivée) et une formule pour les heures supplémentaires (si les heures travaillées dépassent 8 heures par jour : heures travaillées - 8, sinon 0).",
+        "Préparer un argumentaire incluant : une accroche percutante, les bénéfices (gain de temps, augmentation du chiffre d'affaires, réduction du stress), les caractéristiques (accompagnement individuel, sessions hebdomadaires, accès à des ressources exclusives), une proposition de valeur (différenciation), un appel à l'action (session d'essai gratuite).",
+        "Tu dois écrire le code qui gère les PV du joueur, la réduction de PV en cas de contact avec un ennemi, et l'affichage d'un écran « Game over » à 0 PV.",
+        "Tu dois proposer un plan en 3 semaines : préparation, teasing, sortie, suivi.",
+        "Tu dois proposer un plan de révision de 4 semaines et expliquer la première notion avec un exemple.",
+        "Tu dois créer un résumé des avis client récents sur un produit."
+      ],
+      "helper": "La tâche est le cœur du prompt. Plus elle est précise, plus le résultat est bon.",
+      "commonErrors": [
+        "Tâche trop vague",
+        "Tâche trop longue et décousue",
+        "Oublier des éléments clés"
+      ],
+      "formula": "[Verbe d'action] + [éléments à inclure] + [étapes à suivre]."
+    },
+    {
+      "id": "examples",
+      "order": 5,
+      "letter": "E",
+      "label": "Exemples",
+      "amorce": "Fais-le en…",
+      "description": "Fournis des illustrations ou des modèles de réponse attendue.",
+      "purpose": "Clarifie tes attentes (style, format, syntaxe).",
+      "question": "Peux-tu donner un exemple de ce que tu attends ?",
+      "hint": "Une phrase, une formule, un extrait, un style. L'IA va imiter la forme.",
+      "placeholder": "Ex : exemple de formule pour D2 : '=C2-B2'. Exemple pour E2 : '=SI(D2>8;D2-8;0)'.",
+      "type": "textarea",
+      "required": false,
+      "validation": {
+        "maxLength": 600
+      },
+      "examples": [
+        "Exemple de formule pour les heures travaillées en D2 : '=C2-B2'. Exemple pour les heures supplémentaires en E2 : '=SI(D2>8;D2-8;0)'.",
+        "Accroche : « Vous êtes entrepreneur et vous vous sentez débordé ? Vous rêvez de développer votre activité sans sacrifier votre vie personnelle ? » Appel à l'action : « Inscrivez-vous dès maintenant pour une session d'essai gratuite et découvrez comment notre coaching peut transformer votre business ! »",
+        "Style attendu : une fonction par action, par exemple perdrePV(joueur, degats).",
+        "Une ligne type : « Semaine 1, jour 2 : publier un extrait de 15 secondes avec les paroles à l'écran. »",
+        "Explique avec une analogie du quotidien, par exemple l'eau dans un tuyau pour le courant."
+      ],
+      "helper": "Un exemple bien choisi vaut mille mots. Mais attention : l'IA peut le copier mot pour mot. Dis-lui de s'en inspirer, pas de le recopier.",
+      "commonErrors": [
+        "Exemple trop spécifique (l'IA copie mot pour mot)",
+        "Exemple contradictoire avec la tâche",
+        "Oublier de dire « inspire-toi du style »"
+      ],
+      "formula": "Voici un exemple de ce que j'attends (inspire-toi du style, ne le recopie pas) : [exemple]."
+    },
+    {
+      "id": "constraints",
+      "order": 6,
+      "letter": "X",
+      "label": "X-contraintes",
+      "amorce": "Tu ne dois pas…",
+      "description": "Ajoute des restrictions spécifiques.",
+      "purpose": "Encadre la réponse pour mieux l'adapter à ton besoin.",
+      "question": "Quelles sont les limites à ne pas dépasser ?",
+      "hint": "Longueur, vocabulaire, promesses, outils, format…",
+      "placeholder": "Ex : tu ne dois pas utiliser de fonctions Excel complexes. Tu ne dois pas oublier d'indiquer les en-têtes.",
+      "type": "textarea",
+      "required": false,
+      "validation": {
+        "maxLength": 500
+      },
+      "examples": [
+        "Tu ne dois pas utiliser de fonctions Excel complexes. Tu ne dois pas oublier d'indiquer les en-têtes de colonnes.",
+        "Tu ne dois pas utiliser de jargon. Tu ne dois pas faire de promesses irréalistes.",
+        "Tu ne dois pas utiliser de bibliothèque externe autre que Phaser. Tu ne dois pas réécrire le reste du fichier.",
+        "Tu ne dois pas proposer d'action payante. Tu ne dois pas dépasser 12 actions au total.",
+        "Tu ne dois pas utiliser de maths avancées. Tu ne dois pas dépasser 1 page.",
+        "Ne dépasse pas 200 mots. N'utilise ni argot, ni jargon, ni langage informel."
+      ],
+      "helper": "Les contraintes sont les garde-fous. Plus elles sont explicites, moins l'IA fait d'écarts.",
+      "commonErrors": [
+        "Contraintes contradictoires (« détaillé » et « 100 mots max »)",
+        "Contraintes trop nombreuses (l'IA en oublie)"
+      ],
+      "formula": "Tu ne dois pas [limite 1]. Tu ne dois pas [limite 2]."
+    },
+    {
+      "id": "tone",
+      "order": 7,
+      "letter": "T",
+      "label": "Tonalité",
+      "amorce": "Le ton doit être…",
+      "description": "Précise le style ou l'émotion souhaités.",
+      "purpose": "Harmonise le ton avec l'objectif visé.",
+      "question": "Quel ton adopter ?",
+      "hint": "2 ou 3 adjectifs compatibles entre eux. Maximum 3.",
+      "type": "select-multi",
+      "required": true,
+      "max": 3,
+      "source": "tones.json",
+      "validation": {
+        "mustBeCompatible": true
+      },
+      "examples": [
+        [
+          "clair",
+          "informatif"
+        ],
+        [
+          "motivant",
+          "concret"
+        ],
+        [
+          "clair",
+          "pédagogique"
+        ],
+        [
+          "encourageant",
+          "simple"
+        ],
+        [
+          "professionnel",
+          "inspirant"
+        ]
+      ],
+      "helper": "Évite les contradictions (« sérieux et très drôle »). Maximum 3 adjectifs.",
+      "commonErrors": [
+        "Ton contradictoire",
+        "Trop d'adjectifs"
+      ],
+      "formula": "Le ton doit être [adjectif 1], [adjectif 2]."
+    },
+    {
+      "id": "encoding",
+      "order": 8,
+      "letter": "E",
+      "label": "Encodage",
+      "amorce": "Présente la réponse sous forme de…",
+      "description": "Définis le format de sortie précis.",
+      "purpose": "Garantit une présentation directement utilisable.",
+      "question": "Sous quelle forme exacte veux-tu la réponse ?",
+      "hint": "Liste, texte brut, code, tableau, JSON, Markdown…",
+      "placeholder": "Ex : tu devras lister les en-têtes de colonnes. Tu devras fournir les formules Excel pour chaque calcul.",
+      "type": "text",
+      "required": true,
+      "validation": {
+        "minLength": 10,
+        "maxLength": 300
+      },
+      "examples": [
+        "Tu devras lister les en-têtes de colonnes. Tu devras fournir les formules Excel pour chaque calcul.",
+        "Structure logique : Accroche, Bénéfices, Caractéristiques, Proposition de valeur, Appel à l'action. Adapte le vocabulaire au public cible.",
+        "Donne le code dans un seul bloc, avec des commentaires courts en français.",
+        "Présente un tableau : semaine, jour, action, objectif.",
+        "Plan en 4 lignes (une par semaine), puis l'explication en 5 étapes numérotées.",
+        "Tu devras fournir un résumé de 200 mots maximum, dans un langage professionnel adapté à une réunion d'équipe marketing."
+      ],
+      "helper": "L'encodage dit COMMENT afficher (tableau, liste, JSON…). C'est différent de la tâche.",
+      "commonErrors": [
+        "Confondre encodage et format (déjà traité dans la tâche)",
+        "Oublier l'encodage"
+      ],
+      "formula": "Présente la réponse sous forme de [format précis]."
+    },
+    {
+      "id": "verification",
+      "order": 9,
+      "letter": "V",
+      "label": "Vérification",
+      "amorce": "Vérifie que…",
+      "description": "Demande un contrôle de conformité.",
+      "purpose": "Force l'IA à relire sa propre réponse contre les consignes.",
+      "question": "Veux-tu que l'IA vérifie sa propre réponse ?",
+      "hint": "Recommandé. Cela réduit les oublis, sans garantir l'absence d'erreur.",
+      "type": "toggle",
+      "required": false,
+      "default": true,
+      "examples": [
+        "Vérifie minutieusement que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment.",
+        "Vérifie que le code ne contient aucune dépendance supplémentaire et que « Game over » s'affiche à 0 PV.",
+        "Vérifie que le plan contient au maximum 12 actions et aucune dépense.",
+        "Vérifie que chaque explication reste au niveau terminale."
+      ],
+      "helper": "La vérification ne garantit pas l'absence d'erreur, mais elle réduit les oublis.",
+      "commonErrors": [
+        "Oublier la vérification",
+        "Ne pas relire soi-même après"
+      ],
+      "formula": "Vérifie que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment."
+    }
+  ],
+  "template": {
+    "pattern": "Contexte : {context}\nObjectif : {objective}\nNiveau : {level}\nTâche : {task}\nExemples : {examples}\nX-contraintes : {constraints}\nTonalité : {tone}\nEncodage : {encoding}\nVérification : {verification}",
+    "example": "Contexte : Je suis chargé de créer un tableau Excel pour calculer automatiquement les heures supplémentaires des employés.\nObjectif : L'objectif est de créer un tableau qui calcule le nombre d'heures supplémentaires pour chaque employé en fonction de leurs heures d'arrivée et de départ.\nNiveau : Tu es un assistant administratif expérimenté, à l'aise avec les fonctions Excel.\nTâche : Tu dois proposer un tableau Excel avec les colonnes : Nom de l'employé, Heure d'arrivée, Heure de départ, Heures travaillées, Heures supplémentaires. Tu dois proposer la formule pour les heures travaillées (départ - arrivée) et une formule pour les heures supplémentaires (si les heures travaillées dépassent 8 heures par jour : heures travaillées - 8, sinon 0).\nExemples : Exemple de formule pour les heures travaillées en D2 : '=C2-B2'. Exemple pour les heures supplémentaires en E2 : '=SI(D2>8;D2-8;0)'.\nX-contraintes : Tu ne dois pas utiliser de fonctions Excel complexes. Tu ne dois pas oublier d'indiquer les en-têtes de colonnes.\nTonalité : Le ton doit être clair et informatif.\nEncodage : Tu devras lister les en-têtes de colonnes. Tu devras fournir les formules Excel pour chaque calcul.\nVérification : Vérifie minutieusement que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment.",
+    "assembly": [
+      "context",
+      "objective",
+      "level",
+      "task",
+      "examples",
+      "constraints",
+      "tone",
+      "encoding",
+      "verification"
+    ]
+  },
+  "examples": [
+    {
+      "id": "cv-1",
+      "title": "Tableau Excel des heures supplémentaires",
+      "source": "SRC-2",
+      "answers": {
+        "context": "Je suis chargé de créer un tableau Excel pour calculer automatiquement les heures supplémentaires des employés.",
+        "objective": "L'objectif est de créer un tableau qui calcule le nombre d'heures supplémentaires pour chaque employé en fonction de leurs heures d'arrivée et de départ.",
+        "level": "intermédiaire",
+        "task": "Tu dois proposer un tableau Excel avec les colonnes : Nom de l'employé, Heure d'arrivée, Heure de départ, Heures travaillées, Heures supplémentaires. Tu dois proposer la formule pour les heures travaillées (départ - arrivée) et une formule pour les heures supplémentaires (si les heures travaillées dépassent 8 heures par jour : heures travaillées - 8, sinon 0).",
+        "examples": "Exemple de formule pour les heures travaillées en D2 : '=C2-B2'. Exemple pour les heures supplémentaires en E2 : '=SI(D2>8;D2-8;0)'.",
+        "constraints": "Tu ne dois pas utiliser de fonctions Excel complexes. Tu ne dois pas oublier d'indiquer les en-têtes de colonnes.",
+        "tone": [
+          "clair",
+          "informatif"
+        ],
+        "encoding": "Tu devras lister les en-têtes de colonnes. Tu devras fournir les formules Excel pour chaque calcul.",
+        "verification": true
+      },
+      "finalPrompt": "Contexte : Je suis chargé de créer un tableau Excel pour calculer automatiquement les heures supplémentaires des employés.\nObjectif : L'objectif est de créer un tableau qui calcule le nombre d'heures supplémentaires pour chaque employé en fonction de leurs heures d'arrivée et de départ.\nNiveau : intermédiaire\nTâche : Tu dois proposer un tableau Excel avec les colonnes : Nom de l'employé, Heure d'arrivée, Heure de départ, Heures travaillées, Heures supplémentaires. Tu dois proposer la formule pour les heures travaillées (départ - arrivée) et une formule pour les heures supplémentaires (si les heures travaillées dépassent 8 heures par jour : heures travaillées - 8, sinon 0).\nExemples : Exemple de formule pour les heures travaillées en D2 : '=C2-B2'. Exemple pour les heures supplémentaires en E2 : '=SI(D2>8;D2-8;0)'.\nX-contraintes : Tu ne dois pas utiliser de fonctions Excel complexes. Tu ne dois pas oublier d'indiquer les en-têtes de colonnes.\nTonalité : clair et informatif et informatif\nEncodage : Tu devras lister les en-têtes de colonnes. Tu devras fournir les formules Excel pour chaque calcul.\nVérification : Vérifie que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment."
+    },
+    {
+      "id": "cv-2",
+      "title": "Argumentaire de vente",
+      "source": "SRC-2",
+      "answers": {
+        "context": "Je suis chargé de préparer un argumentaire de vente pour un nouveau service de coaching en ligne pour les entrepreneurs. Le service propose un accompagnement personnalisé pour aider les entrepreneurs à développer leur activité.",
+        "objective": "Créer un argumentaire de vente convaincant qui met en avant les bénéfices du service et incite les prospects à s'inscrire.",
+        "level": "expert",
+        "task": "Préparer un argumentaire incluant : une accroche percutante, les bénéfices (gain de temps, augmentation du chiffre d'affaires, réduction du stress), les caractéristiques (accompagnement individuel, sessions hebdomadaires, accès à des ressources exclusives), une proposition de valeur (différenciation), un appel à l'action (session d'essai gratuite).",
+        "examples": "Accroche : « Vous êtes entrepreneur et vous vous sentez débordé ? Vous rêvez de développer votre activité sans sacrifier votre vie personnelle ? » Appel à l'action : « Inscrivez-vous dès maintenant pour une session d'essai gratuite et découvrez comment notre coaching peut transformer votre business ! »",
+        "constraints": "Tu ne dois pas utiliser de jargon. Tu ne dois pas faire de promesses irréalistes.",
+        "tone": [
+          "clair",
+          "informatif"
+        ],
+        "encoding": "Structure logique : Accroche, Bénéfices, Caractéristiques, Proposition de valeur, Appel à l'action. Adapte le vocabulaire au public cible.",
+        "verification": true
+      },
+      "finalPrompt": "Contexte : Je suis chargé de préparer un argumentaire de vente pour un nouveau service de coaching en ligne pour les entrepreneurs. Le service propose un accompagnement personnalisé pour aider les entrepreneurs à développer leur activité.\nObjectif : Créer un argumentaire de vente convaincant qui met en avant les bénéfices du service et incite les prospects à s'inscrire.\nNiveau : expert\nTâche : Préparer un argumentaire incluant : une accroche percutante, les bénéfices (gain de temps, augmentation du chiffre d'affaires, réduction du stress), les caractéristiques (accompagnement individuel, sessions hebdomadaires, accès à des ressources exclusives), une proposition de valeur (différenciation), un appel à l'action (session d'essai gratuite).\nExemples : Accroche : « Vous êtes entrepreneur et vous vous sentez débordé ? Vous rêvez de développer votre activité sans sacrifier votre vie personnelle ? » Appel à l'action : « Inscrivez-vous dès maintenant pour une session d'essai gratuite et découvrez comment notre coaching peut transformer votre business ! »\nX-contraintes : Tu ne dois pas utiliser de jargon. Tu ne dois pas faire de promesses irréalistes.\nTonalité : clair et informatif et informatif\nEncodage : Structure logique : Accroche, Bénéfices, Caractéristiques, Proposition de valeur, Appel à l'action. Adapte le vocabulaire au public cible.\nVérification : Vérifie que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment."
+    },
+    {
+      "id": "cv-3",
+      "title": "Mini-jeu 2D",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Je développe un jeu 2D en JavaScript avec Phaser 3, dans un seul fichier index.html, sur téléphone Android.",
+        "objective": "Ajouter un système de points de vie et de fin de partie.",
+        "level": "avancé",
+        "task": "Tu dois écrire le code qui gère les PV du joueur, la réduction de PV en cas de contact avec un ennemi, et l'affichage d'un écran « Game over » à 0 PV.",
+        "examples": "Style attendu : une fonction par action, par exemple perdrePV(joueur, degats).",
+        "constraints": "Tu ne dois pas utiliser de bibliothèque externe autre que Phaser. Tu ne dois pas réécrire le reste du fichier.",
+        "tone": [
+          "clair",
+          "pédagogique"
+        ],
+        "encoding": "Donne le code dans un seul bloc, avec des commentaires courts en français.",
+        "verification": true
+      },
+      "finalPrompt": "Contexte : Je développe un jeu 2D en JavaScript avec Phaser 3, dans un seul fichier index.html, sur téléphone Android.\nObjectif : Ajouter un système de points de vie et de fin de partie.\nNiveau : avancé\nTâche : Tu dois écrire le code qui gère les PV du joueur, la réduction de PV en cas de contact avec un ennemi, et l'affichage d'un écran « Game over » à 0 PV.\nExemples : Style attendu : une fonction par action, par exemple perdrePV(joueur, degats).\nX-contraintes : Tu ne dois pas utiliser de bibliothèque externe autre que Phaser. Tu ne dois pas réécrire le reste du fichier.\nTonalité : clair et informatif et pédagogique\nEncodage : Donne le code dans un seul bloc, avec des commentaires courts en français.\nVérification : Vérifie que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment."
+    },
+    {
+      "id": "cv-4",
+      "title": "Plan de lancement d'un morceau",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Je suis artiste indépendant. Je distribue seul mes titres. Je prépare la sortie d'un single dans 3 semaines.",
+        "objective": "Obtenir un plan d'actions semaine par semaine pour maximiser les premières écoutes sans budget publicitaire.",
+        "level": "expert",
+        "task": "Tu dois proposer un plan en 3 semaines : préparation, teasing, sortie, suivi.",
+        "examples": "Une ligne type : « Semaine 1, jour 2 : publier un extrait de 15 secondes avec les paroles à l'écran. »",
+        "constraints": "Tu ne dois pas proposer d'action payante. Tu ne dois pas dépasser 12 actions au total.",
+        "tone": [
+          "motivant",
+          "concret"
+        ],
+        "encoding": "Présente un tableau : semaine, jour, action, objectif.",
+        "verification": true
+      },
+      "finalPrompt": "Contexte : Je suis artiste indépendant. Je distribue seul mes titres. Je prépare la sortie d'un single dans 3 semaines.\nObjectif : Obtenir un plan d'actions semaine par semaine pour maximiser les premières écoutes sans budget publicitaire.\nNiveau : expert\nTâche : Tu dois proposer un plan en 3 semaines : préparation, teasing, sortie, suivi.\nExemples : Une ligne type : « Semaine 1, jour 2 : publier un extrait de 15 secondes avec les paroles à l'écran. »\nX-contraintes : Tu ne dois pas proposer d'action payante. Tu ne dois pas dépasser 12 actions au total.\nTonalité : motivant et concret\nEncodage : Présente un tableau : semaine, jour, action, objectif.\nVérification : Vérifie que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment."
+    },
+    {
+      "id": "cv-5",
+      "title": "Étudier pour un examen",
+      "source": "AJOUT",
+      "answers": {
+        "context": "Je prépare un examen d'électronique dans 4 semaines. Je suis faible sur les signaux, les ondes et la préamplification.",
+        "objective": "Comprendre ces notions de base et pouvoir résoudre des exercices simples.",
+        "level": "débutant",
+        "task": "Tu dois proposer un plan de révision de 4 semaines et expliquer la première notion avec un exemple.",
+        "examples": "Explique avec une analogie du quotidien, par exemple l'eau dans un tuyau pour le courant.",
+        "constraints": "Tu ne dois pas utiliser de maths avancées. Tu ne dois pas dépasser 1 page.",
+        "tone": [
+          "encourageant",
+          "simple"
+        ],
+        "encoding": "Plan en 4 lignes (une par semaine), puis l'explication en 5 étapes numérotées.",
+        "verification": true
+      },
+      "finalPrompt": "Contexte : Je prépare un examen d'électronique dans 4 semaines. Je suis faible sur les signaux, les ondes et la préamplification.\nObjectif : Comprendre ces notions de base et pouvoir résoudre des exercices simples.\nNiveau : débutant\nTâche : Tu dois proposer un plan de révision de 4 semaines et expliquer la première notion avec un exemple.\nExemples : Explique avec une analogie du quotidien, par exemple l'eau dans un tuyau pour le courant.\nX-contraintes : Tu ne dois pas utiliser de maths avancées. Tu ne dois pas dépasser 1 page.\nTonalité : encourageant et simple\nEncodage : Plan en 4 lignes (une par semaine), puis l'explication en 5 étapes numérotées.\nVérification : Vérifie que ta réponse respecte bien toutes les consignes et les contraintes énoncées précédemment."
+    },
+    {
+      "id": "cv-6",
+      "title": "Résumé d'avis clients",
+      "source": "SRC-ADOBE",
+      "answers": {
+        "context": "Je prépare la réunion de l'équipe marketing et je dispose des avis client récents sur un produit.",
+        "objective": "Le résumé doit identifier les thèmes clés et le sentiment général.",
+        "level": "3",
+        "task": "Tu dois créer un résumé des avis client récents sur un produit.",
+        "constraints": "Ne dépasse pas 200 mots. N'utilise ni argot, ni jargon, ni langage informel.",
+        "tone": [
+          "professionnel"
+        ],
+        "encoding": "Tu devras fournir un résumé de 200 mots maximum, dans un langage professionnel adapté à une réunion d'équipe marketing.",
+        "verification": false
+      },
+      "finalPrompt": "Contexte : Je prépare la réunion de l'équipe marketing et je dispose des avis client récents sur un produit.\nObjectif : Le résumé doit identifier les thèmes clés et le sentiment général.\nNiveau : Intermédiaire\nTâche : Tu dois créer un résumé des avis client récents sur un produit.\nX-contraintes : Ne dépasse pas 200 mots. N'utilise ni argot, ni jargon, ni langage informel.\nTonalité : professionnel\nEncodage : Tu devras fournir un résumé de 200 mots maximum, dans un langage professionnel adapté à une réunion d'équipe marketing."
+    }
+  ],
+  "lightweightVariant": {
+    "name": "CONTEXTE-V en 5 blocs",
+    "description": "Si tu es pressé mais que la tâche reste complexe.",
+    "blocks": [
+      "context",
+      "objective",
+      "task",
+      "constraints",
+      "verification"
+    ],
+    "whenToUse": "Quand tu maîtrises déjà la méthode et que tu veux aller à l'essentiel.",
+    "examplePrompt": "Contexte : [situation].\nObjectif : [résultat].\nTâche : [action détaillée].\nContraintes : [limites].\nVérification : Vérifie toutes les consignes."
+  },
+  "limitations": [
+    "Long à remplir (9 blocs)",
+    "Peut être intimidant pour un débutant",
+    "Un prompt assistant est recommandé pour le remplir",
+    "Risque de remplir les 9 blocs avec des phrases vides (mieux vaut 6 blocs solides que 9 blocs creux)",
+    "Risque de contraintes contradictoires (« détaillé » et « 100 mots max »)"
+  ],
+  "nextStepIfFail": {
+    "method": null,
+    "reason": "CONTEXTE-V est le sommet de la pyramide. Si ça ne marche pas, ce n'est pas la méthode qui est en cause, c'est le prompt lui-même. Il faut le retravailler avec le moteur d'évolution (SEC-07)."
+  },
+  "tips": [
+    "Mieux vaut 6 blocs solides que 9 blocs creux.",
+    "La partie EXEMPLES est la plus puissante : elle fixe la forme exacte du résultat.",
+    "Les X-CONTRAINTES sont les garde-fous : « pas de fonctions complexes » évite une réponse inutilisable.",
+    "L'ENCODAGE est séparé de la TÂCHE : la tâche dit QUOI produire, l'encodage dit COMMENT l'afficher.",
+    "La VÉRIFICATION force l'IA à relire sa réponse, mais ne garantit pas l'absence d'erreur. Relis toujours toi-même."
+  ],
+  "commonErrorsOverall": [
+    "Remplir les 9 blocs avec des phrases vides",
+    "Contraintes contradictoires (« détaillé » et « 100 mots maximum »)",
+    "Exemple trop spécifique : l'IA le copie mot pour mot",
+    "Oublier la vérification, puis ne pas relire soi-même",
+    "Utiliser un méga-prompt pour une question simple : perte de temps"
+  ],
+  "comparisonWithCraft": {
+    "adds": [
+      "objective",
+      "level",
+      "examples",
+      "constraints",
+      "encoding",
+      "verification"
+    ],
+    "removes": [],
+    "renames": [],
+    "note": "CONTEXTE-V est CRAFT avec 4 blocs supplémentaires : objectif, niveau, exemples, contraintes, encodage, vérification. C'est la version « pro » de CRAFT."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2026-11-03",
+    "sources": [
+      "SRC-2",
+      "AJOUT",
+      "SRC-ADOBE"
+    ],
+    "validated": true
+  }
+}

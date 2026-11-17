@@ -1,0 +1,405 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-11-03",
+  "locale": "fr",
+  "source": {
+    "primary": "Tech_prompt.txt",
+    "origins": [
+      {
+        "id": "SRC-1",
+        "author": "Keyrus",
+        "title": "Prompt engineering — Réconcilier l'intention humaine et les réponses de l'IA",
+        "date": "2024-09"
+      },
+      {
+        "id": "SRC-2",
+        "author": "Frédéric Cavazza",
+        "title": "Le B-A BA du prompt pour maîtriser l'IA",
+        "date": "2025-02"
+      }
+    ],
+    "compiler": "Kameleon Prompter",
+    "SRC-BERNE": "Prompting (Canton de Berne)",
+    "SRC-ADOBE": "Prompts pour l'Assistant IA (Adobe)",
+    "SRC-GUIDE": "Guide complet du prompting"
+  },
+  "categories": {
+    "methods": {
+      "label": "Méthodes de structure",
+      "description": "Organisent les informations du prompt (RTF, CRAFT, CONTEXTE-V…)",
+      "path": "methods/",
+      "required": true,
+      "order": 1,
+      "items": [
+        {
+          "id": "rtf",
+          "label": "RTF",
+          "fullName": "Rôle – Tâche – Format",
+          "file": "rtf.json",
+          "difficulty": 1,
+          "estimatedTime": "30 s",
+          "icon": "zap",
+          "summary": "La méthode la plus courte. 3 blocs. Idéale pour aller vite.",
+          "tags": [
+            "rapide",
+            "débutant",
+            "quotidien"
+          ]
+        },
+        {
+          "id": "craft",
+          "label": "CRAFT",
+          "fullName": "Contexte – Rôle – Action – Format – Tonalité",
+          "file": "craft.json",
+          "difficulty": 2,
+          "estimatedTime": "1-2 min",
+          "icon": "layers",
+          "summary": "Ajoute contexte et ton. Pour des réponses précises.",
+          "tags": [
+            "précis",
+            "quotidien",
+            "polyvalent"
+          ]
+        },
+        {
+          "id": "contexte-v",
+          "label": "CONTEXTE-V",
+          "fullName": "Contexte – Objectif – Niveau – Tâche – Exemples – X-contraintes – Tonalité – Encodage – Vérification",
+          "file": "contexte-v.json",
+          "difficulty": 3,
+          "estimatedTime": "3-5 min",
+          "icon": "target",
+          "summary": "Le méga-prompt. 9 blocs. Pour les tâches complexes.",
+          "tags": [
+            "complet",
+            "avancé",
+            "professionnel"
+          ]
+        },
+        {
+          "id": "qq",
+          "label": "QQ",
+          "fullName": "Qui – Quoi – Comment – Pourquoi",
+          "file": "qq.json",
+          "difficulty": 1,
+          "estimatedTime": "1 min",
+          "icon": "help-circle",
+          "summary": "4 questions pour cadrer vite un besoin.",
+          "tags": [
+            "cadrage",
+            "débutant"
+          ]
+        },
+        {
+          "id": "active",
+          "label": "Active",
+          "fullName": "Méthode active",
+          "file": "active.json",
+          "difficulty": 1,
+          "estimatedTime": "30 s",
+          "icon": "play",
+          "summary": "Verbe d'action + objet + limite. Réponses directes.",
+          "tags": [
+            "rapide",
+            "direct",
+            "quotidien"
+          ]
+        },
+        {
+          "id": "reverse",
+          "label": "Ingénierie inversée",
+          "fullName": "Reverse engineering",
+          "file": "reverse.json",
+          "difficulty": 2,
+          "estimatedTime": "5-10 min",
+          "icon": "undo",
+          "summary": "Définir le résultat idéal AVANT d'écrire le prompt.",
+          "tags": [
+            "planification",
+            "livrables",
+            "régulier"
+          ]
+        }
+      ]
+    },
+    "techniques": {
+      "label": "Techniques de raisonnement",
+      "description": "Changent la façon dont l'IA raisonne (CoT, ReAct, RAG…)",
+      "path": "techniques/",
+      "required": true,
+      "order": 2,
+      "items": [
+        {
+          "id": "zero-shot",
+          "label": "Zero-shot",
+          "file": "zero-shot.json",
+          "difficulty": 1,
+          "summary": "Question directe, sans exemple.",
+          "tags": [
+            "rapide",
+            "exploration"
+          ]
+        },
+        {
+          "id": "few-shot",
+          "label": "Few-shot",
+          "file": "few-shot.json",
+          "difficulty": 2,
+          "summary": "Donner 2-3 exemples à imiter.",
+          "tags": [
+            "style",
+            "format"
+          ]
+        },
+        {
+          "id": "chain-of-thought",
+          "label": "Chaîne de pensée",
+          "shortName": "CoT",
+          "file": "chain-of-thought.json",
+          "difficulty": 2,
+          "summary": "Raisonner étape par étape.",
+          "tags": [
+            "logique",
+            "calcul",
+            "diagnostic"
+          ]
+        },
+        {
+          "id": "self-consistency",
+          "label": "Auto-cohérence",
+          "file": "self-consistency.json",
+          "difficulty": 3,
+          "summary": "Plusieurs réponses puis comparaison.",
+          "tags": [
+            "décision",
+            "fiabilité"
+          ]
+        },
+        {
+          "id": "generate-knowledge",
+          "label": "Connaissance générée",
+          "file": "generate-knowledge.json",
+          "difficulty": 2,
+          "summary": "Générer d'abord les faits utiles, puis répondre.",
+          "tags": [
+            "idées",
+            "sujet neuf"
+          ]
+        },
+        {
+          "id": "react",
+          "label": "ReAct",
+          "fullName": "Reasoning + Acting",
+          "file": "react.json",
+          "difficulty": 3,
+          "summary": "Situation + inquiétudes → étapes concrètes.",
+          "tags": [
+            "projet",
+            "conseil"
+          ]
+        },
+        {
+          "id": "tree-of-thoughts",
+          "label": "Arbre de pensées",
+          "shortName": "ToT",
+          "file": "tree-of-thoughts.json",
+          "difficulty": 4,
+          "summary": "Plusieurs experts, branches, tri collectif.",
+          "tags": [
+            "complexe",
+            "expert"
+          ]
+        },
+        {
+          "id": "rag",
+          "label": "RAG",
+          "fullName": "Retrieval-Augmented Generation",
+          "file": "rag.json",
+          "difficulty": 3,
+          "summary": "Réponse appuyée sur TES documents.",
+          "tags": [
+            "précision",
+            "sources"
+          ]
+        },
+        {
+          "id": "multi-agents",
+          "label": "Multi-agents",
+          "file": "multi-agents.json",
+          "difficulty": 4,
+          "summary": "Plusieurs IA spécialisées collaborent.",
+          "tags": [
+            "complexe",
+            "avancé"
+          ]
+        },
+        {
+          "id": "api-integration",
+          "label": "Intégration API",
+          "file": "api-integration.json",
+          "difficulty": 4,
+          "summary": "Données réelles via un programme.",
+          "tags": [
+            "applis",
+            "avancé"
+          ]
+        },
+        {
+          "id": "prompt-chaining",
+          "label": "Chaînage de prompts",
+          "file": "prompt-chaining.json",
+          "difficulty": 2,
+          "summary": "Découper en étapes qui s'enchaînent.",
+          "tags": [
+            "étapes",
+            "complexe"
+          ]
+        },
+        {
+          "id": "metaprompting",
+          "label": "Métaprompting",
+          "file": "metaprompting.json",
+          "difficulty": 2,
+          "summary": "Faire analyser et améliorer un texte ou un prompt.",
+          "tags": [
+            "amélioration",
+            "relecture"
+          ]
+        }
+      ]
+    },
+    "roles": {
+      "label": "Catalogue des rôles",
+      "description": "Rôles prêts à l'emploi, classés par domaine",
+      "path": "roles/",
+      "required": true,
+      "order": 3,
+      "domains": [
+        {
+          "id": "learning",
+          "label": "Apprendre et expliquer",
+          "file": "learning.json"
+        },
+        {
+          "id": "code",
+          "label": "Code et technique",
+          "file": "code.json"
+        },
+        {
+          "id": "writing",
+          "label": "Création et écriture",
+          "file": "writing.json"
+        },
+        {
+          "id": "music",
+          "label": "Musique et audio",
+          "file": "music.json"
+        },
+        {
+          "id": "business",
+          "label": "Business et argent",
+          "file": "business.json"
+        },
+        {
+          "id": "organization",
+          "label": "Organisation et vie",
+          "file": "organization.json"
+        },
+        {
+          "id": "critique",
+          "label": "Critique et contrôle",
+          "file": "critique.json"
+        },
+        {
+          "id": "dialogue",
+          "label": "Rôles de dialogue",
+          "file": "dialogue.json"
+        }
+      ]
+    }
+  },
+  "standalone": {
+    "label": "Fichiers transverses",
+    "order": 4,
+    "files": [
+      {
+        "id": "tones",
+        "label": "Catalogue des tons",
+        "file": "tones.json",
+        "description": "21 tons avec compatibilités et incompatibilités",
+        "required": true
+      },
+      {
+        "id": "formats",
+        "label": "Catalogue des formats de sortie",
+        "file": "formats.json",
+        "description": "Liste, tableau, JSON, Markdown, plan, checklist…",
+        "required": true
+      },
+      {
+        "id": "levels",
+        "label": "Échelle d'expertise",
+        "file": "levels.json",
+        "description": "Niveaux 0 (enfant) à 5 (expert)",
+        "required": true
+      },
+      {
+        "id": "rules",
+        "label": "Règles de style",
+        "file": "rules.json",
+        "description": "Règles S1 à S8 (voix active, impératif, positivité…)",
+        "required": true
+      },
+      {
+        "id": "principles",
+        "label": "Les 4 principes",
+        "file": "principles.json",
+        "description": "Clarté, Structure, Adaptabilité, Éthique",
+        "required": true
+      },
+      {
+        "id": "guide",
+        "label": "Questionnaire de départ",
+        "file": "guide.json",
+        "description": "3 questions qui recommandent la bonne méthode au débutant",
+        "required": true
+      },
+      {
+        "id": "library",
+        "label": "Bibliothèque de prompts",
+        "file": "library.json",
+        "description": "38 prompts prêts à l'emploi classés par domaine",
+        "required": true
+      },
+      {
+        "id": "coaching",
+        "label": "Aide à comprendre",
+        "file": "coaching.json",
+        "description": "Modèles Berne et Adobe, checklist, bonnes pratiques, erreurs, éthique, glossaire",
+        "required": true
+      }
+    ]
+  },
+  "loading": {
+    "strategy": "manifest-first",
+    "eagerLoad": [
+      "principles",
+      "rules",
+      "levels"
+    ],
+    "lazyLoad": [
+      "methods",
+      "techniques",
+      "roles"
+    ],
+    "cache": true,
+    "fallbackLocale": "fr"
+  },
+  "metadata": {
+    "totalMethods": 6,
+    "totalTechniques": 12,
+    "totalRoleDomains": 8,
+    "totalStandalone": 8,
+    "totalFiles": 33
+  }
+}

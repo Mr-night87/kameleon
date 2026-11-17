@@ -1,0 +1,318 @@
+{
+  "id": "generate-knowledge",
+  "label": "Connaissance générée",
+  "shortName": "GK",
+  "fullName": "Generate Knowledge prompting",
+  "shortDescription": "Générer d'abord les faits utiles, puis répondre. Pour le brainstorming et les sujets neufs.",
+  "description": "La connaissance générée consiste à demander à l'IA de jouer un expert et de générer d'abord les connaissances utiles (faits, conseils, pratiques, idées) avant de répondre à la question. On sépare la collecte d'informations de la réponse finale. Cette technique est idéale pour le brainstorming, les sujets que tu connais peu, et les demandes qui exigent des idées neuves. Elle augmente le risque d'hallucination sur les « recherches récentes » : l'IA peut inventer une source. Il faut toujours vérifier.",
+  "category": "raisonnement",
+  "difficulty": 2,
+  "estimatedTime": "1 à 2 minutes (ajout de structure)",
+  "techniqueType": "reasoning-modifier",
+
+  "whenToUse": [
+    "Brainstorming : trouver des idées nouvelles",
+    "Sujet que tu connais peu et que tu veux explorer",
+    "Demande de conseils « innovants » ou « peu connus »",
+    "Quand tu veux séparer la collecte d'infos de la réponse",
+    "Quand tu veux que l'IA sorte de l'évident",
+    "Pour préparer une décision (collecter les faits d'abord)"
+  ],
+  "whenNotToUse": [
+    "Question factuelle simple (→ zero-shot)",
+    "Calcul ou logique (→ CoT)",
+    "Décision critique (→ self-consistency)",
+    "Quand tu as besoin de sources fiables et vérifiables (→ RAG)",
+    "Quand tu ne peux pas vérifier les faits générés",
+    "Sujet sensible (santé, juridique) sans validation humaine"
+  ],
+
+  "source": ["SRC-1"],
+  "methodsCitation": "Keyrus : « Imagine que tu es un expert en relocalisation d'entreprises. Basé sur les dernières recherches, comment suggérerais-tu d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de générer des conseils innovants qui pourraient ne pas être largement connus. »",
+
+  "principle": "Faire générer à l'IA les connaissances utiles (faits, conseils, pratiques) AVANT de lui demander de répondre. Séparer la collecte du raisonnement.",
+
+  "triggerPhrases": [
+    "Imagine que tu es un expert en [domaine]. Basé sur les dernières recherches, [question].",
+    "Avant de répondre, liste 10 faits importants sur [sujet].",
+    "Génère d'abord les connaissances utiles sur [sujet], puis réponds à [question].",
+    "Donne-moi des conseils innovants qui pourraient ne pas être largement connus.",
+    "Liste ce que tout expert en [domaine] devrait savoir sur [sujet].",
+    "Commence par un rappel des faits clés, puis réponds.",
+    "Fais un état des lieux des connaissances actuelles sur [sujet], puis propose [action]."
+  ],
+
+  "triggerPhraseNote": "La phrase la plus puissante est « Basé sur les dernières recherches ». Attention : sans accès au web, l'IA peut inventer une « recherche ». Ajoute toujours « vérifie tes sources » ou utilise RAG.",
+
+  "examplePrompts": [
+    {
+      "id": "gk-1",
+      "title": "Question de référence Keyrus (relocalisation)",
+      "prompt": "Imagine que tu es un expert en relocalisation d'entreprises. Basé sur les dernières recherches, comment suggérerais-tu d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de générer des conseils innovants qui pourraient ne pas être largement connus.",
+      "source": "SRC-1",
+      "note": "C'est LA question que Keyrus utilise pour illustrer la generate knowledge. Structure : rôle expert → base de connaissances → conseils innovants."
+    },
+    {
+      "id": "gk-2",
+      "title": "Variante en deux temps (recommandée)",
+      "prompt": "Prompt 1 : Liste 10 faits importants sur la relocalisation d'activité en France.\n\nPrompt 2 : À partir de ces faits, réponds à : comment optimiser la préparation d'une relocalisation en France ?",
+      "source": "AJOUT",
+      "note": "La variante en deux temps sépare la collecte du raisonnement, ce qui facilite la vérification. L'utilisateur peut corriger les faits du prompt 1 avant de passer au prompt 2."
+    },
+    {
+      "id": "gk-3",
+      "title": "Brainstorming d'idées",
+      "prompt": "Tu es un expert en création de produits numériques. Liste 15 tendances actuelles dans les applis mobiles pour étudiants. Puis, à partir de cette liste, propose 5 idées d'applis originales qui répondent à un besoin non couvert.",
+      "source": "AJOUT",
+      "note": "La connaissance générée sert de base pour la créativité. L'IA ne part pas de zéro."
+    },
+    {
+      "id": "gk-4",
+      "title": "Conseils peu connus",
+      "prompt": "Tu es un ingénieur du son spécialisé en voix. Liste 8 techniques peu connues pour améliorer une voix enregistrée au téléphone. Pour chaque technique : le nom, l'effet, comment la mettre en œuvre dans un logiciel courant. Puis recommande les 3 plus efficaces pour un débutant.",
+      "source": "AJOUT",
+      "note": "La demande « peu connues » force l'IA à sortir des conseils évidents (« utilise un bon micro »)."
+    },
+    {
+      "id": "gk-5",
+      "title": "Préparation de décision",
+      "prompt": "Tu es un consultant en stratégie. Liste 10 facteurs clés à considérer avant de lancer une chaîne YouTube de tutoriels code. Pour chaque facteur : pourquoi il compte, comment l'évaluer. Puis, à partir de cette liste, dis-moi quels sont les 3 facteurs les plus critiques pour un débutant.",
+      "source": "AJOUT",
+      "note": "La connaissance générée sert de grille d'analyse pour une décision."
+    },
+    {
+      "id": "gk-6",
+      "title": "Explication pédagogique",
+      "prompt": "Tu es un professeur d'électronique. Avant d'expliquer les signaux sinusoïdaux, liste 5 notions prérequises (fréquence, amplitude, phase, période, longueur d'onde) avec une définition simple pour chacune. Puis explique les signaux sinusoïdaux en utilisant ces 5 notions.",
+      "source": "AJOUT",
+      "note": "La connaissance générée sert de base pédagogique : l'explication s'appuie sur des notions déjà définies."
+    }
+  ],
+
+  "keyrusExampleAnalysis": {
+    "originalPrompt": "Imagine que tu es un expert en relocalisation d'entreprises. Basé sur les dernières recherches, comment suggérerais-tu d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de générer des conseils innovants qui pourraient ne pas être largement connus.",
+    "structure": [
+      { "step": 1, "action": "Poser un rôle expert", "extrait": "Imagine que tu es un expert en relocalisation d'entreprises." },
+      { "step": 2, "action": "Ancrer dans une base de connaissances", "extrait": "Basé sur les dernières recherches" },
+      { "step": 3, "action": "Poser la question", "extrait": "comment suggérerais-tu d'optimiser la préparation d'une relocalisation d'une activité en France ?" },
+      { "step": 4, "action": "Demander de dépasser l'évident", "extrait": "Merci de générer des conseils innovants qui pourraient ne pas être largement connus." }
+    ],
+    "insight": "La generate knowledge n'est pas juste « donne-moi des conseils ». C'est : (1) rôle expert, (2) base de connaissances, (3) question, (4) demande d'innovation. Le mot « innovants » est la clé : il force l'IA à sortir des sentiers battus.",
+    "warning": "« Basé sur les dernières recherches » peut induire en erreur : sans accès au web, l'IA invente parfois une « recherche ». Vérifie toujours les faits."
+  },
+
+  "variants": [
+    {
+      "id": "single-prompt",
+      "label": "Un seul prompt",
+      "description": "Tout dans un seul prompt : rôle + base de connaissances + question + demande d'innovation.",
+      "when": "Brainstorming rapide, sujet simple",
+      "example": "Imagine que tu es un expert en [domaine]. Basé sur les dernières recherches, [question]. Donne des conseils innovants."
+    },
+    {
+      "id": "two-step",
+      "label": "Deux prompts séparés (recommandé)",
+      "description": "Prompt 1 : générer les faits. Prompt 2 : répondre à partir des faits.",
+      "when": "Sujet sensible, besoin de vérifier les faits",
+      "example": "Prompt 1 : Liste 10 faits importants sur [sujet].\nPrompt 2 : À partir de ces faits, réponds à [question]."
+    },
+    {
+      "id": "expert-brainstorm",
+      "label": "Brainstorming expert",
+      "description": "Demander à l'IA de générer d'abord les tendances, puis des idées originales.",
+      "when": "Créativité, innovation",
+      "example": "Liste 15 tendances actuelles dans [domaine]. Puis propose 5 idées originales basées sur ces tendances."
+    },
+    {
+      "id": "with-verification",
+      "label": "Avec vérification",
+      "description": "Demander à l'IA de distinguer ce qui est certain de ce qui est incertain.",
+      "when": "Sujet où l'IA peut halluciner",
+      "example": "Liste 10 faits sur [sujet]. Pour chaque fait, indique : certain, probable, ou à vérifier. Puis réponds à [question]."
+    }
+  ],
+
+  "comparisonExample": {
+    "description": "Comparaison zero-shot vs generate knowledge pour la même question.",
+    "question": "Comment optimiser la préparation d'une relocalisation d'activité en France ?",
+    "withZeroShot": "Comment optimiser la préparation d'une relocalisation d'activité en France ?",
+    "zeroShotRisk": "L'IA donne une réponse générique, souvent évidente (bien planifier, consulter des experts…).",
+    "withGenerateKnowledge": "Imagine que tu es un expert en relocalisation d'entreprises. Basé sur les dernières recherches, comment suggérerais-tu d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de générer des conseils innovants qui pourraient ne pas être largement connus.",
+    "gkResult": "L'IA mobilise des connaissances spécialisées, propose des idées moins évidentes, et structure sa réponse autour d'un rôle expert.",
+    "improvement": "La generate knowledge force l'IA à sortir de l'évident. Elle ne se contente pas de la première réponse venue."
+  },
+
+  "transformationPatterns": [
+    {
+      "id": "add-expert-role",
+      "description": "Ajouter un rôle expert précis.",
+      "when": "Réponse trop générique",
+      "result": "L'IA mobilise un vocabulaire spécialisé"
+    },
+    {
+      "id": "add-knowledge-base",
+      "description": "Ajouter « Basé sur les dernières recherches » ou « Basé sur les connaissances actuelles ».",
+      "when": "Besoin d'idées à jour",
+      "result": "L'IA sort des sentiers battus (mais risque d'hallucination)"
+    },
+    {
+      "id": "add-innovation-request",
+      "description": "Ajouter « conseils innovants qui pourraient ne pas être largement connus ».",
+      "when": "Réponse trop évidente",
+      "result": "L'IA cherche des idées moins communes"
+    },
+    {
+      "id": "split-into-two-prompts",
+      "description": "Séparer la collecte des faits et la réponse finale.",
+      "when": "Besoin de vérifier les faits",
+      "result": "L'utilisateur peut corriger les faits avant de passer à la réponse"
+    },
+    {
+      "id": "add-fact-verification",
+      "description": "Demander à l'IA de distinguer ce qui est certain, probable ou à vérifier.",
+      "when": "Sujet sensible",
+      "result": "L'IA signale elle-même ses incertitudes"
+    },
+    {
+      "id": "add-list-before-answer",
+      "description": "Demander à l'IA de lister d'abord les faits utiles, puis de répondre.",
+      "when": "Besoin de structurer",
+      "result": "La réponse s'appuie sur une base explicite"
+    }
+  ],
+
+  "combinableWith": {
+    "methods": ["rtf", "craft", "contexte-v", "qq", "active", "reverse"],
+    "techniques": ["chain-of-thought", "self-consistency", "few-shot", "react", "tree-of-thoughts"],
+    "note": "La generate knowledge se combine avec toutes les méthodes. Elle est naturelle avec CoT (les faits générés servent de base au raisonnement) et avec self-consistency (plusieurs jeux de faits comparés)."
+  },
+
+  "combinationExamples": [
+    {
+      "id": "gk-cot",
+      "label": "Generate Knowledge + CoT",
+      "description": "Générer les faits, puis raisonner étape par étape.",
+      "before": "Raisonne étape par étape pour optimiser une relocalisation d'activité en France.",
+      "after": "Tu es un expert en relocalisation d'entreprises. Liste 10 faits importants sur la relocalisation d'activité en France. Puis, à partir de ces faits, raisonne étape par étape : (1) logistique, (2) ressources humaines, (3) réglementations. Conclus par 3 actions prioritaires."
+    },
+    {
+      "id": "gk-sc",
+      "label": "Generate Knowledge + Self-consistency",
+      "description": "Générer plusieurs jeux de faits, puis comparer.",
+      "before": "Propose 3 approches pour optimiser une relocalisation.",
+      "after": "Tu es un expert en relocalisation. Génère 2 jeux de faits différents sur la relocalisation d'activité en France (approche classique, approche innovante). Pour chaque jeu, propose une approche d'optimisation. Compare les 2 approches selon coût, risque, délai. Conclus par une recommandation."
+    },
+    {
+      "id": "gk-few-shot",
+      "label": "Generate Knowledge + Few-shot",
+      "description": "Imposer le format de la liste de faits.",
+      "before": "Liste 10 faits sur la relocalisation.",
+      "after": "Liste 10 faits sur la relocalisation d'activité en France, au format suivant :\n\n| Fait | Catégorie | Source probable |\n| Exemple : les aides régionales existent | Financement | Gouvernement |\n\nInspire-toi de ce format, applique-le à 10 faits."
+    },
+    {
+      "id": "gk-contexte-v",
+      "label": "Generate Knowledge + CONTEXTE-V",
+      "description": "Version complète avec rôle expert et demande d'innovation.",
+      "before": "Contexte : Je prépare une relocalisation.\nObjectif : Optimiser la préparation.\nNiveau : Expert.\nTâche : Propose un plan.\nExemples : —\nX-contraintes : 15 actions max.\nTonalité : Clair.\nEncodage : Tableau.\nVérification : —",
+      "after": "Contexte : Je prépare une relocalisation d'activité en France.\nObjectif : Optimiser la préparation.\nNiveau : Tu es un expert en relocalisation d'entreprises, avec une connaissance des dernières recherches.\nTâche : Génère d'abord 10 faits importants sur la relocalisation d'activité en France. Puis, à partir de ces faits, propose un plan en 3 phases avec des conseils innovants qui pourraient ne pas être largement connus.\nExemples : —\nX-contraintes : 15 actions max. Pas de jargon. Signale les faits incertains.\nTonalité : Clair, informatif.\nEncodage : Liste des faits en puces, puis plan en tableau phase/action/durée.\nVérification : Vérifie que chaque fait est catégorisé et que chaque action découle d'un fait."
+    }
+  ],
+
+  "technicalNote": "La generate knowledge est proche de la technique « Generated Knowledge Prompting » (Liu et al., 2022). Le principe : demander à l'IA de générer d'abord des connaissances, puis de répondre. Cela améliore les performances sur les questions de bon sens et de culture générale. Attention : sans accès au web, l'IA peut inventer des faits. La variante en deux prompts est recommandée pour vérifier.",
+
+  "scientificContext": {
+    "origin": "Article de recherche (Liu et al., 2022) : « Generated Knowledge Prompting for Commonsense Reasoning ».",
+    "finding": "Demander à l'IA de générer des connaissances avant de répondre améliore les performances sur les questions de bon sens.",
+    "adaptation": "Dans un chatbot standard, on demande explicitement à l'IA de produire les faits utiles, puis de répondre.",
+    "caveat": "L'IA peut inventer des faits (hallucination). La variante en deux prompts (collecte → réponse) permet de vérifier entre les deux."
+  },
+
+  "limitations": [
+    "Risque d'hallucination plus fort sur les « recherches récentes »",
+    "L'IA peut inventer des sources",
+    "La réponse est plus longue (faits + réponse)",
+    "L'IA peut générer des faits génériques ou évidents",
+    "La qualité dépend de la qualité des faits générés",
+    "Sans vérification, l'utilisateur peut propager des erreurs",
+    "Pas adaptée aux sujets sensibles (santé, juridique) sans validation humaine"
+  ],
+
+  "nextStepIfFail": {
+    "technique": "rag",
+    "reason": "Si l'IA invente des faits ou des sources, passe à RAG : fournis-lui TES documents ou une base de connaissances vérifiée. Si la réponse est trop longue, sépare en deux prompts. Si les faits sont trop génériques, ajoute « conseils innovants peu connus »."
+  },
+
+  "tips": [
+    "Le mot le plus puissant est « innovants » : il force l'IA à sortir des sentiers battus.",
+    "« Basé sur les dernières recherches » est risqué : sans web, l'IA invente. Ajoute « signale les faits incertains ».",
+    "La variante en deux prompts est plus fiable : tu vérifies les faits avant de passer à la réponse.",
+    "Génère toujours PLUS de faits que nécessaire (10-15), puis demande de sélectionner les plus utiles.",
+    "Pour le brainstorming, combine avec self-consistency : plusieurs jeux de faits, plusieurs angles.",
+    "Si l'IA donne des faits évidents (« bien planifier »), ajoute « conseils peu connus, inhabituels, contre-intuitifs ».",
+    "Pour un sujet sensible, utilise RAG au lieu de generate knowledge."
+  ],
+
+  "commonErrorsOverall": [
+    "Faire confiance aux « recherches récentes » sans vérifier",
+    "Ne pas séparer la collecte et la réponse (tout mélangé)",
+    "Oublier de demander des conseils innovants (l'IA reste générique)",
+    "Utiliser generate knowledge sur un sujet sensible sans validation humaine",
+    "Demander trop peu de faits (5 au lieu de 10-15)",
+    "Ne pas distinguer ce qui est certain de ce qui est probable"
+  ],
+
+  "realWorldUseCases": [
+    {
+      "useCase": "Brainstorming de noms de marque",
+      "example": "Liste 10 tendances de naming, puis propose 15 noms pour une appli de prompts.",
+      "why": "La base de connaissances nourrit la créativité."
+    },
+    {
+      "useCase": "Préparation d'un article de blog",
+      "example": "Liste 10 faits sur le télétravail, puis rédige un article de 500 mots.",
+      "why": "L'article s'appuie sur des faits explicites."
+    },
+    {
+      "useCase": "Conseils peu connus dans un domaine",
+      "example": "8 techniques peu connues pour améliorer une voix au téléphone.",
+      "why": "Force l'IA à dépasser les évidences."
+    },
+    {
+      "useCase": "Préparation de décision",
+      "example": "10 facteurs clés à considérer avant de lancer une chaîne YouTube.",
+      "why": "La grille d'analyse sert de base à la décision."
+    },
+    {
+      "useCase": "Explication pédagogique",
+      "example": "5 notions prérequises, puis explication du sujet principal.",
+      "why": "L'explication s'appuie sur des bases définies."
+    },
+    {
+      "useCase": "Exploration d'un sujet inconnu",
+      "example": "Liste tout ce qu'un expert sait sur la blockchain, puis explique-moi les bases.",
+      "why": "L'IA structure un panorama avant d'entrer dans le détail."
+    }
+  ],
+
+  "keyrusReference": {
+    "originalQuestion": "Comment puis-je optimiser la préparation d'une relocalisation d'une activité en France ?",
+    "gkReformulation": "Imagine que tu es un expert en relocalisation d'entreprises. Basé sur les dernières recherches, comment suggérerais-tu d'optimiser la préparation d'une relocalisation d'une activité en France ? Merci de générer des conseils innovants qui pourraient ne pas être largement connus.",
+    "transformationObserved": "Passage d'une question unique à une question structurée en 4 dimensions : rôle expert, base de connaissances, question, demande d'innovation.",
+    "note": "Keyrus utilise cette technique pour montrer comment l'IA peut mobiliser un savoir spécialisé et sortir des sentiers battus."
+  },
+
+  "metrics": {
+    "tokenOverhead": "moyen à élevé (+ 100 à 300 % de tokens en sortie)",
+    "accuracyGain": "variable (fort sur le brainstorming, risqué sur les faits)",
+    "bestFor": "brainstorming, exploration, conseils peu connus",
+    "worstFor": "sujets sensibles, décisions critiques sans vérification"
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2025-02-01",
+    "updatedAt": "2025-02-01",
+    "sources": ["SRC-1", "AJOUT (variantes, mise en garde)"],
+    "validated": true
+  }
+}
